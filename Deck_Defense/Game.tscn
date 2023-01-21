@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Gradient" id=1]
+
+[sub_resource type="GradientTexture2D" id=2]
+gradient = SubResource( 1 )
+width = 200
+height = 150
+fill_to = Vector2( 0, 1 )
+
+[node name="Game" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1, 2 )
+current = true
+
+[node name="GridContainer" type="GridContainer" parent="."]
+anchor_right = 0.183
+margin_left = -513.0
+margin_top = 1.0
+margin_right = 512.0
+margin_bottom = 300.0
+columns = 5
+
+[node name="Card" type="GridContainer" parent="GridContainer"]
+margin_right = 200.0
+margin_bottom = 154.0
+
+[node name="Picture" type="TextureRect" parent="GridContainer/Card"]
+margin_right = 200.0
+margin_bottom = 150.0
+texture = SubResource( 2 )
+
+[node name="Description" type="RichTextLabel" parent="GridContainer/Card"]
+margin_top = 154.0
+margin_right = 200.0
+margin_bottom = 154.0
+text = "This is a card"
+
+[node name="Card2" type="GridContainer" parent="GridContainer"]
+margin_left = 204.0
+margin_right = 404.0
+margin_bottom = 154.0
+
+[node name="Picture" type="TextureRect" parent="GridContainer/Card2"]
+margin_right = 200.0
+margin_bottom = 150.0
+texture = SubResource( 2 )
+
+[node name="Description" type="RichTextLabel" parent="GridContainer/Card2"]
+margin_top = 154.0
+margin_right = 200.0
+margin_bottom = 154.0
+text = "This is a card"
