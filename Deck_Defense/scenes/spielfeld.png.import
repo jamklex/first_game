@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/deck-builder-1.png-543d72e956c53a337d7fa54422ab280d.stex"
+path="res://.import/spielfeld.png-2bc63762aa06e617300ec66e3a08aee7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://deck-builder-1.png"
-dest_files=[ "res://.import/deck-builder-1.png-543d72e956c53a337d7fa54422ab280d.stex" ]
+source_file="res://scenes/spielfeld.png"
+dest_files=[ "res://.import/spielfeld.png-2bc63762aa06e617300ec66e3a08aee7.stex" ]
 
 [params]
 
