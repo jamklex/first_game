@@ -1,0 +1,79 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[node name="package" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -804.0
+margin_bottom = -220.0
+rect_min_size = Vector2( 220, 380 )
+rect_pivot_offset = Vector2( -330, -92 )
+
+[node name="name" type="Label" parent="."]
+margin_right = 220.0
+margin_bottom = 20.0
+text = "Pack name"
+align = 1
+valign = 1
+
+[node name="packs" type="Control" parent="."]
+margin_top = 20.0
+margin_right = 220.0
+margin_bottom = 340.0
+
+[node name="pack" type="Panel" parent="packs"]
+margin_right = 200.0
+margin_bottom = 300.0
+
+[node name="cover" type="Sprite" parent="packs/pack"]
+scale = Vector2( 3.125, 4.67188 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="pack2" type="Panel" parent="packs"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 210.0
+margin_bottom = 310.0
+
+[node name="cover" type="Sprite" parent="packs/pack2"]
+scale = Vector2( 3.125, 4.67188 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="pack3" type="Panel" parent="packs"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 220.0
+margin_bottom = 320.0
+
+[node name="cover" type="Sprite" parent="packs/pack3"]
+scale = Vector2( 3.125, 4.67188 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="bar" type="Control" parent="."]
+margin_top = 340.0
+margin_right = 220.0
+margin_bottom = 380.0
+
+[node name="price" type="Label" parent="bar"]
+margin_right = 100.0
+margin_bottom = 40.0
+text = "00 Pt"
+align = 1
+valign = 1
+
+[node name="buyButton" type="Panel" parent="bar"]
+margin_left = 120.0
+margin_top = 7.0
+margin_right = 180.0
+margin_bottom = 32.0
+
+[node name="Label" type="Label" parent="bar/buyButton"]
+margin_right = 60.0
+margin_bottom = 25.0
+text = "Buy"
+align = 1
+valign = 1

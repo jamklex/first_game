@@ -15,16 +15,24 @@ margin_right = 64.0
 margin_bottom = 196.0
 
 [node name="StartButton" type="LinkButton" parent="GridContainer"]
-margin_right = 29.0
+margin_right = 58.0
 margin_bottom = 14.0
 text = "Start"
 
-[node name="QuitButton" type="LinkButton" parent="GridContainer"]
+[node name="PackagesButton" type="LinkButton" parent="GridContainer"]
 margin_top = 18.0
-margin_right = 29.0
+margin_right = 58.0
 margin_bottom = 32.0
+focus_mode = 2
+text = "Packages"
+
+[node name="QuitButton" type="LinkButton" parent="GridContainer"]
+margin_top = 36.0
+margin_right = 58.0
+margin_bottom = 50.0
 focus_mode = 2
 text = "Quit"
 
 [connection signal="pressed" from="GridContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="GridContainer/PackagesButton" to="." method="_on_PackagesButton_pressed"]
 [connection signal="pressed" from="GridContainer/QuitButton" to="." method="_on_QuitButton_pressed"]

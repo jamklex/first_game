@@ -12,12 +12,8 @@ func _ready():
 
 
 func _on_StartButton_pressed():
-	get_tree().change_scene("res://scenes/Game.tscn")
-	
-	
-func _on_PackagesButton_pressed():
-	get_tree().change_scene("res://scenes/packages.tscn")
-	
+	get_tree().change_scene("res://Game.tscn")
+
 
 func _on_QuitButton_pressed():
 	get_tree().quit()
