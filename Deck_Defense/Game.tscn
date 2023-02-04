@@ -9,14 +9,29 @@ position = Vector2( 1, 2 )
 current = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
-anchor_right = 0.183
-margin_left = -513.0
-margin_top = 1.0
+margin_left = -512.0
 margin_right = 512.0
 margin_bottom = 300.0
+rect_clip_content = true
+size_flags_horizontal = 5
 columns = 5
 
 [node name="Card" parent="GridContainer" instance=ExtResource( 1 )]
+position = Vector2( 2, 152 )
+scale = Vector2( 0.5, 0.5 )
 
 [node name="Card2" parent="GridContainer" instance=ExtResource( 1 )]
-position = Vector2( 250, 0 )
+position = Vector2( 103, 152 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Card3" parent="GridContainer" instance=ExtResource( 1 )]
+position = Vector2( 204, 152 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Card4" parent="GridContainer" instance=ExtResource( 1 )]
+position = Vector2( 305, 152 )
+scale = Vector2( 0.5, 0.5 )
+
+[node name="Card5" parent="GridContainer" instance=ExtResource( 1 )]
+position = Vector2( 406, 152 )
+scale = Vector2( 0.5, 0.5 )
