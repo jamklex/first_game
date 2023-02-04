@@ -1,0 +1,86 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://prefabs/ally-card-space.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/spielfeld.png" type="Texture" id=2]
+[ext_resource path="res://prefabs/card.tscn" type="PackedScene" id=3]
+[ext_resource path="res://prefabs/enemy-card-space.tscn" type="PackedScene" id=4]
+
+[node name="Gameboard" type="Node2D"]
+
+[node name="Spielfeld" type="Sprite" parent="."]
+position = Vector2( 0.749966, 2.49997 )
+scale = Vector2( 0.736974, 0.939815 )
+texture = ExtResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 1, 2 )
+current = true
+
+[node name="EnemyCardSpace" parent="." instance=ExtResource( 4 )]
+margin_left = -423.0
+margin_top = -197.0
+margin_right = 423.0
+margin_bottom = -57.0
+
+[node name="AllyCardSpace" parent="." instance=ExtResource( 1 )]
+margin_left = -423.0
+margin_top = -52.0
+margin_right = 423.0
+margin_bottom = 88.0
+
+[node name="HandCards" type="HBoxContainer" parent="."]
+margin_left = -351.0
+margin_top = 110.0
+margin_right = 349.0
+margin_bottom = 350.0
+custom_constants/separation = -100
+alignment = 1
+
+[node name="Card2" parent="HandCards" instance=ExtResource( 3 )]
+margin_right = 160.0
+margin_bottom = 240.0
+
+[node name="Card" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 60.0
+margin_right = 220.0
+margin_bottom = 240.0
+
+[node name="Card3" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 120.0
+margin_right = 280.0
+margin_bottom = 240.0
+
+[node name="Card4" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 180.0
+margin_right = 340.0
+margin_bottom = 240.0
+
+[node name="Card5" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 240.0
+margin_right = 400.0
+margin_bottom = 240.0
+
+[node name="Card6" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 300.0
+margin_right = 460.0
+margin_bottom = 240.0
+
+[node name="Card7" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 360.0
+margin_right = 520.0
+margin_bottom = 240.0
+
+[node name="Card8" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 420.0
+margin_right = 580.0
+margin_bottom = 240.0
+
+[node name="Card9" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 480.0
+margin_right = 640.0
+margin_bottom = 240.0
+
+[node name="Card10" parent="HandCards" instance=ExtResource( 3 )]
+margin_left = 540.0
+margin_right = 700.0
+margin_bottom = 240.0

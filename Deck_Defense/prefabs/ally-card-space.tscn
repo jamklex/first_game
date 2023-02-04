@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://prefabs/card-space.tscn" type="PackedScene" id=1]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.14902, 0.666667, 0.145098, 1 )
+
+[node name="AllyCardSpace" type="Panel"]
+rect_min_size = Vector2( 846, 140 )
+custom_styles/panel = SubResource( 1 )
+
+[node name="CardSpace" parent="." instance=ExtResource( 1 )]
+margin_left = 5.0
+margin_top = 5.0
+margin_right = 841.0
+margin_bottom = 135.0
