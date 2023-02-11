@@ -16,7 +16,7 @@ func place_cards_in_hand(path, amount, visible):
 func add_card_to(path, card):
 	var hand = get_node(path) as HBoxContainer
 	hand.add_child(card)
-	var separation = get_increasing_separation(hand.get_child_count());
+	var separation = get_increasing_separation(hand.get_child_count())
 	hand.add_constant_override("separation", separation)
 		
 func get_increasing_separation(card_amount):
