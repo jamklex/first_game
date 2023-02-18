@@ -1,6 +1,4 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://prefabs/card-small.tscn" type="PackedScene" id=1]
+[gd_scene load_steps=2 format=2]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0235294, 0.0509804, 0.380392, 1 )
@@ -10,71 +8,69 @@ margin_right = 40.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 836, 130 )
 
-[node name="Panel" type="Panel" parent="."]
+[node name="0" type="Panel" parent="."]
 margin_right = 80.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel2" type="Panel" parent="."]
+[node name="1" type="Panel" parent="."]
 margin_left = 84.0
 margin_right = 164.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel3" type="Panel" parent="."]
+[node name="2" type="Panel" parent="."]
 margin_left = 168.0
 margin_right = 248.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel4" type="Panel" parent="."]
+[node name="3" type="Panel" parent="."]
 margin_left = 252.0
 margin_right = 332.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Card" parent="Panel4" instance=ExtResource( 1 )]
-
-[node name="Panel5" type="Panel" parent="."]
+[node name="4" type="Panel" parent="."]
 margin_left = 336.0
 margin_right = 416.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel6" type="Panel" parent="."]
+[node name="5" type="Panel" parent="."]
 margin_left = 420.0
 margin_right = 500.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel7" type="Panel" parent="."]
+[node name="6" type="Panel" parent="."]
 margin_left = 504.0
 margin_right = 584.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel8" type="Panel" parent="."]
+[node name="7" type="Panel" parent="."]
 margin_left = 588.0
 margin_right = 668.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel9" type="Panel" parent="."]
+[node name="8" type="Panel" parent="."]
 margin_left = 672.0
 margin_right = 752.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
 custom_styles/panel = SubResource( 1 )
 
-[node name="Panel10" type="Panel" parent="."]
+[node name="9" type="Panel" parent="."]
 margin_left = 756.0
 margin_right = 836.0
 margin_bottom = 130.0
