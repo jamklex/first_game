@@ -5,7 +5,7 @@ var pointsLabel:Label
 var packageHolder
 var packageScene:PackedScene
 var cardScene:PackedScene
-var points = 200
+var points = 100
 var packages = []
 
 var resultWindow:Panel
@@ -16,10 +16,11 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
-	packageHolder = get_node("scrollWrapper/packageHolder")
-	pointsLabel = get_node("points")
-	resultWindow = get_node("resultWindow")
-	resultWindowCards = get_node("resultWindow/scrollWrapper/cardHolder")
+	var basePanel = get_node("CenterContainer/Panel") as Panel
+	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
+	pointsLabel = basePanel.get_node("points")
+	resultWindow = basePanel.get_node("resultWindow")
+	resultWindowCards = basePanel.get_node("resultWindow/scrollWrapper/cardHolder")
 	packageScene = load("res://prefabs/package.tscn")
 	cardScene = load("res://prefabs/card.tscn")
 	_loadPackages()

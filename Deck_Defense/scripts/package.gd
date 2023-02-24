@@ -16,18 +16,20 @@ var functionName
 var functionArg
 
 var buyBtnLabel:Label
-var buyBtn:Panel
-var buyBtnStyle = StyleBoxFlat.new()
-var availableColor = Color8(189,138,0)
-var notAvailableColor = Color8(20,20,20)
+var buyBtn:Button
+#var buyBtnStyle = StyleBoxFlat.new()
+var availableColor = Color.white
+var notAvailableColor = Color.black
+var soldLayer:Panel
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	buyBtnLabel = get_node("bar/buyButton/Label") as Label
-	buyBtn = get_node("bar/buyButton") as Panel
-	buyBtnStyle.bg_color = availableColor
-	buyBtn.add_stylebox_override("panel", buyBtnStyle)
+	buyBtn = get_node("bar/buyButton")
+	soldLayer = get_node("soldLayer")
+#	buyBtnStyle.bg_color = availableColor
+#	buyBtn.add_stylebox_override("normal", buyBtnStyle)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,9 +48,10 @@ func setPrice(newPrice):
 func setCover(imagePath):
 	var texture = load(imagePath) as Texture
 	var packHolder = get_node("packs") as Control
-	for children in packHolder.get_children():
-		var child = children as Sprite
-		child.texture = texture
+	for children in packHolder.get_children():		
+		var coverHolder = children as Panel
+		var cover = coverHolder.get_child(0) as TextureRect
+		cover.texture = texture
 
 func setOnClick(target, funcName, arg):
 	funcObj = target
@@ -60,16 +63,23 @@ func setStyle(newStyle):
 	style = newStyle
 	if style == Style.Available:
 		buyBtnLabel.text = "Buy"
-		buyBtnStyle.bg_color = availableColor
+		buyBtn.disabled = false
+		buyBtnLabel.add_color_override("font_color", availableColor)
+		soldLayer.visible = false
+#		buyBtnStyle.bg_color = availableColor
 	else:
 		if style == Style.NotEnoughMoney:
 			buyBtnLabel.text = "Buy"
+			soldLayer.visible = false
 		else:
 			buyBtnLabel.text = "Sold"
-		buyBtnStyle.bg_color = notAvailableColor
-	buyBtn.update()
+			soldLayer.visible = true
+		buyBtnLabel.add_color_override("font_color", notAvailableColor)
+		buyBtn.disabled = true
+#		buyBtnStyle.bg_color = notAvailableColor
+#	buyBtn.update()
+	
 
-
-func _on_buyButton_gui_input(event):
-	if style == Style.Available and event is InputEventMouseButton and event.pressed:
+func _on_buyButton_pressed():
+	if style == Style.Available:
 		funcObj.call(functionName, functionArg)
