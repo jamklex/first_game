@@ -12,6 +12,7 @@ rect_min_size = Vector2( 836, 130 )
 margin_right = 80.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="1" type="Panel" parent="."]
@@ -19,6 +20,7 @@ margin_left = 84.0
 margin_right = 164.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="2" type="Panel" parent="."]
@@ -26,6 +28,7 @@ margin_left = 168.0
 margin_right = 248.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="3" type="Panel" parent="."]
@@ -33,6 +36,7 @@ margin_left = 252.0
 margin_right = 332.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="4" type="Panel" parent="."]
@@ -40,6 +44,7 @@ margin_left = 336.0
 margin_right = 416.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="5" type="Panel" parent="."]
@@ -47,6 +52,7 @@ margin_left = 420.0
 margin_right = 500.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="6" type="Panel" parent="."]
@@ -54,6 +60,7 @@ margin_left = 504.0
 margin_right = 584.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="7" type="Panel" parent="."]
@@ -61,6 +68,7 @@ margin_left = 588.0
 margin_right = 668.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="8" type="Panel" parent="."]
@@ -68,6 +76,7 @@ margin_left = 672.0
 margin_right = 752.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )
 
 [node name="9" type="Panel" parent="."]
@@ -75,4 +84,5 @@ margin_left = 756.0
 margin_right = 836.0
 margin_bottom = 130.0
 rect_min_size = Vector2( 80, 130 )
+mouse_filter = 2
 custom_styles/panel = SubResource( 1 )

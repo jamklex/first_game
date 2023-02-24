@@ -134,4 +134,5 @@ margin_right = 484.0
 margin_bottom = 274.0
 custom_styles/panel = SubResource( 5 )
 
+[connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
 [connection signal="gui_input" from="Player/Hand" to="." method="_on_Hand_gui_input"]
