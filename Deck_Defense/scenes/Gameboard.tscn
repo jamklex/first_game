@@ -83,7 +83,6 @@ margin_bottom = 135.0
 [node name="TurnOptions" type="Control" parent="."]
 
 [node name="ReturnToOpponent" parent="TurnOptions" instance=ExtResource( 8 )]
-visible = false
 margin_left = 379.0
 margin_top = -49.0
 margin_right = 479.0
@@ -134,5 +133,7 @@ margin_right = 484.0
 margin_bottom = 274.0
 custom_styles/panel = SubResource( 5 )
 
+[connection signal="gui_input" from="TurnOptions/ReturnToOpponent" to="." method="_on_ReturnToOpponent_gui_input"]
+[connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
 [connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
 [connection signal="gui_input" from="Player/Hand" to="." method="_on_Hand_gui_input"]

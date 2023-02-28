@@ -10,8 +10,18 @@ var max_card_space_spots = 10;
 const player_card_space = "Player/CardSpace/Spots"
 const player_hand = "Player/Hand"
 var selected_action_card = -1
+const NEXT_PLAYER = "TurnOptions/ReturnToOpponent"
+const ATTACK_PLAYER = "TurnOptions/AttackOpponent"
+enum TURN_CYCLE {
+	MY_TURN,
+	OPPONENT_TURN,
+	FIGHT_ANIMATION
+}
+var current_cycle = TURN_CYCLE.MY_TURN
 
 func _ready():
+	set_visibility(NEXT_PLAYER, false)
+	set_visibility(ATTACK_PLAYER, true)
 	rng.randomize()
 	place_cards_in_hand("Enemy/Hand", rng.randi_range(1,10), false)
 	place_cards_in_hand(player_hand, rng.randi_range(1,10), true)
@@ -19,7 +29,7 @@ func _ready():
 	set_hp("Player/Health", rng.randi_range(1,playerMaxHp), playerMaxHp)
 
 func _on_Hand_gui_input(event):
-	if is_mouse_click(event):
+	if is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_hand) as HBoxContainer
 		var bump_factor = 30;
 		bump_child_y(node.get_child(selected_action_card), bump_factor)
@@ -27,11 +37,30 @@ func _on_Hand_gui_input(event):
 		bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
 
 func _on_CardSpace_gui_input(event):
-	if is_mouse_click(event):
+	if is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_card_space) as HBoxContainer
 		var card_space_spot_selected = get_child_index(node, make_input_local(event).position, false, -1)
 		if card_space_spot_selected >= 0 and selected_action_card >= 0:
 			lay_card_on_space(player_card_space, selected_action_card, card_space_spot_selected)
+
+func _on_ReturnToOpponent_gui_input(event):
+	if is_mouse_click(event) and can_place_cards():
+		current_cycle = TURN_CYCLE.OPPONENT_TURN
+		# enemy is allowed to place cards or attack
+		print("enemy will kill you!")
+
+func _on_AttackOpponent_gui_input(event):
+	if is_mouse_click(event) and can_place_cards():
+		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
+		# you will now attack the enemy
+		print("good luck winning with that...")
+
+func can_place_cards():
+	return current_cycle == TURN_CYCLE.MY_TURN
+
+func set_visibility(path, status):
+	var control = get_node(path) as Control
+	control.visible = status
 
 func place_cards_in_hand(path, amount, visible):
 	for n in amount:
@@ -85,6 +114,8 @@ func lay_card_on_space(path, from, to):
 	if successful:
 		remove_card("Player/Hand", from)
 		selected_action_card = -1
+		set_visibility(NEXT_PLAYER, true)
+		set_visibility(ATTACK_PLAYER, false)
 
 func add_card_to_spot(spots, card, id):
 	var contender = spots.get_child(id)
