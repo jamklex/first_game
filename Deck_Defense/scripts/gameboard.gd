@@ -1,15 +1,5 @@
 extends Node2D
 
-var rng = RandomNumberGenerator.new()
-var visibleCard = preload("res://prefabs/card.tscn")
-var notVisibleCard = preload("res://prefabs/card-back.tscn")
-var miniCard = preload("res://prefabs/card-small.tscn")
-var playerMaxHp = rng.randi_range(75,250)
-var enemyMaxHp = rng.randi_range(125,300)
-var max_card_space_spots = 10;
-const player_card_space = "Player/CardSpace/Spots"
-const player_hand = "Player/Hand"
-var selected_action_card = -1
 const NEXT_PLAYER = "TurnOptions/ReturnToOpponent"
 const ATTACK_PLAYER = "TurnOptions/AttackOpponent"
 enum TURN_CYCLE {
@@ -17,16 +7,43 @@ enum TURN_CYCLE {
 	OPPONENT_TURN,
 	FIGHT_ANIMATION
 }
-var current_cycle = TURN_CYCLE.MY_TURN
+const player_card_space = "Player/CardSpace/Spots"
+const player_hand = "Player/Hand"
+const player_healt = "Player/Health"
+const enemy_card_space = "Enemy/CardSpace/Spots"
+const enemy_hand = "Enemy/Hand"
+const enemy_healt = "Enemy/Health"
+const damage_per_monster = 5
+
+var rng = RandomNumberGenerator.new()
+var visibleCard = preload("res://prefabs/card.tscn")
+var notVisibleCard = preload("res://prefabs/card-back.tscn")
+var miniCard = preload("res://prefabs/card-small.tscn")
+var playerMaxHp
+var playerCurrentHp
+var enemyMaxHp
+var enemyCurrentHp
+var max_card_space_spots = 10;
+var max_hand_cards = 5;
+var initial_hand_cards = 3;
+var cards_per_turn = 3;
+var selected_action_card = -1
+var current_cycle
 
 func _ready():
-	set_visibility(NEXT_PLAYER, false)
-	set_visibility(ATTACK_PLAYER, true)
+	initialize_game()
+
+func initialize_game():
 	rng.randomize()
-	place_cards_in_hand("Enemy/Hand", rng.randi_range(1,10), false)
-	place_cards_in_hand(player_hand, rng.randi_range(1,10), true)
-	set_hp("Enemy/Health", rng.randi_range(1,enemyMaxHp), enemyMaxHp)
-	set_hp("Player/Health", rng.randi_range(1,playerMaxHp), playerMaxHp)
+	playerMaxHp = 250
+	playerCurrentHp = playerMaxHp
+	enemyMaxHp = 250
+	enemyCurrentHp = enemyMaxHp
+	place_cards_in_hand(enemy_hand, initial_hand_cards, false)
+	place_cards_in_hand(player_hand, initial_hand_cards, true)
+	set_hp(enemy_healt, enemyCurrentHp, enemyMaxHp)
+	set_hp(player_healt, playerCurrentHp, playerMaxHp)
+	switch_to_player()
 
 func _on_Hand_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
@@ -41,22 +58,65 @@ func _on_CardSpace_gui_input(event):
 		var node = get_node(player_card_space) as HBoxContainer
 		var card_space_spot_selected = get_child_index(node, make_input_local(event).position, false, -1)
 		if card_space_spot_selected >= 0 and selected_action_card >= 0:
-			lay_card_on_space(player_card_space, selected_action_card, card_space_spot_selected)
+			lay_card_on_space(player_card_space, selected_action_card, card_space_spot_selected, player_hand)
 
 func _on_ReturnToOpponent_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
-		current_cycle = TURN_CYCLE.OPPONENT_TURN
-		# enemy is allowed to place cards or attack
-		print("enemy will kill you!")
+		switch_to_enemy()
 
 func _on_AttackOpponent_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
-		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
-		# you will now attack the enemy
-		print("good luck winning with that...")
+		var free_spots = get_free_spots(player_card_space)
+		var damage_dealt = (10 - free_spots.size()) * damage_per_monster
+		var new_hp = max(0, enemyCurrentHp - damage_dealt)
+		set_hp(enemy_healt, new_hp, enemyMaxHp)
+		enemyCurrentHp = new_hp
+		switch_to_enemy()
+
+func enemy_move():
+	var enemyHandCards = get_node(enemy_hand).get_child_count()
+	var free_spots = get_free_spots(enemy_card_space)
+	var will_attack = rng.randi_range(1,max_card_space_spots) > free_spots.size()
+	if will_attack or (enemyHandCards == 0 and free_spots.size() < max_card_space_spots):
+		var damage_dealt = (10 - free_spots.size()) * damage_per_monster
+		var new_hp = max(0, playerCurrentHp - damage_dealt)
+		set_hp(player_healt, new_hp, playerMaxHp)
+		playerCurrentHp = new_hp
+	else:
+		var cardsToPlay = 0 if enemyHandCards <= 0 else rng.randi_range(1, min(free_spots.size(), enemyHandCards))
+		if(cardsToPlay > 0):
+			for i in range(cardsToPlay):
+				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
+				lay_card_on_space(enemy_card_space, i, free_spots[spot_to_place], enemy_hand)
+		else:
+			print("enemy can't do anything...")
+	switch_to_player()
+
+func get_free_spots(space):
+	var node = get_node(space)
+	var free_spaces = []
+	for child in node.get_children():
+		if child.get_child_count() <= 0:
+			free_spaces.append(child.get_index())
+	return free_spaces
 
 func can_place_cards():
 	return current_cycle == TURN_CYCLE.MY_TURN
+
+func switch_to_player():
+	current_cycle = TURN_CYCLE.MY_TURN
+	set_visibility(NEXT_PLAYER, false)
+	set_visibility(ATTACK_PLAYER, true)
+	var cards_to_max = max_hand_cards - get_node(player_hand).get_child_count()
+	place_cards_in_hand(player_hand, min(cards_to_max, cards_per_turn), true)
+	
+func switch_to_enemy():
+	current_cycle = TURN_CYCLE.OPPONENT_TURN
+	set_visibility(NEXT_PLAYER, true)
+	set_visibility(ATTACK_PLAYER, false)
+	var cards_to_max = max_hand_cards - get_node(enemy_hand).get_child_count()
+	place_cards_in_hand(enemy_hand, min(cards_to_max, cards_per_turn), false)
+	enemy_move()
 
 func set_visibility(path, status):
 	var control = get_node(path) as Control
@@ -66,6 +126,7 @@ func place_cards_in_hand(path, amount, visible):
 	for n in amount:
 		var card = (visibleCard.instance() if visible else notVisibleCard.instance()) as Panel
 		add_card_to(path, card)
+		yield(get_tree().create_timer(.25), "timeout")
 
 func add_card_to(path, card):
 	var hand = get_node(path) as HBoxContainer
@@ -108,11 +169,11 @@ func is_in_range(base_vector, from_vector, to_vector):
 func is_mouse_click(event):
 	return event is InputEventMouseButton and event.pressed and event.button_index == 1
 
-func lay_card_on_space(path, from, to):
-	var card_spots = get_node(path) as HBoxContainer
+func lay_card_on_space(space, from, to, hand):
+	var card_spots = get_node(space) as HBoxContainer
 	var successful = add_card_to_spot(card_spots, miniCard.instance() as Panel, to)
 	if successful:
-		remove_card("Player/Hand", from)
+		remove_card(hand, from)
 		selected_action_card = -1
 		set_visibility(NEXT_PLAYER, true)
 		set_visibility(ATTACK_PLAYER, false)
