@@ -16,12 +16,12 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
-	var basePanel = get_node("CenterContainer/Panel") as Panel
-	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
-	pointsLabel = basePanel.get_node("points")
-	resultWindow = basePanel.get_node("resultWindow")
-	resultWindowCards = basePanel.get_node("resultWindow/scrollWrapper/cardHolder")
-	packageScene = load("res://prefabs/package.tscn")
+	var basePanel = get_node("windowMain") as VBoxContainer
+	packageHolder = basePanel.get_node("mainScreen/scrollWrapper/packageHolder")
+	pointsLabel = basePanel.get_node("menu/points")
+	resultWindow = get_node("overlay/resultWindow")
+	resultWindowCards = get_node("overlay/resultWindow/scrollWrapper/cardHolder")
+	packageScene = load("res://prefabs/packageRes.tscn")
 	cardScene = load("res://prefabs/card.tscn")
 	_loadPackages()
 	_refreshPoints()
@@ -69,13 +69,11 @@ func onBuyButton(packageIndex):
 		var newCard = cardScene.instance()
 		resultWindowCards.add_child(newCard)
 	resultWindow.visible = true
+	
+
+func _on_back_pressed():
+	get_tree().change_scene("res://scenes/Menu.tscn")
 
 
-func _on_back_gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
-		get_tree().change_scene("res://scenes/Menu.tscn")
-
-
-func _on_close_gui_input(event):
-	if event is InputEventMouseButton and event.pressed:
-		resultWindow.visible = false
+func _on_close_pressed():
+	resultWindow.visible = false
