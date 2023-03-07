@@ -2,11 +2,13 @@ extends Control
 
 
 var pointsLabel:Label
-var packageHolder
+var packageHolder: GridContainer
 var packageScene:PackedScene
 var cardScene:PackedScene
 var points = 100
 var packages = []
+var minPackageWidth = -1
+var minPackageHeight = -1
 
 var resultWindow:Panel
 var resultWindowCards:GridContainer
@@ -16,15 +18,16 @@ var rng = RandomNumberGenerator.new()
 
 func _ready():
 	rng.randomize()
-	var basePanel = get_node("windowMain") as VBoxContainer
-	packageHolder = basePanel.get_node("mainScreen/scrollWrapper/packageHolder")
-	pointsLabel = basePanel.get_node("menu/points")
-	resultWindow = get_node("overlay/resultWindow")
-	resultWindowCards = get_node("overlay/resultWindow/scrollWrapper/cardHolder")
-	packageScene = load("res://prefabs/packageRes.tscn")
+	var basePanel = get_node("bg") as Panel
+	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
+	pointsLabel = basePanel.get_node("points")
+	resultWindow = get_node("bg/resultWindow")
+	resultWindowCards = get_node("bg/resultWindow/scrollWrapper/cardHolder")
+	packageScene = load("res://prefabs/package.tscn")
 	cardScene = load("res://prefabs/card.tscn")
 	_loadPackages()
 	_refreshPoints()
+	_afterResize()
 
 
 func _refreshPoints():
@@ -47,7 +50,7 @@ func _loadPackages():
 		var newPackage = packageScene.instance() as Package
 		var name = "Moin" + String(i)
 		var price = rng.randi_range(1,10)
-		var coverIndex = String(rng.randi_range(1,3))
+		var coverIndex = String(rng.randi_range(1,4))
 		var imagePath = "res://images/packCovers/cover" + coverIndex + ".png"
 		newPackage.setCover(imagePath)
 		newPackage.setName(name)
@@ -55,7 +58,11 @@ func _loadPackages():
 		newPackage.setOnClick(self, "onBuyButton", i)
 		packageHolder.add_child(newPackage)
 		packages.append(newPackage)
-		
+		if minPackageHeight == -1:
+			var rect = newPackage.rect_min_size
+			minPackageWidth = rect[0]
+			minPackageHeight = rect[1]
+			
 
 func onBuyButton(packageIndex):
 	var selectedPackage = packages[packageIndex] as Package
@@ -77,3 +84,46 @@ func _on_back_pressed():
 
 func _on_close_pressed():
 	resultWindow.visible = false
+
+
+func _on_scrollWrapper_resized():
+	_afterResize()
+	
+	
+func _afterResize():
+#	setPackageHolderSeparation()
+	setPackageSize()
+	
+	
+func setPackageSize():
+	if minPackageHeight == -1:
+		return
+	var width = packageHolder.get_parent().rect_size[0] - 12
+	var columns = packageHolder.columns
+	var separation = packageHolder.get_constant("hseparation")
+	var usedWidth = (columns-1) * separation
+	var freeWidth = width - usedWidth
+	var newPackageWidth = freeWidth / columns
+	if newPackageWidth < minPackageWidth:
+		return
+	var widthSizeVal = newPackageWidth / minPackageWidth
+	var newPackageHeight = minPackageHeight * widthSizeVal
+	for package in packages:
+		package = package as Package
+		package.rect_min_size[0] = newPackageWidth
+		package.rect_min_size[1] = newPackageHeight
+	
+
+func setPackageHolderSeparation():
+	if minPackageHeight == -1:
+		return
+	var width = packageHolder.get_parent().rect_size[0] - 12
+	var columns = packageHolder.columns
+	var usedWidth = columns * minPackageWidth
+	var freeWidth = width - usedWidth
+	var neededSeparation = freeWidth / (columns-1)
+#	print(columns)	
+#	var separation = packageHolder.get_constant("hseparation")
+#	separation += 1
+	packageHolder.add_constant_override("hseparation", neededSeparation)
+#	print(separation)

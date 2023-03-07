@@ -25,8 +25,8 @@ var soldLayer:Panel
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	buyBtnLabel = get_node("bar/buyButton/Label") as Label
-	buyBtn = get_node("bar/buyButton")
+	buyBtnLabel = get_node("main/bar/buyButton/Label") as Label
+	buyBtn = get_node("main/bar/buyButton")
 	soldLayer = get_node("soldLayer")
 #	buyBtnStyle.bg_color = availableColor
 #	buyBtn.add_stylebox_override("normal", buyBtnStyle)
@@ -36,18 +36,18 @@ func _ready():
 #func _process(delta):
 #	pass
 func setName(name):
-	var label = get_node("name") as Label
+	var label = get_node("main/name") as Label
 	label.text = name
 	
 func setPrice(newPrice):
-	var label = get_node("bar/price") as Label
+	var label = get_node("main/bar/price") as Label
 	label.text = String(newPrice) + " Pt"
 	price = newPrice
 	
 	
 func setCover(imagePath):
 	var texture = load(imagePath) as Texture
-	var packHolder = get_node("packs") as Control
+	var packHolder = get_node("main/packs") as Control
 	for children in packHolder.get_children():		
 		var coverHolder = children as Panel
 		var cover = coverHolder.get_child(0) as TextureRect
