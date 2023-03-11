@@ -1,13 +1,7 @@
 res://default_env.tres
 res://scenes/Menu.tscn
-res://scenes/Gameboard.tscn
-res://scripts/gameboard.gd
-res://prefabs/cardsLeft.tscn
-res://prefabs/healthbar.tscn
+res://scenes/packages.tscn
+res://prefabs/package.tscn
+res://scripts/package.gd
+res://scripts/packages.gd
 res://prefabs/card.tscn
-res://prefabs/card-small.tscn
-res://prefabs/card-space.tscn
-res://prefabs/card-back.tscn
-res://prefabs/blockOpponent.tscn
-res://prefabs/waitWhileFight.tscn
-res://scripts/card.gd

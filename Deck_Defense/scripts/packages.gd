@@ -21,8 +21,8 @@ func _ready():
 	var basePanel = get_node("bg") as Panel
 	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
 	pointsLabel = basePanel.get_node("points")
-	resultWindow = get_node("bg/resultWindow")
-	resultWindowCards = get_node("bg/resultWindow/scrollWrapper/cardHolder")
+	resultWindow = get_node("bg/resultWindowHolder")
+	resultWindowCards = get_node("bg/resultWindowHolder/resultWindow/scrollWrapper/cardHolder")
 	packageScene = load("res://prefabs/package.tscn")
 	cardScene = load("res://prefabs/card.tscn")
 	_loadPackages()
@@ -31,9 +31,9 @@ func _ready():
 
 
 func _refreshPoints():
-	pointsLabel.text = String(points) + " Pt"
-	
-	
+	pointsLabel.text = String.num_int64(points) + " Pt"
+
+
 func _refreshPackages():
 	for pack in packages:
 		pack = pack as Package
@@ -48,9 +48,9 @@ func _refreshPackages():
 func _loadPackages():
 	for i in 10:
 		var newPackage = packageScene.instantiate() as Package
-		var name = "Moin" + String(i)
+		var name = "Moin" + String.num_int64(i)
 		var price = rng.randi_range(1,10)
-		var coverIndex = String(rng.randi_range(1,4))
+		var coverIndex = String.num_int64(rng.randi_range(1,4))
 		var imagePath = "res://images/packCovers/cover" + coverIndex + ".png"
 		newPackage.setCover(imagePath)
 		newPackage.setName(name)
@@ -62,7 +62,7 @@ func _loadPackages():
 			var rect = newPackage.custom_minimum_size
 			minPackageWidth = rect[0]
 			minPackageHeight = rect[1]
-			
+
 
 func onBuyButton(packageIndex):
 	var selectedPackage = packages[packageIndex] as Package
@@ -72,11 +72,12 @@ func onBuyButton(packageIndex):
 	_refreshPackages()
 	for child in resultWindowCards.get_children():
 		resultWindowCards.remove_child(child)
-	for i in rng.randi_range(1,10):
+	for i in rng.randi_range(1,50):
 		var newCard = cardScene.instantiate()
 		resultWindowCards.add_child(newCard)
+	setCardHolderColumns()
 	resultWindow.visible = true
-	
+
 
 func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/Menu.tscn")
@@ -88,19 +89,33 @@ func _on_close_pressed():
 
 func _on_scrollWrapper_resized():
 	_afterResize()
-	
-	
+
+
 func _afterResize():
 #	setPackageHolderSeparation()
 	setPackageSize()
+	setCardHolderColumns()
+
+func setCardHolderColumns():
+	if not resultWindowCards:
+		return
 	
-	
+	var childCount = resultWindowCards.get_child_count()
+	if childCount <= 0:
+		return
+	var firstCard = resultWindowCards.get_child(0) as Control
+	var cardWidth = firstCard.custom_minimum_size[0]
+	var currentWidth = resultWindowCards.get_parent_control().get_rect().size.x
+	var columns = int(currentWidth / cardWidth)
+	resultWindowCards.columns = columns
+
+
 func setPackageSize():
 	if minPackageHeight == -1:
 		return
 	var width = packageHolder.get_parent().size[0] - 12
 	var columns = packageHolder.columns
-	var separation = packageHolder.get_constant("h_separation")
+	var separation = packageHolder.get_theme_constant("h_separation")
 	var usedWidth = (columns-1) * separation
 	var freeWidth = width - usedWidth
 	var newPackageWidth = freeWidth / columns
@@ -112,7 +127,7 @@ func setPackageSize():
 		package = package as Package
 		package.custom_minimum_size[0] = newPackageWidth
 		package.custom_minimum_size[1] = newPackageHeight
-	
+
 
 func setPackageHolderSeparation():
 	if minPackageHeight == -1:
@@ -122,8 +137,8 @@ func setPackageHolderSeparation():
 	var usedWidth = columns * minPackageWidth
 	var freeWidth = width - usedWidth
 	var neededSeparation = freeWidth / (columns-1)
+	packageHolder.add_theme_constant_override("h_separation", neededSeparation)
 #	print(columns)	
 #	var separation = packageHolder.get_constant("h_separation")
 #	separation += 1
-	packageHolder.add_theme_constant_override("h_separation", neededSeparation)
 #	print(separation)

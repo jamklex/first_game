@@ -15,7 +15,6 @@ var funcObj:Control
 var functionName
 var functionArg
 
-var buyBtnLabel:Label
 var buyBtn:Button
 #var buyBtnStyle = StyleBoxFlat.new()
 var availableColor = Color.WHITE
@@ -23,35 +22,31 @@ var notAvailableColor = Color.BLACK
 var soldLayer:Panel
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	buyBtnLabel = get_node("main/bar/buyButton/Label") as Label
-	buyBtn = get_node("main/bar/buyButton")
+	buyBtn = get_node("main/bar/MarginContainer/buyButton")
 	soldLayer = get_node("soldLayer")
 #	buyBtnStyle.bg_color = availableColor
 #	buyBtn.add_theme_stylebox_override("normal", buyBtnStyle)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func setName(name):
 	var label = get_node("main/name") as Label
 	label.text = name
 	
 func setPrice(newPrice):
 	var label = get_node("main/bar/price") as Label
-	label.text = String(newPrice) + " Pt"
+	label.text = String.num_int64(newPrice) + " Pt"
 	price = newPrice
 	
 	
 func setCover(imagePath):
 	var texture = load(imagePath) as Texture2D
 	var packHolder = get_node("main/packs") as Control
-	for children in packHolder.get_children():		
-		var coverHolder = children as Panel
+	for child in packHolder.get_children():
+		var coverHolder = child as Panel
 		var cover = coverHolder.get_child(0) as TextureRect
 		cover.texture = texture
+		
 
 func setOnClick(target, funcName, arg):
 	funcObj = target
@@ -62,19 +57,19 @@ func setOnClick(target, funcName, arg):
 func setStyle(newStyle):
 	style = newStyle
 	if style == Style.Available:
-		buyBtnLabel.text = "Buy"
+		buyBtn.text = "Buy"
 		buyBtn.disabled = false
-		buyBtnLabel.add_theme_color_override("font_color", availableColor)
+		buyBtn.add_theme_color_override("font_color", availableColor)
 		soldLayer.visible = false
 #		buyBtnStyle.bg_color = availableColor
 	else:
 		if style == Style.NotEnoughMoney:
-			buyBtnLabel.text = "Buy"
+			buyBtn.text = "Buy"
 			soldLayer.visible = false
 		else:
-			buyBtnLabel.text = "Sold"
+			buyBtn.text = "Buy"
 			soldLayer.visible = true
-		buyBtnLabel.add_theme_color_override("font_color", notAvailableColor)
+		buyBtn.add_theme_color_override("font_color", notAvailableColor)
 		buyBtn.disabled = true
 #		buyBtnStyle.bg_color = notAvailableColor
 #	buyBtn.update()

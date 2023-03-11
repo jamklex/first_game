@@ -1,14 +1,16 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://c3s7600f7wysf"]
 
-[ext_resource path="res://images/attack.png" type="Texture2D" id=1]
+[ext_resource type="Texture2D" uid="uid://beq2ltmrikyok" path="res://images/attack.png" id="1"]
 
 [node name="AttackOpponent" type="Control"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
 offset_right = 100.0
 offset_bottom = 100.0
-custom_minimum_size = Vector2( 100, 100 )
 tooltip_text = "Attack Opponent"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2( 52, 52 )
-scale = Vector2( 0.2, 0.2 )
-texture = ExtResource( 1 )
+position = Vector2(52, 52)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1")

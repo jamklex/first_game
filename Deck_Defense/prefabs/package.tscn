@@ -1,176 +1,178 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=3 uid="uid://3cc7kl101j2p"]
 
-[ext_resource path="res://scripts/package.gd" type="Script" id=2]
+[ext_resource type="Script" path="res://scripts/package.gd" id="2"]
 
-[sub_resource type="StyleBoxFlat" id=10]
-bg_color = Color( 0, 0.403922, 0.364706, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icy1u"]
+bg_color = Color(1, 1, 1, 0.0941176)
 
-[sub_resource type="StyleBoxFlat" id=11]
-bg_color = Color( 0.529412, 0.529412, 0.529412, 1 )
-shadow_color = Color( 0, 0, 0, 0.709804 )
-shadow_size = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4133c"]
+bg_color = Color(0.282353, 0.282353, 0.282353, 1)
+shadow_size = 5
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.529412, 0.529412, 0.529412, 1 )
-border_color = Color( 1, 0, 0, 1 )
-shadow_color = Color( 0, 0, 0, 0.709804 )
-shadow_size = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nx6x2"]
+bg_color = Color(0.866667, 0.584314, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.807843, 0.705882, 0, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5ud3"]
+bg_color = Color(0.909804, 0.615686, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.635294, 0.501961, 0.0588235, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pu7e7"]
+bg_color = Color(0.831373, 0.560784, 0, 1)
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6h3v3"]
+bg_color = Color(0.513726, 0.513726, 0.513726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boju7"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.172549, 0.172549, 0.172549, 1 )
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.811765, 0.639216, 0.0784314, 1 )
-
-[sub_resource type="StyleBoxFlat" id=8]
-bg_color = Color( 0.141176, 0.141176, 0.141176, 0.901961 )
-
-[sub_resource type="StyleBoxFlat" id=9]
-bg_color = Color( 0.180392, 0.180392, 0.180392, 1 )
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color( 0, 0, 0, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7a1j1"]
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 1
+border_width_bottom = 1
+border_color = Color(1, 0, 0, 1)
 
 [node name="package" type="Panel"]
-offset_right = 200.0
-offset_bottom = 400.0
-custom_minimum_size = Vector2( 145, 330 )
-custom_styles/panel = SubResource( 10 )
-script = ExtResource( 2 )
+custom_minimum_size = Vector2(150, 350)
+offset_right = 150.0
+offset_bottom = 350.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_icy1u")
+script = ExtResource("2")
 
 [node name="main" type="VBoxContainer" parent="."]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 
 [node name="name" type="Label" parent="main"]
-offset_right = 200.0
-offset_bottom = 14.0
+layout_mode = 2
 text = "Pack name"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="packs" type="Control" parent="main"]
-offset_top = 18.0
-offset_right = 200.0
-offset_bottom = 361.0
-custom_minimum_size = Vector2( 0, 270 )
+custom_minimum_size = Vector2(0, 270)
+layout_mode = 2
 size_flags_vertical = 3
 
 [node name="cover1" type="Panel" parent="main/packs"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 5.0
-offset_right = -15.0
-offset_bottom = -23.0
+offset_left = 7.0
+offset_right = -18.0
+offset_bottom = -31.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/panel = SubResource( 11 )
+theme_override_styles/panel = SubResource("StyleBoxFlat_4133c")
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover1"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-expand = true
-stretch_mode = 7
+expand_mode = 1
 
 [node name="cover2" type="Panel" parent="main/packs"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 10.0
+offset_left = 14.0
 offset_top = 10.0
-offset_right = -10.0
-offset_bottom = -13.0
-custom_styles/panel = SubResource( 1 )
+offset_right = -11.0
+offset_bottom = -21.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4133c")
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover2"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-expand = true
-stretch_mode = 7
+expand_mode = 1
 
 [node name="cover3" type="Panel" parent="main/packs"]
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 15.0
+offset_left = 20.0
 offset_top = 20.0
 offset_right = -5.0
-offset_bottom = -3.0
-custom_styles/panel = SubResource( 1 )
+offset_bottom = -11.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_4133c")
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover3"]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-expand = true
-stretch_mode = 7
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
 
 [node name="bar" type="HBoxContainer" parent="main"]
-offset_top = 365.0
-offset_right = 200.0
-offset_bottom = 400.0
-custom_minimum_size = Vector2( 0, 35 )
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
 
 [node name="price" type="Label" parent="main/bar"]
-offset_right = 98.0
-offset_bottom = 35.0
-custom_minimum_size = Vector2( 73, 35 )
+custom_minimum_size = Vector2(73, 35)
+layout_mode = 2
 size_flags_horizontal = 3
 text = "00 Pt"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="buyButton" type="Button" parent="main/bar"]
-offset_left = 102.0
-offset_right = 200.0
-offset_bottom = 35.0
-custom_minimum_size = Vector2( 60, 25 )
+[node name="MarginContainer" type="MarginContainer" parent="main/bar"]
+layout_mode = 2
 size_flags_horizontal = 3
-custom_styles/hover = SubResource( 2 )
-custom_styles/pressed = SubResource( 6 )
-custom_styles/focus = SubResource( 7 )
-custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 5 )
+size_flags_vertical = 4
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
 
-[node name="Label" type="Label" parent="main/bar/buyButton"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="buyButton" type="Button" parent="main/bar/MarginContainer"]
+custom_minimum_size = Vector2(60, 25)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_nx6x2")
+theme_override_styles/hover = SubResource("StyleBoxFlat_b5ud3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pu7e7")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_6h3v3")
+theme_override_styles/focus = SubResource("StyleBoxFlat_boju7")
 text = "Buy"
-align = 1
-valign = 1
 
 [node name="soldLayer" type="Panel" parent="."]
 visible = false
+clip_contents = true
+layout_mode = 0
 anchor_right = 1.0
 anchor_bottom = 1.0
-clip_contents = true
-custom_styles/panel = SubResource( 8 )
 
 [node name="Panel" type="Panel" parent="soldLayer"]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-offset_left = -31.0
-offset_top = 189.0
-offset_right = 24.0
-offset_bottom = 229.0
-rotation = -20.1
-custom_styles/panel = SubResource( 9 )
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = 45.0
+offset_right = 25.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = -0.338594
+theme_override_styles/panel = SubResource("StyleBoxFlat_7a1j1")
 
 [node name="Label" type="Label" parent="soldLayer/Panel"]
-anchor_right = 1.0
-offset_left = 85.4134
-offset_top = 11.0246
-offset_right = -64.5866
-offset_bottom = 31.0246
-custom_colors/font_color = Color( 1, 0, 0, 1 )
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -21.0
+offset_top = -13.0
+offset_right = 21.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "SOLD"
-align = 1
-valign = 1
 
-[connection signal="pressed" from="main/bar/buyButton" to="." method="_on_buyButton_pressed"]
+[connection signal="pressed" from="main/bar/MarginContainer/buyButton" to="." method="_on_buyButton_pressed"]
