@@ -16,6 +16,6 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [node name="Card" type="Panel"]
-rect_min_size = Vector2( 160, 240 )
+custom_minimum_size = Vector2( 160, 240 )
 custom_styles/panel = SubResource( 1 )
 script = ExtResource( 1 )

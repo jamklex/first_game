@@ -1,0 +1,7 @@
+res://default_env.tres
+res://scenes/Menu.tscn
+res://scenes/packages.tscn
+res://prefabs/package.tscn
+res://scripts/package.gd
+res://scripts/packages.gd
+res://prefabs/card.tscn

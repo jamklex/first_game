@@ -77,7 +77,7 @@ func _on_AttackOpponent_gui_input(event):
 func random_cards(amount, visible):
 	var array = []
 	for i in range(amount):
-		var card = visibleCard.instance() if visible else notVisibleCard.instance()
+		var card = visibleCard.instantiate() if visible else notVisibleCard.instantiate()
 		card.initialize(rng.randi_range(1,7), "test")
 		array.append(card)
 	return array
@@ -182,7 +182,7 @@ func place_cards_in_hand(path, amount, visible):
 		if card == null:
 			return
 		add_card_to(path, card)
-		yield(get_tree().create_timer(.25), "timeout")
+		await get_tree().create_timer(.25).timeout
 		update_cards_left()
 
 func get_card_from_deck(player):
@@ -205,29 +205,29 @@ func add_card_to(path, card):
 func adjust_separation(hand):
 	var card_amount = hand.get_child_count()
 	var separation = 5 if card_amount <= 3 else card_amount * -10
-	hand.add_constant_override("separation", separation)
+	hand.add_theme_constant_override("separation", separation)
 
 func set_hp(path, amount, max_amount):
 	var indicator = get_node(path + "/Indicator") as Panel
 	var label = get_node(path + "/Label") as Label
 	label.set_text(str(amount, " / ", max_amount))
-	var max_size = (get_node(path) as Panel).rect_size[0]
-	var new_size = Vector2(max_size / max_amount * amount, indicator.rect_size[1])
+	var max_size = (get_node(path) as Panel).size[0]
+	var new_size = Vector2(max_size / max_amount * amount, indicator.size[1])
 	indicator.set_size(new_size)
 
 func bump_child_y(node, increase):
 	if node != null:
-		node.set_position(Vector2(node.rect_position[0], node.rect_position[1] + increase))
+		node.set_position(Vector2(node.position[0], node.position[1] + increase))
 
 func get_child_index(node, mousePosition, reversed, default_value):
 	var children = node.get_children()
 	if reversed:
 		children.invert()
 	for child in children:
-		var rect_size = child.rect_size
-		var rect_pos = child.rect_global_position
-		var fromPos = rect_pos[0] - rect_size[0] if reversed else rect_pos[0]
-		var toPos = rect_pos[0] if reversed else rect_pos[0] + rect_size[0]
+		var size = child.size
+		var rect_pos = child.global_position
+		var fromPos = rect_pos[0] - size[0] if reversed else rect_pos[0]
+		var toPos = rect_pos[0] if reversed else rect_pos[0] + size[0]
 		if is_in_range(mousePosition[0], fromPos, toPos):
 			return child.get_index()
 	return default_value
@@ -263,6 +263,6 @@ func remove_card(node, id):
 func create_mini_card(card):
 	if card == null:
 		return
-	var mini_card = miniCard.instance()
+	var mini_card = miniCard.instantiate()
 	mini_card.initialize(card.get_base_hp(), card.get_description())
 	return mini_card
