@@ -54,4 +54,4 @@ func update_label(path, value):
 		color = boosted_color
 	if is_damaged():
 		color = damaged_color
-	label.set("custom_colors/font_color", color)
+	label.add_theme_color_override("font_color", color)

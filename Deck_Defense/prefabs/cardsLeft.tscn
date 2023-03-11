@@ -1,14 +1,15 @@
-[gd_scene format=2]
+[gd_scene format=3 uid="uid://dhl21c73fohma"]
 
 [node name="CardsLeft" type="Panel"]
-margin_right = 40.0
-margin_bottom = 40.0
-rect_min_size = Vector2( 100, 150 )
+custom_minimum_size = Vector2(100, 150)
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="Amount" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-rect_min_size = Vector2( 100, 150 )
+custom_minimum_size = Vector2(100, 150)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 14.0
 text = "10 / 55"
-align = 1
-valign = 1
+horizontal_alignment = 1
+vertical_alignment = 1

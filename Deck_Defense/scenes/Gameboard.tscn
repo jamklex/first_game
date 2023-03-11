@@ -1,139 +1,191 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=14 format=3 uid="uid://cy1g05xwfqc3k"]
 
-[ext_resource path="res://scripts/gameboard.gd" type="Script" id=1]
-[ext_resource path="res://prefabs/card-space.tscn" type="PackedScene" id=2]
-[ext_resource path="res://prefabs/healthbar.tscn" type="PackedScene" id=6]
-[ext_resource path="res://prefabs/cardsLeft.tscn" type="PackedScene" id=7]
-[ext_resource path="res://prefabs/returnToOpponent.tscn" type="PackedScene" id=8]
-[ext_resource path="res://prefabs/attackOpponent.tscn" type="PackedScene" id=9]
+[ext_resource type="Script" path="res://scripts/gameboard.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cpamhaingobwl" path="res://prefabs/card-space.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://de38q4xua11xu" path="res://prefabs/healthbar.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://prefabs/cardsLeft.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://prefabs/blockOpponent.tscn" id="7_luclj"]
+[ext_resource type="PackedScene" uid="uid://bvcn0w7wgi4kl" path="res://prefabs/waitWhileFight.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://prefabs/attackOpponent.tscn" id="9"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.188235, 0.34902, 0.470588, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8sp8"]
+bg_color = Color(0.576471, 0, 0.117647, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=2]
-bg_color = Color( 0.129412, 0.0156863, 0.0156863, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu1b1"]
+bg_color = Color(0.576471, 0, 0.117647, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
-[sub_resource type="StyleBoxFlat" id=4]
-bg_color = Color( 0.129412, 0.0156863, 0.0156863, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa5pe"]
+bg_color = Color(0.576471, 0, 0.117647, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=7]
-bg_color = Color( 0.733333, 0.0470588, 0.054902, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c82is"]
+bg_color = Color(0.0862745, 0.27451, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.117647, 0.603922, 0.0705882, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fojdk"]
+bg_color = Color(0.0862745, 0.27451, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.027451, 0.14902, 0.0156863, 1 )
-
-[sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.027451, 0.14902, 0.0156863, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhtdn"]
+bg_color = Color(0.0862745, 0.27451, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="Gameboard" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
 
 [node name="Panel" type="Panel" parent="."]
-margin_left = -1034.0
-margin_top = -1004.0
-margin_right = 966.0
-margin_bottom = 996.0
-custom_styles/panel = SubResource( 1 )
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1000.0
+offset_top = -1000.0
+offset_right = 1000.0
+offset_bottom = 1000.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2( 1, 2 )
-current = true
+position = Vector2(1, 2)
 
 [node name="Enemy" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="Hand" type="HBoxContainer" parent="Enemy"]
-margin_left = -351.0
-margin_top = -419.0
-margin_right = 349.0
-margin_bottom = -179.0
-custom_constants/separation = -100
+layout_mode = 0
+offset_left = -351.0
+offset_top = -419.0
+offset_right = 349.0
+offset_bottom = -179.0
 alignment = 1
 
-[node name="Health" parent="Enemy" instance=ExtResource( 6 )]
-margin_left = -500.0
-margin_top = -176.0
-margin_right = -300.0
-margin_bottom = -146.0
-custom_styles/panel = SubResource( 2 )
+[node name="Health" parent="Enemy" instance=ExtResource("6")]
+layout_mode = 0
+offset_left = -500.0
+offset_top = -176.0
+offset_right = -300.0
+offset_bottom = -146.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e8sp8")
 
-[node name="CardsLeft" parent="Enemy" instance=ExtResource( 7 )]
-margin_left = 384.0
-margin_top = -269.0
-margin_right = 484.0
-margin_bottom = -119.0
-custom_styles/panel = SubResource( 4 )
+[node name="CardsLeft" parent="Enemy" instance=ExtResource("7")]
+layout_mode = 0
+offset_left = 384.0
+offset_top = -269.0
+offset_right = 484.0
+offset_bottom = -119.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fu1b1")
 
 [node name="CardSpace" type="Panel" parent="Enemy"]
-margin_left = -500.0
-margin_top = -143.0
-margin_right = 346.0
-margin_bottom = -3.0
-rect_min_size = Vector2( 846, 140 )
-custom_styles/panel = SubResource( 7 )
+custom_minimum_size = Vector2(846, 140)
+layout_mode = 0
+offset_left = -500.0
+offset_top = -143.0
+offset_right = 346.0
+offset_bottom = -3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aa5pe")
 
-[node name="Spots" parent="Enemy/CardSpace" instance=ExtResource( 2 )]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 841.0
-margin_bottom = 135.0
+[node name="Spots" parent="Enemy/CardSpace" instance=ExtResource("2")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 841.0
+offset_bottom = 135.0
 
 [node name="TurnOptions" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 
-[node name="ReturnToOpponent" parent="TurnOptions" instance=ExtResource( 8 )]
-margin_left = 379.0
-margin_top = -49.0
-margin_right = 479.0
-margin_bottom = 51.0
+[node name="WaitWhileFight" parent="TurnOptions" instance=ExtResource("8")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 379.0
+offset_top = -49.0
+offset_right = 479.0
+offset_bottom = 51.0
 
-[node name="AttackOpponent" parent="TurnOptions" instance=ExtResource( 9 )]
+[node name="AttackOpponent" parent="TurnOptions" instance=ExtResource("9")]
 light_mask = 141
-margin_left = 379.0
-margin_top = -49.0
-margin_right = 479.0
-margin_bottom = 51.0
+anchors_preset = 0
+offset_left = 379.0
+offset_top = -49.0
+offset_right = 479.0
+offset_bottom = 51.0
+
+[node name="BlockOpponent" parent="TurnOptions" instance=ExtResource("7_luclj")]
+offset_left = 379.0
+offset_top = -49.0
+offset_right = 479.0
+offset_bottom = 51.0
 
 [node name="Player" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="CardSpace" type="Panel" parent="Player"]
-margin_left = -500.0
-margin_top = 3.0
-margin_right = 346.0
-margin_bottom = 143.0
-rect_min_size = Vector2( 846, 140 )
-custom_styles/panel = SubResource( 6 )
+custom_minimum_size = Vector2(846, 140)
+layout_mode = 0
+offset_left = -500.0
+offset_top = 3.0
+offset_right = 346.0
+offset_bottom = 143.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_c82is")
 
-[node name="Spots" parent="Player/CardSpace" instance=ExtResource( 2 )]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 841.0
-margin_bottom = 135.0
+[node name="Spots" parent="Player/CardSpace" instance=ExtResource("2")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 841.0
+offset_bottom = 135.0
 
-[node name="Health" parent="Player" instance=ExtResource( 6 )]
-margin_left = -500.0
-margin_top = 147.0
-margin_right = -300.0
-margin_bottom = 177.0
-custom_styles/panel = SubResource( 3 )
+[node name="Health" parent="Player" instance=ExtResource("6")]
+layout_mode = 0
+offset_left = -500.0
+offset_top = 147.0
+offset_right = -300.0
+offset_bottom = 177.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fojdk")
 
 [node name="Hand" type="HBoxContainer" parent="Player"]
-margin_left = -351.0
-margin_top = 181.0
-margin_right = 349.0
-margin_bottom = 421.0
-custom_constants/separation = -100
+layout_mode = 0
+offset_left = -351.0
+offset_top = 181.0
+offset_right = 349.0
+offset_bottom = 421.0
 alignment = 1
 
-[node name="CardsLeft" parent="Player" instance=ExtResource( 7 )]
-margin_left = 384.0
-margin_top = 124.0
-margin_right = 484.0
-margin_bottom = 274.0
-custom_styles/panel = SubResource( 5 )
+[node name="CardsLeft" parent="Player" instance=ExtResource("7")]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 124.0
+offset_right = 484.0
+offset_bottom = 274.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fhtdn")
 
-[connection signal="gui_input" from="TurnOptions/ReturnToOpponent" to="." method="_on_ReturnToOpponent_gui_input"]
 [connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
+[connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
 [connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
 [connection signal="gui_input" from="Player/Hand" to="." method="_on_Hand_gui_input"]

@@ -1,21 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://bgv6bpe1irc6a"]
 
-[ext_resource path="res://scripts/card.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://scripts/card.gd" id="1"]
 
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0.306152, 0.289642, 0.221243, 1 )
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5hu"]
+bg_color = Color(0.278431, 0.156863, 0, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color( 0, 0, 0, 1 )
-border_blend = true
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="Card" type="Panel"]
-rect_min_size = Vector2( 160, 240 )
-custom_styles/panel = SubResource( 1 )
-script = ExtResource( 1 )
+custom_minimum_size = Vector2(160, 240)
+theme_override_styles/panel = SubResource("StyleBoxFlat_th5hu")
+script = ExtResource("1")

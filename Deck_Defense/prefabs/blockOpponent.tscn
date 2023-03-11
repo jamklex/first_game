@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dys067fcb2jup"]
+
+[ext_resource type="Texture2D" uid="uid://c3quukkn21gxo" path="res://images/shield.png" id="1_8fpqc"]
+
+[node name="BlockOpponent" type="Control"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 100.0
+tooltip_text = "Block Opponent"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(52, 52)
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("1_8fpqc")

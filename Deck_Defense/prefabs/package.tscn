@@ -41,9 +41,9 @@ border_width_bottom = 2
 border_color = Color( 0, 0, 0, 1 )
 
 [node name="package" type="Panel"]
-margin_right = 200.0
-margin_bottom = 400.0
-rect_min_size = Vector2( 145, 330 )
+offset_right = 200.0
+offset_bottom = 400.0
+custom_minimum_size = Vector2( 145, 330 )
 custom_styles/panel = SubResource( 10 )
 script = ExtResource( 2 )
 
@@ -53,25 +53,25 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 
 [node name="name" type="Label" parent="main"]
-margin_right = 200.0
-margin_bottom = 14.0
+offset_right = 200.0
+offset_bottom = 14.0
 text = "Pack name"
 align = 1
 valign = 1
 
 [node name="packs" type="Control" parent="main"]
-margin_top = 18.0
-margin_right = 200.0
-margin_bottom = 361.0
-rect_min_size = Vector2( 0, 270 )
+offset_top = 18.0
+offset_right = 200.0
+offset_bottom = 361.0
+custom_minimum_size = Vector2( 0, 270 )
 size_flags_vertical = 3
 
 [node name="cover1" type="Panel" parent="main/packs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 5.0
-margin_right = -15.0
-margin_bottom = -23.0
+offset_left = 5.0
+offset_right = -15.0
+offset_bottom = -23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_styles/panel = SubResource( 11 )
@@ -85,10 +85,10 @@ stretch_mode = 7
 [node name="cover2" type="Panel" parent="main/packs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 10.0
-margin_top = 10.0
-margin_right = -10.0
-margin_bottom = -13.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -13.0
 custom_styles/panel = SubResource( 1 )
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover2"]
@@ -100,10 +100,10 @@ stretch_mode = 7
 [node name="cover3" type="Panel" parent="main/packs"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 15.0
-margin_top = 20.0
-margin_right = -5.0
-margin_bottom = -3.0
+offset_left = 15.0
+offset_top = 20.0
+offset_right = -5.0
+offset_bottom = -3.0
 custom_styles/panel = SubResource( 1 )
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover3"]
@@ -113,25 +113,25 @@ expand = true
 stretch_mode = 7
 
 [node name="bar" type="HBoxContainer" parent="main"]
-margin_top = 365.0
-margin_right = 200.0
-margin_bottom = 400.0
-rect_min_size = Vector2( 0, 35 )
+offset_top = 365.0
+offset_right = 200.0
+offset_bottom = 400.0
+custom_minimum_size = Vector2( 0, 35 )
 
 [node name="price" type="Label" parent="main/bar"]
-margin_right = 98.0
-margin_bottom = 35.0
-rect_min_size = Vector2( 73, 35 )
+offset_right = 98.0
+offset_bottom = 35.0
+custom_minimum_size = Vector2( 73, 35 )
 size_flags_horizontal = 3
 text = "00 Pt"
 align = 1
 valign = 1
 
 [node name="buyButton" type="Button" parent="main/bar"]
-margin_left = 102.0
-margin_right = 200.0
-margin_bottom = 35.0
-rect_min_size = Vector2( 60, 25 )
+offset_left = 102.0
+offset_right = 200.0
+offset_bottom = 35.0
+custom_minimum_size = Vector2( 60, 25 )
 size_flags_horizontal = 3
 custom_styles/hover = SubResource( 2 )
 custom_styles/pressed = SubResource( 6 )
@@ -150,24 +150,24 @@ valign = 1
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-rect_clip_content = true
+clip_contents = true
 custom_styles/panel = SubResource( 8 )
 
 [node name="Panel" type="Panel" parent="soldLayer"]
 anchor_right = 1.0
-margin_left = -31.0
-margin_top = 189.0
-margin_right = 24.0
-margin_bottom = 229.0
-rect_rotation = -20.1
+offset_left = -31.0
+offset_top = 189.0
+offset_right = 24.0
+offset_bottom = 229.0
+rotation = -20.1
 custom_styles/panel = SubResource( 9 )
 
 [node name="Label" type="Label" parent="soldLayer/Panel"]
 anchor_right = 1.0
-margin_left = 85.4134
-margin_top = 11.0246
-margin_right = -64.5866
-margin_bottom = 31.0246
+offset_left = 85.4134
+offset_top = 11.0246
+offset_right = -64.5866
+offset_bottom = 31.0246
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "SOLD"
 align = 1

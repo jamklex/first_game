@@ -47,7 +47,7 @@ func _refreshPackages():
 
 func _loadPackages():
 	for i in 10:
-		var newPackage = packageScene.instance() as Package
+		var newPackage = packageScene.instantiate() as Package
 		var name = "Moin" + String(i)
 		var price = rng.randi_range(1,10)
 		var coverIndex = String(rng.randi_range(1,4))
@@ -59,7 +59,7 @@ func _loadPackages():
 		packageHolder.add_child(newPackage)
 		packages.append(newPackage)
 		if minPackageHeight == -1:
-			var rect = newPackage.rect_min_size
+			var rect = newPackage.custom_minimum_size
 			minPackageWidth = rect[0]
 			minPackageHeight = rect[1]
 			
@@ -73,13 +73,13 @@ func onBuyButton(packageIndex):
 	for child in resultWindowCards.get_children():
 		resultWindowCards.remove_child(child)
 	for i in rng.randi_range(1,10):
-		var newCard = cardScene.instance()
+		var newCard = cardScene.instantiate()
 		resultWindowCards.add_child(newCard)
 	resultWindow.visible = true
 	
 
 func _on_back_pressed():
-	get_tree().change_scene("res://scenes/Menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/Menu.tscn")
 
 
 func _on_close_pressed():
@@ -98,9 +98,9 @@ func _afterResize():
 func setPackageSize():
 	if minPackageHeight == -1:
 		return
-	var width = packageHolder.get_parent().rect_size[0] - 12
+	var width = packageHolder.get_parent().size[0] - 12
 	var columns = packageHolder.columns
-	var separation = packageHolder.get_constant("hseparation")
+	var separation = packageHolder.get_constant("h_separation")
 	var usedWidth = (columns-1) * separation
 	var freeWidth = width - usedWidth
 	var newPackageWidth = freeWidth / columns
@@ -110,20 +110,20 @@ func setPackageSize():
 	var newPackageHeight = minPackageHeight * widthSizeVal
 	for package in packages:
 		package = package as Package
-		package.rect_min_size[0] = newPackageWidth
-		package.rect_min_size[1] = newPackageHeight
+		package.custom_minimum_size[0] = newPackageWidth
+		package.custom_minimum_size[1] = newPackageHeight
 	
 
 func setPackageHolderSeparation():
 	if minPackageHeight == -1:
 		return
-	var width = packageHolder.get_parent().rect_size[0] - 12
+	var width = packageHolder.get_parent().size[0] - 12
 	var columns = packageHolder.columns
 	var usedWidth = columns * minPackageWidth
 	var freeWidth = width - usedWidth
 	var neededSeparation = freeWidth / (columns-1)
 #	print(columns)	
-#	var separation = packageHolder.get_constant("hseparation")
+#	var separation = packageHolder.get_constant("h_separation")
 #	separation += 1
-	packageHolder.add_constant_override("hseparation", neededSeparation)
+	packageHolder.add_theme_constant_override("h_separation", neededSeparation)
 #	print(separation)

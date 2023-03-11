@@ -18,8 +18,8 @@ var functionArg
 var buyBtnLabel:Label
 var buyBtn:Button
 #var buyBtnStyle = StyleBoxFlat.new()
-var availableColor = Color.white
-var notAvailableColor = Color.black
+var availableColor = Color.WHITE
+var notAvailableColor = Color.BLACK
 var soldLayer:Panel
 
 
@@ -29,7 +29,7 @@ func _ready():
 	buyBtn = get_node("main/bar/buyButton")
 	soldLayer = get_node("soldLayer")
 #	buyBtnStyle.bg_color = availableColor
-#	buyBtn.add_stylebox_override("normal", buyBtnStyle)
+#	buyBtn.add_theme_stylebox_override("normal", buyBtnStyle)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -46,7 +46,7 @@ func setPrice(newPrice):
 	
 	
 func setCover(imagePath):
-	var texture = load(imagePath) as Texture
+	var texture = load(imagePath) as Texture2D
 	var packHolder = get_node("main/packs") as Control
 	for children in packHolder.get_children():		
 		var coverHolder = children as Panel
@@ -64,7 +64,7 @@ func setStyle(newStyle):
 	if style == Style.Available:
 		buyBtnLabel.text = "Buy"
 		buyBtn.disabled = false
-		buyBtnLabel.add_color_override("font_color", availableColor)
+		buyBtnLabel.add_theme_color_override("font_color", availableColor)
 		soldLayer.visible = false
 #		buyBtnStyle.bg_color = availableColor
 	else:
@@ -74,7 +74,7 @@ func setStyle(newStyle):
 		else:
 			buyBtnLabel.text = "Sold"
 			soldLayer.visible = true
-		buyBtnLabel.add_color_override("font_color", notAvailableColor)
+		buyBtnLabel.add_theme_color_override("font_color", notAvailableColor)
 		buyBtn.disabled = true
 #		buyBtnStyle.bg_color = notAvailableColor
 #	buyBtn.update()

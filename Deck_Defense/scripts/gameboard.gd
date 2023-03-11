@@ -1,7 +1,8 @@
 extends Node2D
 
-const NEXT_PLAYER = "TurnOptions/ReturnToOpponent"
+const WAIT_WHILE_FIGHT = "TurnOptions/WaitWhileFight"
 const ATTACK_PLAYER = "TurnOptions/AttackOpponent"
+const BLOCK_PLAYER = "TurnOptions/BlockOpponent"
 enum TURN_CYCLE {
 	MY_TURN,
 	OPPONENT_TURN,
@@ -15,6 +16,10 @@ const enemy_card_space = "Enemy/CardSpace/Spots"
 const enemy_hand = "Enemy/Hand"
 const enemy_healt = "Enemy/Health"
 const enemy_cards_left = "Enemy/CardsLeft"
+
+const ENEMY_THINKING_TIME = 1.5
+const CARD_DRAW_TIME = 0.2
+const ATTACK_ANIMATION_TIME = 0.1
 
 var rng = RandomNumberGenerator.new()
 var visibleCard = preload("res://prefabs/card.tscn")
@@ -54,30 +59,39 @@ func initialize_game():
 func _on_Hand_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_hand) as HBoxContainer
-		bump_child_y(node.get_child(selected_action_card), bump_factor)
+		if(selected_action_card >= 0):
+			bump_child_y(node.get_child(selected_action_card), bump_factor)
 		selected_action_card = get_child_index(node, make_input_local(event).position, true, -1)
-		bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
+		if(selected_action_card >= 0):
+			bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
 
 func _on_CardSpace_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_card_space) as HBoxContainer
 		var card_space_spot_selected = get_child_index(node, make_input_local(event).position, false, -1)
 		if card_space_spot_selected >= 0 and selected_action_card >= 0:
-			lay_card_on_space(player_card_space, selected_action_card, card_space_spot_selected, player_hand)
+			if lay_card_on_space(player_card_space, selected_action_card, card_space_spot_selected, player_hand):
+				set_visibility(WAIT_WHILE_FIGHT, false)
+				set_visibility(ATTACK_PLAYER, false)
+				set_visibility(BLOCK_PLAYER, true)
 
-func _on_ReturnToOpponent_gui_input(event):
-	if is_mouse_click(event) and can_place_cards():
+func _on_BlockOpponent_gui_input(event):
+	if is_mouse_click(event):
 		switch_to_enemy()
 
 func _on_AttackOpponent_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
+		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
+		set_visibility(WAIT_WHILE_FIGHT, true)
+		set_visibility(ATTACK_PLAYER, false)
+		set_visibility(BLOCK_PLAYER, false)
 		player_attacks_enemy()
 		switch_to_enemy()
 
 func random_cards(amount, visible):
 	var array = []
 	for i in range(amount):
-		var card = visibleCard.instance() if visible else notVisibleCard.instance()
+		var card = visibleCard.instantiate() if visible else notVisibleCard.instantiate()
 		card.initialize(rng.randi_range(1,7), "test")
 		array.append(card)
 	return array
@@ -87,25 +101,30 @@ func enemy_move():
 	var free_spots = get_free_spots(enemy_card_space)
 	var will_attack = rng.randi_range(1,max_card_space_spots) > free_spots.size()
 	if will_attack or (enemyHandCards == 0 and free_spots.size() < max_card_space_spots):
-		enemy_attacks_player()
+		await enemy_attacks_player()
 	else:
 		var cardsToPlay = 0 if enemyHandCards <= 0 else rng.randi_range(1, min(free_spots.size(), enemyHandCards))
 		if(cardsToPlay > 0):
 			for i in range(cardsToPlay):
 				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
 				lay_card_on_space(enemy_card_space, i, free_spots[spot_to_place], enemy_hand)
+				await get_tree().create_timer(CARD_DRAW_TIME).timeout
 		else:
 			print("enemy can't do anything...")
 	switch_to_player()
 
 func enemy_attacks_player():
-	var damage_dealt = ltr_attack(enemy_card_space, player_card_space)
+	var damage_dealt = await ltr_attack(enemy_card_space, player_card_space)
 	var new_hp = max(0, playerCurrentHp - damage_dealt)
 	set_hp(player_healt, new_hp, playerMaxHp)
 	playerCurrentHp = new_hp
+	current_cycle = TURN_CYCLE.FIGHT_ANIMATION
+	set_visibility(WAIT_WHILE_FIGHT, true)
+	set_visibility(ATTACK_PLAYER, false)
+	set_visibility(BLOCK_PLAYER, false)
 
 func player_attacks_enemy():
-	var damage_dealt = ltr_attack(player_card_space, enemy_card_space)
+	var damage_dealt = await ltr_attack(player_card_space, enemy_card_space)
 	var new_hp = max(0, enemyCurrentHp - damage_dealt)
 	set_hp(enemy_healt, new_hp, enemyMaxHp)
 	enemyCurrentHp = new_hp
@@ -113,6 +132,7 @@ func player_attacks_enemy():
 func ltr_attack(attacker, target):
 	var cards_to_kill = []
 	for myCard in cards_ltr_in(attacker):
+		await get_tree().create_timer(ATTACK_ANIMATION_TIME).timeout
 		if myCard in cards_to_kill:
 			continue
 		for enemyCard in cards_ltr_in(target):
@@ -159,17 +179,18 @@ func can_place_cards():
 
 func switch_to_player():
 	current_cycle = TURN_CYCLE.MY_TURN
-	set_visibility(NEXT_PLAYER, false)
+	set_visibility(WAIT_WHILE_FIGHT, false)
 	set_visibility(ATTACK_PLAYER, true)
-	var cards_to_max = max_hand_cards - get_node(player_hand).get_child_count()
-	place_cards_in_hand(player_hand, min(cards_to_max, cards_per_turn), true)
+	set_visibility(BLOCK_PLAYER, false)
+	place_cards_in_hand(player_hand, cards_per_turn, true)
 	
 func switch_to_enemy():
 	current_cycle = TURN_CYCLE.OPPONENT_TURN
-	set_visibility(NEXT_PLAYER, true)
+	set_visibility(WAIT_WHILE_FIGHT, true)
 	set_visibility(ATTACK_PLAYER, false)
-	var cards_to_max = max_hand_cards - get_node(enemy_hand).get_child_count()
-	place_cards_in_hand(enemy_hand, min(cards_to_max, cards_per_turn), false)
+	set_visibility(BLOCK_PLAYER, false)
+	place_cards_in_hand(enemy_hand, cards_per_turn, false)
+	await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
 	enemy_move()
 
 func set_visibility(path, status):
@@ -178,12 +199,14 @@ func set_visibility(path, status):
 
 func place_cards_in_hand(path, amount, visible):
 	for n in amount:
+		if get_node(path).get_child_count() == max_hand_cards:
+			break
 		var card = get_card_from_deck(visible)
 		if card == null:
 			return
 		add_card_to(path, card)
-		yield(get_tree().create_timer(.25), "timeout")
 		update_cards_left()
+		await get_tree().create_timer(CARD_DRAW_TIME).timeout
 
 func get_card_from_deck(player):
 	var deck_used = (player_deck if player else enemy_deck) as Array
@@ -205,30 +228,30 @@ func add_card_to(path, card):
 func adjust_separation(hand):
 	var card_amount = hand.get_child_count()
 	var separation = 5 if card_amount <= 3 else card_amount * -10
-	hand.add_constant_override("separation", separation)
+	hand.add_theme_constant_override("separation", separation)
 
 func set_hp(path, amount, max_amount):
 	var indicator = get_node(path + "/Indicator") as Panel
 	var label = get_node(path + "/Label") as Label
 	label.set_text(str(amount, " / ", max_amount))
-	var max_size = (get_node(path) as Panel).rect_size[0]
-	var new_size = Vector2(max_size / max_amount * amount, indicator.rect_size[1])
+	var max_size = (get_node(path) as Panel).size[0]
+	var new_size = Vector2(max_size / max_amount * amount, indicator.size[1])
 	indicator.set_size(new_size)
 
 func bump_child_y(node, increase):
 	if node != null:
-		node.set_position(Vector2(node.rect_position[0], node.rect_position[1] + increase))
+		node.set_position(Vector2(node.position[0], node.position[1] + increase))
 
 func get_child_index(node, mousePosition, reversed, default_value):
 	var children = node.get_children()
 	if reversed:
-		children.invert()
+		children.reverse()
 	for child in children:
-		var rect_size = child.rect_size
-		var rect_pos = child.rect_global_position
-		var fromPos = rect_pos[0] - rect_size[0] if reversed else rect_pos[0]
-		var toPos = rect_pos[0] if reversed else rect_pos[0] + rect_size[0]
-		if is_in_range(mousePosition[0], fromPos, toPos):
+		var size = child.size
+		var rect_pos = child.global_position
+		var fromPos = rect_pos[0] - size[0] if reversed else rect_pos[0]
+		var toPos = rect_pos[0] if reversed else rect_pos[0] + size[0]
+		if is_in_range(mousePosition[0] + (size[0]*0.4 if reversed else size[0]), fromPos, toPos):
 			return child.get_index()
 	return default_value
 
@@ -246,8 +269,7 @@ func lay_card_on_space(space, from, to, hand):
 	if successful:
 		remove_card(hand_node, from)
 		selected_action_card = -1
-		set_visibility(NEXT_PLAYER, true)
-		set_visibility(ATTACK_PLAYER, false)
+	return successful
 
 func add_card_to_spot(spots, card, id):
 	var contender = spots.get_child(id)
@@ -263,6 +285,6 @@ func remove_card(node, id):
 func create_mini_card(card):
 	if card == null:
 		return
-	var mini_card = miniCard.instance()
+	var mini_card = miniCard.instantiate()
 	mini_card.initialize(card.get_base_hp(), card.get_description())
 	return mini_card

@@ -12,11 +12,11 @@ func _ready():
 
 
 func _on_StartButton_pressed():
-	get_tree().change_scene("res://scenes/Gameboard.tscn")
+	get_tree().change_scene_to_file("res://scenes/Gameboard.tscn")
 	
 	
 func _on_PackagesButton_pressed():
-	get_tree().change_scene("res://scenes/packages.tscn")
+	get_tree().change_scene_to_file("res://scenes/packages.tscn")
 	
 
 func _on_QuitButton_pressed():
