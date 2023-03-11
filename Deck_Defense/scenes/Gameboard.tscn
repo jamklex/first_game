@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://prefabs/cardsLeft.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://prefabs/blockOpponent.tscn" id="7_luclj"]
 [ext_resource type="PackedScene" uid="uid://bvcn0w7wgi4kl" path="res://prefabs/waitWhileFight.tscn" id="8"]
-[ext_resource type="PackedScene" path="res://prefabs/attackOpponent.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://c3s7600f7wysf" path="res://prefabs/attackOpponent.tscn" id="9"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8sp8"]
 bg_color = Color(0.576471, 0, 0.117647, 1)
@@ -128,7 +128,6 @@ offset_bottom = 51.0
 
 [node name="AttackOpponent" parent="TurnOptions" instance=ExtResource("9")]
 light_mask = 141
-anchors_preset = 0
 offset_left = 379.0
 offset_top = -49.0
 offset_right = 479.0
