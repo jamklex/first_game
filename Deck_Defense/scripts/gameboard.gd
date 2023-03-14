@@ -6,7 +6,8 @@ const BLOCK_PLAYER = "TurnOptions/BlockOpponent"
 enum TURN_CYCLE {
 	MY_TURN,
 	OPPONENT_TURN,
-	FIGHT_ANIMATION
+	FIGHT_ANIMATION,
+	GAME_END
 }
 const player_card_space = "Player/CardSpace/Spots"
 const player_hand = "Player/Hand"
@@ -19,7 +20,9 @@ const enemy_cards_left = "Enemy/CardsLeft"
 
 const ENEMY_THINKING_TIME = 1.5
 const CARD_DRAW_TIME = 0.2
-const ATTACK_ANIMATION_TIME = 0.1
+const ATTACK_ANIMATION_TIME = 0.25
+
+var GameboardUtil = preload("res://scripts/util/gameboard-util.gd").new()
 
 var rng = RandomNumberGenerator.new()
 var visibleCard = preload("res://prefabs/card.tscn")
@@ -44,23 +47,39 @@ func _ready():
 
 func initialize_game():
 	rng.randomize()
-	playerMaxHp = 250
+	playerMaxHp = 50
 	playerCurrentHp = playerMaxHp
-	enemyMaxHp = 250
+	enemyMaxHp = 50
 	enemyCurrentHp = enemyMaxHp
-	player_deck = random_cards(50, true)
-	enemy_deck = random_cards(50, false)
+	player_deck = GameboardUtil.random_cards(50, true)
+	enemy_deck = GameboardUtil.random_cards(50, false)
 	place_cards_in_hand(enemy_hand, initial_hand_cards, false)
 	place_cards_in_hand(player_hand, initial_hand_cards, true)
 	set_hp(enemy_healt, enemyCurrentHp, enemyMaxHp)
 	set_hp(player_healt, playerCurrentHp, playerMaxHp)
 	switch_to_player()
 
+func check_winning_state():
+	if enemyCurrentHp == 0 or enemy_total_card_size() == 0:
+		player_wins()
+		return true
+	if playerCurrentHp == 0 or player_total_card_size() == 0:
+		player_looses()
+		return true
+	return false
+
+func player_wins():
+	set_visibility("PlayerWins", true)
+	current_cycle = TURN_CYCLE.GAME_END
+
+func player_looses():
+	set_visibility("PlayerLooses", true)
+	current_cycle = TURN_CYCLE.GAME_END
+
 func _on_Hand_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_hand) as HBoxContainer
-		if(selected_action_card >= 0):
-			bump_child_y(node.get_child(selected_action_card), bump_factor)
+		reset_hand_card_focus()
 		selected_action_card = get_child_index(node, make_input_local(event).position, true, -1)
 		if(selected_action_card >= 0):
 			bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
@@ -77,31 +96,40 @@ func _on_CardSpace_gui_input(event):
 
 func _on_BlockOpponent_gui_input(event):
 	if is_mouse_click(event):
+		reset_hand_card_focus()
 		switch_to_enemy()
+
+func reset_hand_card_focus():
+	if(selected_action_card >= 0):
+		bump_child_y(get_node(player_hand).get_child(selected_action_card), bump_factor)
+	selected_action_card = -1
 
 func _on_AttackOpponent_gui_input(event):
 	if is_mouse_click(event) and can_place_cards():
+		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
 		set_visibility(WAIT_WHILE_FIGHT, true)
 		set_visibility(ATTACK_PLAYER, false)
 		set_visibility(BLOCK_PLAYER, false)
-		player_attacks_enemy()
+		await ltr_attack(player_card_space, enemy_card_space)
+		var new_hp = max(0, enemyCurrentHp - calculate_damage(player_card_space))
+		set_hp(enemy_healt, new_hp, enemyMaxHp)
+		enemyCurrentHp = new_hp
 		switch_to_enemy()
-
-func random_cards(amount, visible):
-	var array = []
-	for i in range(amount):
-		var card = visibleCard.instantiate() if visible else notVisibleCard.instantiate()
-		card.initialize(rng.randi_range(1,7), "test")
-		array.append(card)
-	return array
 
 func enemy_move():
 	var enemyHandCards = get_node(enemy_hand).get_child_count()
 	var free_spots = get_free_spots(enemy_card_space)
 	var will_attack = rng.randi_range(1,max_card_space_spots) > free_spots.size()
 	if will_attack or (enemyHandCards == 0 and free_spots.size() < max_card_space_spots):
-		await enemy_attacks_player()
+		await ltr_attack(enemy_card_space, player_card_space)
+		var new_hp = max(0, playerCurrentHp - calculate_damage(enemy_card_space))
+		set_hp(player_healt, new_hp, playerMaxHp)
+		playerCurrentHp = new_hp
+		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
+		set_visibility(WAIT_WHILE_FIGHT, true)
+		set_visibility(ATTACK_PLAYER, false)
+		set_visibility(BLOCK_PLAYER, false)
 	else:
 		var cardsToPlay = 0 if enemyHandCards <= 0 else rng.randi_range(1, min(free_spots.size(), enemyHandCards))
 		if(cardsToPlay > 0):
@@ -111,48 +139,28 @@ func enemy_move():
 				await get_tree().create_timer(CARD_DRAW_TIME).timeout
 		else:
 			print("enemy can't do anything...")
+			player_wins()
 	switch_to_player()
 
-func enemy_attacks_player():
-	var damage_dealt = await ltr_attack(enemy_card_space, player_card_space)
-	var new_hp = max(0, playerCurrentHp - damage_dealt)
-	set_hp(player_healt, new_hp, playerMaxHp)
-	playerCurrentHp = new_hp
-	current_cycle = TURN_CYCLE.FIGHT_ANIMATION
-	set_visibility(WAIT_WHILE_FIGHT, true)
-	set_visibility(ATTACK_PLAYER, false)
-	set_visibility(BLOCK_PLAYER, false)
-
-func player_attacks_enemy():
-	var damage_dealt = await ltr_attack(player_card_space, enemy_card_space)
-	var new_hp = max(0, enemyCurrentHp - damage_dealt)
-	set_hp(enemy_healt, new_hp, enemyMaxHp)
-	enemyCurrentHp = new_hp
-
 func ltr_attack(attacker, target):
-	var cards_to_kill = []
 	for myCard in cards_ltr_in(attacker):
 		await get_tree().create_timer(ATTACK_ANIMATION_TIME).timeout
-		if myCard in cards_to_kill:
-			continue
 		for enemyCard in cards_ltr_in(target):
-			if enemyCard in cards_to_kill:
-				continue
+			await get_tree().create_timer(ATTACK_ANIMATION_TIME).timeout
 			var new_card_hp = abs(enemyCard.get_hp() - myCard.get_hp())
 			if new_card_hp == 0:
-				cards_to_kill.append(myCard)
-				cards_to_kill.append(enemyCard)
+				myCard.free()
+				enemyCard.free()
 				break
 			if enemyCard.get_hp() < myCard.get_hp():
-				cards_to_kill.append(enemyCard)
+				enemyCard.free()
 				myCard.set_hp(new_card_hp)
-				continue
-			if enemyCard.get_hp() > myCard.get_hp():
-				cards_to_kill.append(myCard)
+			elif enemyCard.get_hp() > myCard.get_hp():
+				myCard.free()
 				enemyCard.set_hp(new_card_hp)
 				break
-	for obj in cards_to_kill:
-		obj.queue_free()
+
+func calculate_damage(attacker):
 	var damage_dealt = 0
 	for card in cards_ltr_in(attacker):
 		damage_dealt += card.get_hp()
@@ -178,20 +186,22 @@ func can_place_cards():
 	return current_cycle == TURN_CYCLE.MY_TURN
 
 func switch_to_player():
-	current_cycle = TURN_CYCLE.MY_TURN
-	set_visibility(WAIT_WHILE_FIGHT, false)
-	set_visibility(ATTACK_PLAYER, true)
-	set_visibility(BLOCK_PLAYER, false)
-	place_cards_in_hand(player_hand, cards_per_turn, true)
-	
+	if not check_winning_state():
+		set_visibility(WAIT_WHILE_FIGHT, false)
+		set_visibility(ATTACK_PLAYER, true)
+		set_visibility(BLOCK_PLAYER, false)
+		await place_cards_in_hand(player_hand, cards_per_turn, true)
+		current_cycle = TURN_CYCLE.MY_TURN
+
 func switch_to_enemy():
-	current_cycle = TURN_CYCLE.OPPONENT_TURN
-	set_visibility(WAIT_WHILE_FIGHT, true)
-	set_visibility(ATTACK_PLAYER, false)
-	set_visibility(BLOCK_PLAYER, false)
-	place_cards_in_hand(enemy_hand, cards_per_turn, false)
-	await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
-	enemy_move()
+	if not check_winning_state():
+		current_cycle = TURN_CYCLE.OPPONENT_TURN
+		set_visibility(WAIT_WHILE_FIGHT, true)
+		set_visibility(ATTACK_PLAYER, false)
+		set_visibility(BLOCK_PLAYER, false)
+		place_cards_in_hand(enemy_hand, cards_per_turn, false)
+		await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
+		enemy_move()
 
 func set_visibility(path, status):
 	var control = get_node(path) as Control
@@ -207,6 +217,7 @@ func place_cards_in_hand(path, amount, visible):
 		add_card_to(path, card)
 		update_cards_left()
 		await get_tree().create_timer(CARD_DRAW_TIME).timeout
+	reset_hand_card_focus()
 
 func get_card_from_deck(player):
 	var deck_used = (player_deck if player else enemy_deck) as Array
@@ -288,3 +299,9 @@ func create_mini_card(card):
 	var mini_card = miniCard.instantiate()
 	mini_card.initialize(card.get_base_hp(), card.get_description())
 	return mini_card
+
+func enemy_total_card_size():
+	return enemy_deck.size() + cards_ltr_in(enemy_card_space).size() + get_node(enemy_hand).get_child_count()
+
+func player_total_card_size():
+	return player_deck.size() + cards_ltr_in(player_card_space).size() + get_node(player_hand).get_child_count()

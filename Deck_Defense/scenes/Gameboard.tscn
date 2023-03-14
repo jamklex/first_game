@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cy1g05xwfqc3k"]
+[gd_scene load_steps=16 format=3 uid="uid://cy1g05xwfqc3k"]
 
 [ext_resource type="Script" path="res://scripts/gameboard.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://cpamhaingobwl" path="res://prefabs/card-space.tscn" id="2"]
@@ -6,7 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://prefabs/cardsLeft.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://prefabs/blockOpponent.tscn" id="7_luclj"]
 [ext_resource type="PackedScene" uid="uid://bvcn0w7wgi4kl" path="res://prefabs/waitWhileFight.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://ccc2tywi8eumf" path="res://prefabs/player-looses.tscn" id="8_vb3l3"]
 [ext_resource type="PackedScene" uid="uid://c3s7600f7wysf" path="res://prefabs/attackOpponent.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://vjthyer42ikq" path="res://prefabs/player-wins.tscn" id="9_aphqi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8sp8"]
 bg_color = Color(0.576471, 0, 0.117647, 1)
@@ -59,19 +61,23 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -1000.0
-offset_top = -1000.0
-offset_right = 1000.0
-offset_bottom = 1000.0
+offset_left = -425.0
+offset_top = -678.0
+offset_right = 1575.0
+offset_bottom = 1322.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(1, 2)
+position = Vector2(576, 324)
 
 [node name="Enemy" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 575.0
+offset_top = 322.0
+offset_right = 575.0
+offset_bottom = 322.0
 
 [node name="Hand" type="HBoxContainer" parent="Enemy"]
 layout_mode = 0
@@ -116,6 +122,10 @@ offset_bottom = 135.0
 [node name="TurnOptions" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 575.0
+offset_top = 322.0
+offset_right = 575.0
+offset_bottom = 322.0
 
 [node name="WaitWhileFight" parent="TurnOptions" instance=ExtResource("8")]
 anchors_preset = 0
@@ -142,6 +152,10 @@ offset_bottom = 51.0
 [node name="Player" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
+offset_left = 575.0
+offset_top = 322.0
+offset_right = 575.0
+offset_bottom = 322.0
 
 [node name="CardSpace" type="Panel" parent="Player"]
 custom_minimum_size = Vector2(846, 140)
@@ -183,6 +197,25 @@ offset_top = 124.0
 offset_right = 484.0
 offset_bottom = 274.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_fhtdn")
+
+[node name="PlayerWins" parent="." instance=ExtResource("9_aphqi")]
+visible = false
+top_level = true
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayerLooses" parent="." instance=ExtResource("8_vb3l3")]
+visible = false
+top_level = true
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = -924.0
+offset_top = -1176.0
+offset_right = 2076.0
+offset_bottom = 1824.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
 [connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
