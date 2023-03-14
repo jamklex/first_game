@@ -11,18 +11,24 @@ var minPackageWidth = -1
 var minPackageHeight = -1
 
 var resultWindow:Panel
-var resultWindowCards:GridContainer
+var resultCardHolder:GridContainer
 
 var rng = RandomNumberGenerator.new()
+
+#Open package animation stuff
+var animationPlayer: AnimationPlayer
+var animationPackage:TextureRect
 
 
 func _ready():
 	rng.randomize()
+	animationPlayer = $AnimationPlayer
 	var basePanel = get_node("bg") as Panel
 	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
 	pointsLabel = basePanel.get_node("points")
-	resultWindow = get_node("bg/resultWindowHolder")
-	resultWindowCards = get_node("bg/resultWindowHolder/resultWindow/scrollWrapper/cardHolder")
+	resultWindow = get_node("resultWindow")
+	resultCardHolder = resultWindow.get_node("cardWindow/scrollWrapper/CenterContainer/cardHolder")
+	animationPackage = resultWindow.get_node("package")
 	packageScene = load("res://prefabs/package.tscn")
 	cardScene = load("res://prefabs/card.tscn")
 	_loadPackages()
@@ -70,12 +76,14 @@ func onBuyButton(packageIndex):
 	selectedPackage.numberOfPacks -= 1
 	_refreshPoints()
 	_refreshPackages()
-	for child in resultWindowCards.get_children():
-		resultWindowCards.remove_child(child)
 	for i in rng.randi_range(1,50):
-		var newCard = cardScene.instantiate()
-		resultWindowCards.add_child(newCard)
+		var newCard = cardScene.instantiate() as Control
+#		newCard.visible = false
+#		print(newCard.pos)
+		resultCardHolder.add_child(newCard)
 	setCardHolderColumns()
+	animationPlayer.queue("openingPackage/1_packageAppears")
+	animationPlayer.queue("openingPackage/2_openCardWindow")
 	resultWindow.visible = true
 
 
@@ -84,6 +92,10 @@ func _on_back_pressed():
 
 
 func _on_close_pressed():
+	for child in resultCardHolder.get_children():
+		resultCardHolder.remove_child(child)
+	animationPlayer.stop()
+	animationPlayer.clear_caches()
 	resultWindow.visible = false
 
 
@@ -97,17 +109,20 @@ func _afterResize():
 	setCardHolderColumns()
 
 func setCardHolderColumns():
-	if not resultWindowCards:
-		return
-	
-	var childCount = resultWindowCards.get_child_count()
+	if not resultCardHolder:
+		return	
+	var childCount = resultCardHolder.get_child_count()
 	if childCount <= 0:
 		return
-	var firstCard = resultWindowCards.get_child(0) as Control
+	var firstCard = resultCardHolder.get_child(0) as Control
 	var cardWidth = firstCard.custom_minimum_size[0]
-	var currentWidth = resultWindowCards.get_parent_control().get_rect().size.x
+	var currentWidth = resultCardHolder.get_parent_control().get_parent_control().get_rect().size.x
+	currentWidth -= 20
 	var columns = int(currentWidth / cardWidth)
-	resultWindowCards.columns = columns
+	resultCardHolder.columns = columns
+	# debug outputs
+#	print("width cardholder: " + String.num_int64(resultCardHolder.get_rect().size.x))
+#	print("width parent of cardholder: " + String.num_int64(resultCardHolder.get_parent_control().get_rect().size.x))
 
 
 func setPackageSize():
@@ -142,3 +157,15 @@ func setPackageHolderSeparation():
 #	var separation = packageHolder.get_constant("h_separation")
 #	separation += 1
 #	print(separation)
+
+
+func _on_animation_player_animation_finished(anim_name):
+	print("finished animation")
+#	for c in resultCardHolder.get_children():
+#		var child = c as Control
+#		child.visible = true
+#		var x = child.global_position.x
+#		var y = child.global_position.y
+#		print(child.position)
+#		var tween = create_tween()
+#		tween.tween_property(child, "global_position", Vector2(0,0), 1.0)
