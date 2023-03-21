@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dnb71k1vf61sw"]
+
+[ext_resource type="Script" path="res://scripts/packageCard.gd" id="1_12ls2"]
+[ext_resource type="PackedScene" uid="uid://3xco5eyd0ms2" path="res://prefabs/card.tscn" id="1_yarcp"]
+
+[node name="packageCard" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_12ls2")
+
+[node name="Card" parent="." instance=ExtResource("1_yarcp")]
+layout_mode = 0
+anchors_preset = 0

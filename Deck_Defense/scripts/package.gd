@@ -20,6 +20,7 @@ var buyBtn:Button
 var availableColor = Color.WHITE
 var notAvailableColor = Color.BLACK
 var soldLayer:Panel
+var coverTexture:Texture2D
 
 
 func _ready():
@@ -41,6 +42,7 @@ func setPrice(newPrice):
 	
 func setCover(imagePath):
 	var texture = load(imagePath) as Texture2D
+	coverTexture = texture
 	var packHolder = get_node("main/packs") as Control
 	for child in packHolder.get_children():
 		var coverHolder = child as Panel

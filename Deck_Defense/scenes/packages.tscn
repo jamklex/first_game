@@ -120,7 +120,7 @@ _data = {
 bg_color = Color(0.301961, 0.301961, 0.301961, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sb28g"]
-bg_color = Color(0.6, 0.6, 0.6, 0.2)
+bg_color = Color(0.0862745, 0.0862745, 0.0862745, 0.384314)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gtfl1"]
 bg_color = Color(0.133333, 0.133333, 0.133333, 1)
@@ -242,30 +242,32 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_sb28g")
 
 [node name="package" type="TextureRect" parent="resultWindow"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
+anchors_preset = 6
+anchor_left = 1.0
 anchor_top = 0.5
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = 649.0
+offset_left = 73.0
 offset_top = -149.0
-offset_right = 824.0
+offset_right = 248.0
 offset_bottom = 151.0
-grow_horizontal = 2
+grow_horizontal = 0
 grow_vertical = 2
 texture = ExtResource("3_q0n6v")
+expand_mode = 5
 
 [node name="cardWindow" type="Panel" parent="resultWindow"]
 clip_contents = true
-layout_mode = 0
-anchor_left = 0.1
-anchor_top = 0.1
-anchor_right = 0.9
-anchor_bottom = 0.9
-offset_left = 464.8
-offset_top = 235.2
-offset_right = -456.8
-offset_bottom = -278.2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 580.0
+offset_top = 300.0
+offset_right = -572.0
+offset_bottom = -348.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_gtfl1")
 
 [node name="close" type="Button" parent="resultWindow/cardWindow"]

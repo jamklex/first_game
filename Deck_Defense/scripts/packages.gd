@@ -4,7 +4,7 @@ extends Control
 var pointsLabel:Label
 var packageHolder: GridContainer
 var packageScene:PackedScene
-var cardScene:PackedScene
+var packageCardScene:PackedScene
 var points = 100
 var packages = []
 var minPackageWidth = -1
@@ -30,7 +30,7 @@ func _ready():
 	resultCardHolder = resultWindow.get_node("cardWindow/scrollWrapper/CenterContainer/cardHolder")
 	animationPackage = resultWindow.get_node("package")
 	packageScene = load("res://prefabs/package.tscn")
-	cardScene = load("res://prefabs/card.tscn")
+	packageCardScene = load("res://prefabs/packageCard.tscn")
 	_loadPackages()
 	_refreshPoints()
 	_afterResize()
@@ -76,12 +76,15 @@ func onBuyButton(packageIndex):
 	selectedPackage.numberOfPacks -= 1
 	_refreshPoints()
 	_refreshPackages()
+	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
+	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	for i in rng.randi_range(1,50):
-		var newCard = cardScene.instantiate() as Control
-#		newCard.visible = false
-#		print(newCard.pos)
-		resultCardHolder.add_child(newCard)
+		var packageCard = packageCardScene.instantiate() as PackageCard
+		resultCardHolder.add_child(packageCard)
+		packageCard.setVisibility(false)
 	setCardHolderColumns()
+	var animationPackage = get_node("resultWindow/package") as TextureRect
+	animationPackage.texture = selectedPackage.coverTexture
 	animationPlayer.queue("openingPackage/1_packageAppears")
 	animationPlayer.queue("openingPackage/2_openCardWindow")
 	resultWindow.visible = true
@@ -153,19 +156,21 @@ func setPackageHolderSeparation():
 	var freeWidth = width - usedWidth
 	var neededSeparation = freeWidth / (columns-1)
 	packageHolder.add_theme_constant_override("h_separation", neededSeparation)
-#	print(columns)	
-#	var separation = packageHolder.get_constant("h_separation")
-#	separation += 1
-#	print(separation)
 
 
 func _on_animation_player_animation_finished(anim_name):
 	print("finished animation")
-#	for c in resultCardHolder.get_children():
-#		var child = c as Control
-#		child.visible = true
-#		var x = child.global_position.x
-#		var y = child.global_position.y
-#		print(child.position)
-#		var tween = create_tween()
-#		tween.tween_property(child, "global_position", Vector2(0,0), 1.0)
+	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
+	var prevTeen = null
+	var tween = create_tween()
+	var baseTime = 0.5
+	var curCard = 1.0
+	for c in resultCardHolder.get_children():
+		var packageCard = c as PackageCard
+		var targetPos = packageCard.position
+		packageCard.position = Vector2(300,-350)
+		tween.chain().tween_property(packageCard, "position", targetPos, max(baseTime/curCard,0.1))
+		packageCard.setVisibility(true)
+		curCard += 1.0
+	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+
