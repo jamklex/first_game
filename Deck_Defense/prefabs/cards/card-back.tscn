@@ -1,6 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://bgv6bpe1irc6a"]
+[gd_scene load_steps=3 format=3 uid="uid://c5w45gfps4oaq"]
 
-[ext_resource type="Script" path="res://scripts/card.gd" id="1"]
+[ext_resource type="Script" path="res://scripts/cards/card.gd" id="1_vqwxo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_th5hu"]
 bg_color = Color(0.278431, 0.156863, 0, 1)
@@ -17,4 +17,4 @@ corner_radius_bottom_left = 15
 [node name="Card" type="Panel"]
 custom_minimum_size = Vector2(160, 240)
 theme_override_styles/panel = SubResource("StyleBoxFlat_th5hu")
-script = ExtResource("1")
+script = ExtResource("1_vqwxo")

@@ -1,0 +1,192 @@
+[gd_scene load_steps=12 format=3 uid="uid://be7wfa0iqayuw"]
+
+[ext_resource type="Script" path="res://scripts/cards/card.gd" id="1_upn8h"]
+[ext_resource type="Texture2D" uid="uid://bbh22l7xhv335" path="res://images/dar.png" id="2_0s41q"]
+[ext_resource type="Texture2D" uid="uid://bsvb8drke7wbr" path="res://icon.png" id="3_wmgh8"]
+[ext_resource type="PackedScene" uid="uid://bnqlb5xu4p5m" path="res://prefabs/cards/VirusNode.tscn" id="4_fd8uo"]
+[ext_resource type="Texture2D" uid="uid://bi7myipkq5y6w" path="res://images/hp.png" id="5_ra86p"]
+[ext_resource type="Texture2D" uid="uid://2u508rw8j6sb" path="res://images/atk.png" id="6_idk4g"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
+bg_color = Color(0.992157, 0.788235, 0.486275, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15hua"]
+draw_center = false
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.8, 0.137255, 0.458824, 1)
+border_blend = true
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3teaj"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dwj0"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdeoe"]
+draw_center = false
+
+[node name="Card" type="Panel"]
+custom_minimum_size = Vector2(160, 240)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -80.0
+offset_top = -120.0
+offset_right = 80.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
+script = ExtResource("1_upn8h")
+
+[node name="VirusFrame" type="Panel" parent="."]
+custom_minimum_size = Vector2(160, 240)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_15hua")
+
+[node name="Layout" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -77.0
+offset_top = -112.0
+offset_right = 77.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Top" type="HBoxContainer" parent="Layout"]
+custom_minimum_size = Vector2(130, 115)
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Left" type="Panel" parent="Layout/Top"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3teaj")
+
+[node name="Image" type="Sprite2D" parent="Layout/Top/Left"]
+position = Vector2(-7, 0)
+scale = Vector2(0.08, 0.25)
+texture = ExtResource("2_0s41q")
+centered = false
+offset = Vector2(-10, 0)
+flip_h = true
+
+[node name="Face" type="Panel" parent="Layout/Top"]
+clip_contents = true
+custom_minimum_size = Vector2(115, 100)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4dwj0")
+
+[node name="Image" type="Sprite2D" parent="Layout/Top/Face"]
+scale = Vector2(1.8, 1.8)
+texture = ExtResource("3_wmgh8")
+centered = false
+
+[node name="Right" type="Panel" parent="Layout/Top"]
+custom_minimum_size = Vector2(15, 0)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bdeoe")
+
+[node name="Image" type="Sprite2D" parent="Layout/Top/Right"]
+position = Vector2(-17, 0)
+scale = Vector2(0.08, 0.25)
+texture = ExtResource("2_0s41q")
+centered = false
+
+[node name="Bottom" type="VBoxContainer" parent="Layout"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+mouse_filter = 2
+alignment = 2
+
+[node name="Virus" type="HBoxContainer" parent="Layout/Bottom"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="1" parent="Layout/Bottom/Virus" instance=ExtResource("4_fd8uo")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="2" parent="Layout/Bottom/Virus" instance=ExtResource("4_fd8uo")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="3" parent="Layout/Bottom/Virus" instance=ExtResource("4_fd8uo")]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HP" type="HBoxContainer" parent="Layout/Bottom"]
+layout_mode = 2
+alignment = 1
+
+[node name="Value" type="Label" parent="Layout/Bottom/HP"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "8"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Symbol" type="Panel" parent="Layout/Bottom/HP"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Image" type="Sprite2D" parent="Layout/Bottom/HP/Symbol"]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("5_ra86p")
+centered = false
+
+[node name="ATK" type="HBoxContainer" parent="Layout/Bottom"]
+layout_mode = 2
+alignment = 1
+
+[node name="Value" type="Label" parent="Layout/Bottom/ATK"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "10"
+horizontal_alignment = 1
+vertical_alignment = 1
+uppercase = true
+
+[node name="Symbol" type="Panel" parent="Layout/Bottom/ATK"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Image" type="Sprite2D" parent="Layout/Bottom/ATK/Symbol"]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("6_idk4g")
+centered = false

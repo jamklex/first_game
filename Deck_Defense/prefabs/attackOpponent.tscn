@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c3s7600f7wysf"]
 
-[ext_resource type="Texture2D" uid="uid://beq2ltmrikyok" path="res://images/attack.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://c16wlopljqbsc" path="res://images/attack.png" id="1"]
 
 [node name="AttackOpponent" type="Control"]
 custom_minimum_size = Vector2(100, 100)

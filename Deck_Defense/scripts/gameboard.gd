@@ -25,9 +25,7 @@ const ATTACK_ANIMATION_TIME = 0.25
 var GameboardUtil = preload("res://scripts/util/gameboard-util.gd").new()
 
 var rng = RandomNumberGenerator.new()
-var visibleCard = preload("res://prefabs/card.tscn")
-var notVisibleCard = preload("res://prefabs/card-back.tscn")
-var miniCard = preload("res://prefabs/card-small.tscn")
+var miniCard = preload("res://prefabs/cards/card-small.tscn")
 var playerMaxHp
 var playerCurrentHp
 var player_deck = []
@@ -207,14 +205,14 @@ func set_visibility(path, status):
 	var control = get_node(path) as Control
 	control.visible = status
 
-func place_cards_in_hand(path, amount, visible):
+func place_cards_in_hand(path, amount, from_player):
 	for n in amount:
 		if get_node(path).get_child_count() == max_hand_cards:
 			break
-		var card = get_card_from_deck(visible)
+		var card = get_card_from_deck(from_player)
 		if card == null:
 			return
-		add_card_to(path, card)
+		add_card_to(path, GameboardUtil.create_visible_instance(card, from_player))
 		update_cards_left()
 		await get_tree().create_timer(CARD_DRAW_TIME).timeout
 	reset_hand_card_focus()
@@ -252,6 +250,7 @@ func set_hp(path, amount, max_amount):
 func bump_child_y(node, increase):
 	if node != null:
 		node.set_position(Vector2(node.position[0], node.position[1] + increase))
+		node.z_index = 0 if increase > 0 else increase * -1
 
 func get_child_index(node, mousePosition, reversed, default_value):
 	var children = node.get_children()
