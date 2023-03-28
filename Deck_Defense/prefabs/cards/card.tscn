@@ -43,22 +43,14 @@ draw_center = false
 
 [node name="Card" type="Panel"]
 custom_minimum_size = Vector2(160, 240)
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -80.0
-offset_top = -120.0
-offset_right = 80.0
-offset_bottom = 120.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 160.0
+offset_bottom = 240.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
 script = ExtResource("1_upn8h")
 
 [node name="VirusFrame" type="Panel" parent="."]
+visible = false
 custom_minimum_size = Vector2(160, 240)
 layout_mode = 1
 anchors_preset = 15
@@ -77,14 +69,15 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -77.0
-offset_top = -112.0
+offset_top = -105.0
 offset_right = 77.0
-offset_bottom = 112.0
+offset_bottom = 115.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
 [node name="Top" type="HBoxContainer" parent="Layout"]
+clip_contents = true
 custom_minimum_size = Vector2(130, 115)
 layout_mode = 2
 mouse_filter = 2
@@ -97,6 +90,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3teaj")
 
 [node name="Image" type="Sprite2D" parent="Layout/Top/Left"]
+visible = false
 position = Vector2(-7, 0)
 scale = Vector2(0.08, 0.25)
 texture = ExtResource("2_0s41q")
@@ -123,6 +117,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bdeoe")
 
 [node name="Image" type="Sprite2D" parent="Layout/Top/Right"]
+visible = false
 position = Vector2(-17, 0)
 scale = Vector2(0.08, 0.25)
 texture = ExtResource("2_0s41q")
@@ -135,6 +130,7 @@ mouse_filter = 2
 alignment = 2
 
 [node name="Virus" type="HBoxContainer" parent="Layout/Bottom"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 
@@ -152,11 +148,13 @@ mouse_filter = 2
 
 [node name="HP" type="HBoxContainer" parent="Layout/Bottom"]
 layout_mode = 2
+theme_override_constants/separation = 5
 alignment = 1
 
 [node name="Value" type="Label" parent="Layout/Bottom/HP"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
 text = "8"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -169,14 +167,17 @@ mouse_filter = 2
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("5_ra86p")
 centered = false
+offset = Vector2(0, 35)
 
 [node name="ATK" type="HBoxContainer" parent="Layout/Bottom"]
 layout_mode = 2
+theme_override_constants/separation = 5
 alignment = 1
 
 [node name="Value" type="Label" parent="Layout/Bottom/ATK"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
 text = "10"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -190,3 +191,4 @@ mouse_filter = 2
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("6_idk4g")
 centered = false
+offset = Vector2(0, 35)

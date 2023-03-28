@@ -1,0 +1,9 @@
+[
+	{
+		"id": 1,
+		"image": "res://images/cards/ultra-monster.png",
+		"atk": 5,
+		"hp": 10,
+		"max_owned": 3
+	}
+]

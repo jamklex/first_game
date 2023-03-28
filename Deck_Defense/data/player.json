@@ -1,0 +1,20 @@
+{
+	"cards": [
+		{
+			"id": 1,
+			"amount": 2
+		}
+	],
+	"decks": [
+		{
+			"name": "Mein geiles Deck",
+			"active": true,
+			"cards": [
+				{
+					"id": 1,
+					"amount": 2
+				}
+			]
+		}
+	]
+}

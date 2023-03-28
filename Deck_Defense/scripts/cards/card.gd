@@ -12,3 +12,6 @@ func initialize_from(card):
 	properties = card
 	properties.link_node(self)
 	properties.load_labels()
+
+func initialize_from_id(id):
+	initialize_from(preload("res://scripts/obj/card-obj.gd").new())

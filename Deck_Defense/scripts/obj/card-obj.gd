@@ -14,7 +14,7 @@ var base_hp = 0
 var hp = 0
 var base_atk = 0
 var atk = 0
-var virus_level = 0
+var virus_level = 3
 var node
 
 func _ready():

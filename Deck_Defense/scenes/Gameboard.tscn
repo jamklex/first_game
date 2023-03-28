@@ -137,6 +137,7 @@ offset_right = 479.0
 offset_bottom = 51.0
 
 [node name="AttackOpponent" parent="TurnOptions" instance=ExtResource("9")]
+visible = false
 light_mask = 141
 offset_left = 379.0
 offset_top = -49.0
@@ -144,6 +145,7 @@ offset_right = 479.0
 offset_bottom = 51.0
 
 [node name="BlockOpponent" parent="TurnOptions" instance=ExtResource("7_luclj")]
+visible = false
 offset_left = 379.0
 offset_top = -49.0
 offset_right = 479.0

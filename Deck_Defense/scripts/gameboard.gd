@@ -20,12 +20,10 @@ const enemy_cards_left = "Enemy/CardsLeft"
 
 const ENEMY_THINKING_TIME = 1.5
 const CARD_DRAW_TIME = 0.2
-const ATTACK_ANIMATION_TIME = 0.25
 
 var GameboardUtil = preload("res://scripts/util/gameboard-util.gd").new()
 
 var rng = RandomNumberGenerator.new()
-var miniCard = preload("res://prefabs/cards/card-small.tscn")
 var playerMaxHp
 var playerCurrentHp
 var player_deck = []
@@ -51,137 +49,49 @@ func initialize_game():
 	enemyCurrentHp = enemyMaxHp
 	player_deck = GameboardUtil.random_cards(50, true)
 	enemy_deck = GameboardUtil.random_cards(50, false)
-	place_cards_in_hand(enemy_hand, initial_hand_cards, false)
-	place_cards_in_hand(player_hand, initial_hand_cards, true)
 	set_hp(enemy_healt, enemyCurrentHp, enemyMaxHp)
 	set_hp(player_healt, playerCurrentHp, playerMaxHp)
+	await place_cards_in_hand(enemy_hand, initial_hand_cards, false)
+	await place_cards_in_hand(player_hand, initial_hand_cards, true)
 	switch_to_player()
 
-func check_winning_state():
-	if enemyCurrentHp == 0 or enemy_total_card_size() == 0:
-		player_wins()
-		return true
-	if playerCurrentHp == 0 or player_total_card_size() == 0:
-		player_looses()
-		return true
-	return false
-
-func player_wins():
-	set_visibility("PlayerWins", true)
-	current_cycle = TURN_CYCLE.GAME_END
-
-func player_looses():
-	set_visibility("PlayerLooses", true)
-	current_cycle = TURN_CYCLE.GAME_END
-
 func _on_Hand_gui_input(event):
-	if is_mouse_click(event) and can_place_cards():
+	if GameboardUtil.is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_hand) as HBoxContainer
 		reset_hand_card_focus()
-		selected_action_card = get_child_index(node, make_input_local(event).position, true, -1)
+		selected_action_card = GameboardUtil.get_child_index(node, make_input_local(event).position, true, -1)
 		if(selected_action_card >= 0):
-			bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
+			GameboardUtil.bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
 
 func _on_CardSpace_gui_input(event):
-	if is_mouse_click(event) and can_place_cards():
+	if GameboardUtil.is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_card_space) as HBoxContainer
-		var card_space_spot_selected = get_child_index(node, make_input_local(event).position, false, -1)
+		var card_space_spot_selected = GameboardUtil.get_child_index(node, make_input_local(event).position, false, -1)
 		if card_space_spot_selected >= 0 and selected_action_card >= 0:
-			if lay_card_on_space(player_card_space, selected_action_card, card_space_spot_selected, player_hand):
+			if GameboardUtil.lay_card_on_space(get_node(player_card_space), selected_action_card, card_space_spot_selected, get_node(player_hand)):
 				set_visibility(WAIT_WHILE_FIGHT, false)
 				set_visibility(ATTACK_PLAYER, false)
 				set_visibility(BLOCK_PLAYER, true)
+				reset_hand_card_focus()
 
 func _on_BlockOpponent_gui_input(event):
-	if is_mouse_click(event):
+	if GameboardUtil.is_mouse_click(event):
 		reset_hand_card_focus()
 		switch_to_enemy()
 
-func reset_hand_card_focus():
-	if(selected_action_card >= 0):
-		bump_child_y(get_node(player_hand).get_child(selected_action_card), bump_factor)
-	selected_action_card = -1
-
 func _on_AttackOpponent_gui_input(event):
-	if is_mouse_click(event) and can_place_cards():
+	if GameboardUtil.is_mouse_click(event) and can_place_cards():
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
 		set_visibility(WAIT_WHILE_FIGHT, true)
 		set_visibility(ATTACK_PLAYER, false)
 		set_visibility(BLOCK_PLAYER, false)
-		await ltr_attack(player_card_space, enemy_card_space)
-		var new_hp = max(0, enemyCurrentHp - calculate_damage(player_card_space))
+		var player_cards = GameboardUtil.cards_ltr_in(get_node(player_card_space))
+		var enemy_cards = GameboardUtil.cards_ltr_in(get_node(enemy_card_space))
+		var new_hp = max(0, enemyCurrentHp - await GameboardUtil.attack(player_cards, enemy_cards, get_tree()))
 		set_hp(enemy_healt, new_hp, enemyMaxHp)
 		enemyCurrentHp = new_hp
 		switch_to_enemy()
-
-func enemy_move():
-	var enemyHandCards = get_node(enemy_hand).get_child_count()
-	var free_spots = get_free_spots(enemy_card_space)
-	var will_attack = rng.randi_range(1,max_card_space_spots) > free_spots.size()
-	if will_attack or (enemyHandCards == 0 and free_spots.size() < max_card_space_spots):
-		await ltr_attack(enemy_card_space, player_card_space)
-		var new_hp = max(0, playerCurrentHp - calculate_damage(enemy_card_space))
-		set_hp(player_healt, new_hp, playerMaxHp)
-		playerCurrentHp = new_hp
-		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
-		set_visibility(WAIT_WHILE_FIGHT, true)
-		set_visibility(ATTACK_PLAYER, false)
-		set_visibility(BLOCK_PLAYER, false)
-	else:
-		var cardsToPlay = 0 if enemyHandCards <= 0 else rng.randi_range(1, min(free_spots.size(), enemyHandCards))
-		if(cardsToPlay > 0):
-			for i in range(cardsToPlay):
-				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
-				lay_card_on_space(enemy_card_space, i, free_spots[spot_to_place], enemy_hand)
-				await get_tree().create_timer(CARD_DRAW_TIME).timeout
-		else:
-			print("enemy can't do anything...")
-			player_wins()
-	switch_to_player()
-
-func ltr_attack(attacker, target):
-	for myCard in cards_ltr_in(attacker):
-		await get_tree().create_timer(ATTACK_ANIMATION_TIME).timeout
-		for enemyCard in cards_ltr_in(target):
-			await get_tree().create_timer(ATTACK_ANIMATION_TIME).timeout
-			var new_card_hp = abs(enemyCard.get_hp() - myCard.get_hp())
-			if new_card_hp == 0:
-				myCard.free()
-				enemyCard.free()
-				break
-			if enemyCard.get_hp() < myCard.get_hp():
-				enemyCard.free()
-				myCard.set_hp(new_card_hp)
-			elif enemyCard.get_hp() > myCard.get_hp():
-				myCard.free()
-				enemyCard.set_hp(new_card_hp)
-				break
-
-func calculate_damage(attacker):
-	var damage_dealt = 0
-	for card in cards_ltr_in(attacker):
-		damage_dealt += card.get_hp()
-	return damage_dealt
-
-func cards_ltr_in(card_space_path):
-	var cards = []
-	var node = get_node(card_space_path) as HBoxContainer
-	for child in node.get_children():
-		for card in child.get_children():
-			cards.append(card)
-	return cards
-
-func get_free_spots(space):
-	var node = get_node(space)
-	var free_spaces = []
-	for child in node.get_children():
-		if child.get_child_count() <= 0:
-			free_spaces.append(child.get_index())
-	return free_spaces
-
-func can_place_cards():
-	return current_cycle == TURN_CYCLE.MY_TURN
 
 func switch_to_player():
 	if not check_winning_state():
@@ -197,9 +107,57 @@ func switch_to_enemy():
 		set_visibility(WAIT_WHILE_FIGHT, true)
 		set_visibility(ATTACK_PLAYER, false)
 		set_visibility(BLOCK_PLAYER, false)
-		place_cards_in_hand(enemy_hand, cards_per_turn, false)
+		await place_cards_in_hand(enemy_hand, cards_per_turn, false)
 		await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
 		enemy_move()
+
+func enemy_move():
+	var enemyHandCards = get_node(enemy_hand).get_child_count()
+	var free_spots = GameboardUtil.get_free_spots(get_node(enemy_card_space))
+	var will_attack = rng.randi_range(1,max_card_space_spots) > free_spots.size()
+	if will_attack or (enemyHandCards == 0 and free_spots.size() < max_card_space_spots):
+		var player_cards = GameboardUtil.cards_ltr_in(get_node(player_card_space))
+		var enemy_cards = GameboardUtil.cards_ltr_in(get_node(enemy_card_space))
+		var new_hp = max(0, playerCurrentHp - await GameboardUtil.attack(enemy_cards, player_cards, get_tree()))
+		set_hp(player_healt, new_hp, playerMaxHp)
+		playerCurrentHp = new_hp
+		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
+		set_visibility(WAIT_WHILE_FIGHT, true)
+		set_visibility(ATTACK_PLAYER, false)
+		set_visibility(BLOCK_PLAYER, false)
+	else:
+		var cardsToPlay = 0 if enemyHandCards <= 0 else rng.randi_range(1, min(free_spots.size(), enemyHandCards))
+		if(cardsToPlay > 0):
+			for i in range(cardsToPlay):
+				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
+				GameboardUtil.lay_card_on_space(get_node(enemy_card_space), i, free_spots[spot_to_place], get_node(enemy_hand))
+				await get_tree().create_timer(CARD_DRAW_TIME).timeout
+		else:
+			print("enemy can't do anything...")
+			player_wins()
+	switch_to_player()
+
+func check_winning_state():
+	var enemy_cards = GameboardUtil.total_card_size(enemy_deck, get_node(enemy_card_space), get_node(enemy_hand))
+	var player_cards = GameboardUtil.total_card_size(player_deck, get_node(player_card_space), get_node(player_hand))
+	if enemyCurrentHp == 0 or enemy_cards == 0:
+		player_wins()
+		return true
+	if playerCurrentHp == 0 or player_cards == 0:
+		player_looses()
+		return true
+	return false
+
+func player_wins():
+	set_visibility("PlayerWins", true)
+	current_cycle = TURN_CYCLE.GAME_END
+
+func player_looses():
+	set_visibility("PlayerLooses", true)
+	current_cycle = TURN_CYCLE.GAME_END
+
+func can_place_cards():
+	return current_cycle == TURN_CYCLE.MY_TURN
 
 func set_visibility(path, status):
 	var control = get_node(path) as Control
@@ -232,12 +190,7 @@ func update_cards_left():
 func add_card_to(path, card):
 	var hand = get_node(path) as HBoxContainer
 	hand.add_child(card)
-	adjust_separation(hand)
-	
-func adjust_separation(hand):
-	var card_amount = hand.get_child_count()
-	var separation = 5 if card_amount <= 3 else card_amount * -10
-	hand.add_theme_constant_override("separation", separation)
+	GameboardUtil.adjust_separation(hand)
 
 func set_hp(path, amount, max_amount):
 	var indicator = get_node(path + "/Indicator") as Panel
@@ -247,60 +200,7 @@ func set_hp(path, amount, max_amount):
 	var new_size = Vector2(max_size / max_amount * amount, indicator.size[1])
 	indicator.set_size(new_size)
 
-func bump_child_y(node, increase):
-	if node != null:
-		node.set_position(Vector2(node.position[0], node.position[1] + increase))
-		node.z_index = 0 if increase > 0 else increase * -1
-
-func get_child_index(node, mousePosition, reversed, default_value):
-	var children = node.get_children()
-	if reversed:
-		children.reverse()
-	for child in children:
-		var size = child.size
-		var rect_pos = child.global_position
-		var fromPos = rect_pos[0] - size[0] if reversed else rect_pos[0]
-		var toPos = rect_pos[0] if reversed else rect_pos[0] + size[0]
-		if is_in_range(mousePosition[0] + (size[0]*0.4 if reversed else size[0]), fromPos, toPos):
-			return child.get_index()
-	return default_value
-
-func is_in_range(base_vector, from_vector, to_vector):
-	return base_vector >= from_vector and base_vector <= to_vector
-
-func is_mouse_click(event):
-	return event is InputEventMouseButton and event.pressed and event.button_index == 1
-
-func lay_card_on_space(space, from, to, hand):
-	var hand_node = get_node(hand) as HBoxContainer
-	var mini_card = create_mini_card(hand_node.get_child(from))
-	var card_spots = get_node(space) as HBoxContainer
-	var successful = add_card_to_spot(card_spots, mini_card as Panel, to)
-	if successful:
-		remove_card(hand_node, from)
-		selected_action_card = -1
-	return successful
-
-func add_card_to_spot(spots, card, id):
-	var contender = spots.get_child(id)
-	if contender.get_child_count() == 0:
-		contender.add_child(card)
-		return true
-	return false
-
-func remove_card(node, id):
-	node.remove_child(node.get_child(id))
-	adjust_separation(node)
-
-func create_mini_card(card):
-	if card == null:
-		return
-	var mini_card = miniCard.instantiate()
-	mini_card.initialize(card.get_base_hp(), card.get_description())
-	return mini_card
-
-func enemy_total_card_size():
-	return enemy_deck.size() + cards_ltr_in(enemy_card_space).size() + get_node(enemy_hand).get_child_count()
-
-func player_total_card_size():
-	return player_deck.size() + cards_ltr_in(player_card_space).size() + get_node(player_hand).get_child_count()
+func reset_hand_card_focus():
+	if(selected_action_card >= 0):
+		GameboardUtil.bump_child_y(get_node(player_hand).get_child(selected_action_card), bump_factor)
+	selected_action_card = -1
