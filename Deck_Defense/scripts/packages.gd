@@ -16,14 +16,12 @@ var resultCardHolder:GridContainer
 var rng = RandomNumberGenerator.new()
 
 #Open package animation stuff
-var animationPlayer: AnimationPlayer
 var animationPackage:TextureRect
 
 
 func _ready():
 	rng.randomize()
-	animationPlayer = $AnimationPlayer
-	var basePanel = get_node("bg") as Panel
+	var basePanel = $bg as Panel
 	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
 	pointsLabel = basePanel.get_node("points")
 	resultWindow = get_node("resultWindow")
@@ -78,16 +76,13 @@ func onBuyButton(packageIndex):
 	_refreshPackages()
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	for i in rng.randi_range(1,50):
+	for i in rng.randi_range(1,10):
 		var packageCard = packageCardScene.instantiate() as PackageCard
 		resultCardHolder.add_child(packageCard)
 		packageCard.setVisibility(false)
-	setCardHolderColumns()
-	var animationPackage = get_node("resultWindow/package") as TextureRect
-	animationPackage.texture = selectedPackage.coverTexture
-	animationPlayer.queue("openingPackage/1_packageAppears")
-	animationPlayer.queue("openingPackage/2_openCardWindow")
-	resultWindow.visible = true
+	setCardHolderColumns()	
+	playOpeningAnimation(selectedPackage)
+	
 
 
 func _on_back_pressed():
@@ -97,8 +92,6 @@ func _on_back_pressed():
 func _on_close_pressed():
 	for child in resultCardHolder.get_children():
 		resultCardHolder.remove_child(child)
-	animationPlayer.stop()
-	animationPlayer.clear_caches()
 	resultWindow.visible = false
 
 
@@ -158,19 +151,61 @@ func setPackageHolderSeparation():
 	packageHolder.add_theme_constant_override("h_separation", neededSeparation)
 
 
-func _on_animation_player_animation_finished(anim_name):
-	print("finished animation")
-	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
-	var prevTeen = null
-	var tween = create_tween()
-	var baseTime = 0.5
-	var curCard = 1.0
-	for c in resultCardHolder.get_children():
-		var packageCard = c as PackageCard
-		var targetPos = packageCard.position
-		packageCard.position = Vector2(300,-350)
-		tween.chain().tween_property(packageCard, "position", targetPos, max(baseTime/curCard,0.1))
-		packageCard.setVisibility(true)
-		curCard += 1.0
-	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+###### ANIMATION STUFF
+func playOpeningAnimation(selectedPackage: Package):
+	var animationPackage = $resultWindow/package as TextureRect
+	var cardWindow = $resultWindow/cardWindow as Panel
+	cardWindow.clip_contents = true
+	var cardWindowCloseBtn = $resultWindow/cardWindow/close as Button
+	animationPackage.texture = selectedPackage.coverTexture
+	resultWindow.visible = true
+	cardWindowCloseBtn.visible = false
+	var packHorMid = resultWindow.size.x / 2 - animationPackage.size.x / 2
+	var packVertMid = resultWindow.size.y / 2 - animationPackage.size.y / 2
+	cardWindow.size = Vector2(0,0)
+	animationPackage.position = Vector2(resultWindow.size.x, packVertMid)
+	var openingTween = create_tween().set_parallel(true)
+	# PACK FLY FROM LEFT TO RIGHT
+	openingTween.chain().tween_property(animationPackage, "position", Vector2(packHorMid, packVertMid), 1)
+	# WINDOW OPENS
+	cardWindow.size = Vector2(0,5)
+	cardWindow.position = Vector2(resultWindow.size.x / 2, resultWindow.size.y / 2 - cardWindow.size.y / 2)
+	var widthMarginPixels = resultWindow.size.x * 0.1
+	var heightMarginPixels = resultWindow.size.y * 0.1	
+	# HORIZONTAL OPENING
+	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, resultWindow.size.y / 2 - cardWindow.size.y / 2), 1)
+	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), 5), 1)
+	# VERTICAL OPENING
+	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, heightMarginPixels), 1)
+	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), resultWindow.size.y-(heightMarginPixels*2)), 1)
+	# AFTER DOINGS
+	openingTween.chain().tween_callback(onOpeningAnimationFinished)
 
+
+var revealCardIndex = 0
+func onOpeningAnimationFinished():
+	print("finished animation")
+	var cardWindow = $resultWindow/cardWindow as Panel
+	cardWindow.clip_contents = false
+	revealCardIndex = 0
+	reveal()
+	
+	
+func reveal():
+	var cards = resultCardHolder.get_children()
+	if revealCardIndex >= cards.size():
+		onAllCardsRevealed()
+	else:
+		var packageCard = cards[revealCardIndex] as PackageCard
+		packageCard.setVisibility(true)
+		packageCard.setOnAnimationFinished(self, "reveal")
+		packageCard.scaleCardToZero()
+		packageCard.playAnimation()
+		revealCardIndex += 1
+	
+	
+func onAllCardsRevealed():
+	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
+	var closeBtn = $resultWindow/cardWindow/close as Button
+	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	closeBtn.visible = true
