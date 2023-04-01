@@ -2,18 +2,34 @@ extends Control
 
 var settingsPanel:Panel
 
+## actual settings
+var settings = Settings.new()
+var KEY_FULLSCREEN = "fullscreen"
+var KEY_WINDOWSIZE_WIDTH = "windowSizeWidth"
+var KEY_WINDOWSIZE_HEIGHT = "windowSizeHeight"
+###
+
+
 var windowSizes = [
-	Vector2(640,360),
 	Vector2(1280,720),
+	Vector2(1366,768),
 	Vector2(1600,900)
 ]
+var selectedWindowSize = 0
+var fullscreen = false
+
+
+var resizeDropdown:OptionButton
+var fullScreenToggle:CheckButton
 
 func _ready():
 	settingsPanel = $Settings as Panel
 	get_window().unresizable = true
-	var resizeDropdown = $Settings/resizeDropdown as OptionButton
+	resizeDropdown = $Settings/resizeDropdown as OptionButton
+	fullScreenToggle = $Settings/fullScreen as CheckButton
 	for size in windowSizes:
 		resizeDropdown.add_item(String.num(size.x) + " x " + String.num(size.y))
+	loadSettings()
 
 func _on_StartButton_pressed():
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
@@ -31,11 +47,44 @@ func _on_close_pressed():
 	settingsPanel.visible = false
 
 func resizeWindow(index):
+	resizeDropdown.selected = index
 	if get_window().mode == Window.MODE_WINDOWED:
 		get_window().size = windowSizes[index]
+	selectedWindowSize = index
+	onSettingsChanged()
 
-func fullScreen(checked):
+func changeFullscreen(checked):
+	fullScreenToggle.button_pressed = checked
 	if checked:
 		get_window().mode = Window.MODE_FULLSCREEN
 	else:
 		get_window().mode = Window.MODE_WINDOWED
+	fullscreen = checked
+	onSettingsChanged()
+		
+func onSettingsChanged():
+	settings.setData(KEY_FULLSCREEN, fullscreen)
+	var windowSize = windowSizes[selectedWindowSize]
+	settings.setData(KEY_WINDOWSIZE_WIDTH, windowSize.x)
+	settings.setData(KEY_WINDOWSIZE_HEIGHT, windowSize.y)
+	settings.saveData()
+
+func loadSettings():
+	var width = settings.getData(KEY_WINDOWSIZE_WIDTH)
+	var height = settings.getData(KEY_WINDOWSIZE_HEIGHT)
+	var fullscreenData = settings.getData(KEY_FULLSCREEN)
+	# LOAD IF EXISTS
+	if width and height:
+		selectedWindowSize = getIndexByWidthAndHeigth(width, height)
+	if fullscreenData:
+		fullscreen = fullscreenData
+	# APPLY SETTINGS
+	resizeWindow(selectedWindowSize)
+	changeFullscreen(fullscreen)
+	
+func getIndexByWidthAndHeigth(width, height):
+	for index in windowSizes.size():
+		var windowSize = windowSizes[index]
+		if windowSize.x == width and windowSize.y == height:
+			return index
+	return 0

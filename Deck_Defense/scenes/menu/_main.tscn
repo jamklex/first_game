@@ -145,4 +145,4 @@ grow_vertical = 2
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="Settings/Close" to="." method="_on_close_pressed"]
 [connection signal="item_selected" from="Settings/resizeDropdown" to="." method="resizeWindow"]
-[connection signal="toggled" from="Settings/fullScreen" to="." method="fullScreen"]
+[connection signal="toggled" from="Settings/fullScreen" to="." method="changeFullscreen"]

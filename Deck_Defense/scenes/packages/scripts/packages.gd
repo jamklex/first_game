@@ -74,13 +74,11 @@ func onBuyButton(packageIndex):
 	_refreshPackages()
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	for i in rng.randi_range(1,10):
+	for i in 5:
 		var packageCard = packageCardScene.instantiate() as PackageCard
 		resultCardHolder.add_child(packageCard)
 		packageCard.setVisibility(false)
-	setCardHolderColumns()	
 	playOpeningAnimation(selectedPackage)
-	
 
 
 func _on_back_pressed():
@@ -115,6 +113,7 @@ func setCardHolderColumns():
 	var columns = int(currentWidth / cardWidth)
 	resultCardHolder.columns = columns
 	# debug outputs
+#	print(columns)
 #	print("width cardholder: " + String.num_int64(resultCardHolder.get_rect().size.x))
 #	print("width parent of cardholder: " + String.num_int64(resultCardHolder.get_parent_control().get_rect().size.x))
 
@@ -163,44 +162,56 @@ func playOpeningAnimation(selectedPackage: Package):
 	cardWindow.size = Vector2(0,0)
 	animationPackage.position = Vector2(resultWindow.size.x, packVertMid)
 	var openingTween = create_tween().set_parallel(true)
-	# PACK FLY FROM LEFT TO RIGHT
-	openingTween.chain().tween_property(animationPackage, "position", Vector2(packHorMid, packVertMid), 1)
+	# PACK FLY FROM RIGHT TO LEFT
+	openingTween.chain().tween_property(animationPackage, "position", Vector2(packHorMid, packVertMid), 0.5)
 	# WINDOW OPENS
 	cardWindow.size = Vector2(0,5)
 	cardWindow.position = Vector2(resultWindow.size.x / 2, resultWindow.size.y / 2 - cardWindow.size.y / 2)
 	var widthMarginPixels = resultWindow.size.x * 0.1
 	var heightMarginPixels = resultWindow.size.y * 0.1	
 	# HORIZONTAL OPENING
-	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, resultWindow.size.y / 2 - cardWindow.size.y / 2), 1)
-	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), 5), 1)
+	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, resultWindow.size.y / 2 - cardWindow.size.y / 2), 0.5)
+	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), 5), 0.5)
 	# VERTICAL OPENING
-	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, heightMarginPixels), 1)
-	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), resultWindow.size.y-(heightMarginPixels*2)), 1)
+	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, heightMarginPixels), 0.5)
+	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), resultWindow.size.y-(heightMarginPixels*2)), 0.5)
 	# AFTER DOINGS
-	openingTween.chain().tween_callback(onOpeningAnimationFinished)
+	openingTween.chain().tween_callback(onResultWindowOpen)
 
 
-var revealCardIndex = 0
-func onOpeningAnimationFinished():
-	print("finished animation")
+var currentAnimationCardIndex = 0
+func onResultWindowOpen():
+	setCardHolderColumns()
 	var cardWindow = $resultWindow/cardWindow as Panel
 	cardWindow.clip_contents = false
-	revealCardIndex = 0
-	reveal()
+	currentAnimationCardIndex = 0
+	showCard()
 	
 	
-func reveal():
+func showCard():
 	var cards = resultCardHolder.get_children()
-	if revealCardIndex >= cards.size():
+	if currentAnimationCardIndex >= cards.size():
+		currentAnimationCardIndex = 0
+		revealCard()
+	else:
+		var packageCard = cards[currentAnimationCardIndex] as PackageCard
+		packageCard.setVisibility(true)
+		packageCard.setOnShowDoneFinished(self, "showCard")
+		packageCard.scaleCardToZero()
+		packageCard.playShowAnimation()
+		currentAnimationCardIndex += 1
+	
+	
+func revealCard():
+	var cards = resultCardHolder.get_children()
+	if currentAnimationCardIndex >= cards.size():
 		onAllCardsRevealed()
 	else:
-		var packageCard = cards[revealCardIndex] as PackageCard
-		packageCard.setVisibility(true)
-		packageCard.setOnAnimationFinished(self, "reveal")
-		packageCard.scaleCardToZero()
-		packageCard.playAnimation()
-		revealCardIndex += 1
-	
+		var packageCard = cards[currentAnimationCardIndex] as PackageCard
+		packageCard.setOnRevealDoneFinished(self, "revealCard")
+		packageCard.playRevealAnimation()
+		currentAnimationCardIndex += 1
+
 	
 func onAllCardsRevealed():
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
