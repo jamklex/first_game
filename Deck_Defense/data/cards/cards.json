@@ -1,9 +1,142 @@
 [
 	{
 		"id": 1,
-		"image": "res://images/cards/ultra-monster.png",
-		"atk": 5,
-		"hp": 10,
+		"image": "res://data/cards/images/1.png",
+		"atk": 12,
+		"hp": 19,
 		"max_owned": 3
-	}
+	},
+	{
+		"id": 2,
+		"image": "res://data/cards/images/2.png",
+		"atk": 17,
+		"hp": 14,
+		"max_owned": 3
+	},
+	{
+		"id": 3,
+		"image": "res://data/cards/images/3.png",
+		"atk": 9,
+		"hp": 7,
+		"max_owned": 3
+	},
+	{
+		"id": 4,
+		"image": "res://data/cards/images/4.png",
+		"atk": 6,
+		"hp": 9,
+		"max_owned": 3
+	},
+	{
+		"id": 5,
+		"image": "res://data/cards/images/5.png",
+		"atk": 16,
+		"hp": 6,
+		"max_owned": 3
+	},
+	{
+		"id": 6,
+		"image": "res://data/cards/images/6.png",
+		"atk": 5,
+		"hp": 15,
+		"max_owned": 3
+	},
+	{
+		"id": 7,
+		"image": "res://data/cards/images/7.png",
+		"atk": 17,
+		"hp": 8,
+		"max_owned": 3
+	},
+	{
+		"id": 8,
+		"image": "res://data/cards/images/8.png",
+		"atk": 13,
+		"hp": 19,
+		"max_owned": 3
+	},
+	{
+		"id": 9,
+		"image": "res://data/cards/images/9.png",
+		"atk": 8,
+		"hp": 9,
+		"max_owned": 3
+	},
+	{
+		"id": 10,
+		"image": "res://data/cards/images/10.png",
+		"atk": 14,
+		"hp": 5,
+		"max_owned": 3
+	},
+	{
+		"id": 11,
+		"image": "res://data/cards/images/11.png",
+		"atk": 7,
+		"hp": 9,
+		"max_owned": 3
+	},
+	{
+		"id": 12,
+		"image": "res://data/cards/images/12.png",
+		"atk": 9,
+		"hp": 15,
+		"max_owned": 3
+	},
+	{
+		"id": 13,
+		"image": "res://data/cards/images/13.png",
+		"atk": 16,
+		"hp": 5,
+		"max_owned": 3
+	},
+	{
+		"id": 14,
+		"image": "res://data/cards/images/14.png",
+		"atk": 5,
+		"hp": 12,
+		"max_owned": 3
+	},
+	{
+		"id": 15,
+		"image": "res://data/cards/images/15.png",
+		"atk": 20,
+		"hp": 11,
+		"max_owned": 3
+	},
+	{
+		"id": 16,
+		"image": "res://data/cards/images/16.png",
+		"atk": 16,
+		"hp": 11,
+		"max_owned": 3
+	},
+	{
+		"id": 17,
+		"image": "res://data/cards/images/17.png",
+		"atk": 8,
+		"hp": 4,
+		"max_owned": 3
+	},
+	{
+		"id": 18,
+		"image": "res://data/cards/images/18.png",
+		"atk": 4,
+		"hp": 20,
+		"max_owned": 3
+	},
+	{
+		"id": 19,
+		"image": "res://data/cards/images/19.png",
+		"atk": 3,
+		"hp": 9,
+		"max_owned": 3
+	},
+	{
+		"id": 20,
+		"image": "res://data/cards/images/20.png",
+		"atk": 3,
+		"hp": 7,
+		"max_owned": 3
+	},
 ]

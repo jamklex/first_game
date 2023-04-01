@@ -4,20 +4,16 @@ var player_deck = []
 var enemy_deck = []
 var rng = RandomNumberGenerator.new()
 
-var CardProperties = preload("res://shared/card/scripts/properties.gd")
 var enemy_card = preload("res://shared/card/back.tscn")
 var player_card = preload("res://shared/card/front.tscn")
 
-func _ready():
-	rng.randomize()
+var tree:SceneTree
+var properties
 
-func random_cards(amount, visible):
-	var array = []
-	for i in range(amount):
-		var card = CardProperties.new()
-		card.initialize(rng.randi_range(1,7), rng.randi_range(1,7))
-		array.append(card)
-	return array
+func initialize(given_tree, given_properties):
+	tree = given_tree
+	properties = given_properties
+	rng.randomize()
 
 func lay_card_on_space(card_spots, from, to, hand_node):
 	var initial_card = hand_node.get_child(from)
@@ -45,7 +41,7 @@ func adjust_separation(hand):
 	var separation = 5 if card_amount <= 3 else card_amount * -10
 	hand.add_theme_constant_override("separation", separation)
 
-func attack(attacker_cards, target_cards, tree):
+func attack(attacker_cards, target_cards):
 	const attack_animation_time = 0.25
 	for atk in attacker_cards:
 		if atk != null:
@@ -113,3 +109,25 @@ func bump_child_y(node, increase):
 
 func total_card_size(deck, card_space, hand):
 	return deck.size() + cards_ltr_in(card_space).size() + hand.get_child_count()
+
+func draw_cards(node, amount, deck, visible_card, card_draw_time):
+	for n in amount:
+		if node.get_child_count() == properties.max_hand_cards:
+			break
+		var card = get_card_from_deck(deck)
+		if card == null:
+			return
+		add_card_to(node, create_visible_instance(card, visible_card))
+		await tree.create_timer(card_draw_time).timeout
+
+func get_card_from_deck(deck):
+	if deck.size() == 0:
+		return
+	return deck.pop_at(rng.randi_range(0, deck.size()-1))
+
+func add_card_to(hand, card):
+	hand.add_child(card)
+	adjust_separation(hand)
+
+func set_visibility(node, status):
+	node.visible = status

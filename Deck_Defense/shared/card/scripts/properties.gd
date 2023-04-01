@@ -10,6 +10,9 @@ const boosted_color = Color("#1e9a12")
 const damaged_color = Color("#bb0c0e")
 const default_color = Color("#000000")
 
+var JsonReader = preload("res://shared/scripts/json_reader.gd").new()
+var CardData = "res://data/cards/cards.json"
+var face
 var base_hp = 0
 var hp = 0
 var base_atk = 0
@@ -17,8 +20,17 @@ var atk = 0
 var virus_level = 3
 var node
 
-func _ready():
-	pass
+func load_data(id):
+	var content = JsonReader.read_json(CardData)
+	for i in content:
+		if i["id"] == id:
+			load_properties(i)
+			return
+
+func load_properties(card_prop_dict):
+	face = card_prop_dict["image"]
+	initialize(card_prop_dict["hp"], card_prop_dict["atk"])
+	reload_data()
 
 func initialize(init_hp, init_atk):
 	base_hp = init_hp
@@ -29,9 +41,13 @@ func initialize(init_hp, init_atk):
 func link_node(link):
 	node = link
 
-func load_labels():
-	update_label(hp_label, hp, base_hp)
-	update_label(atk_label, atk, base_atk)
+func reload_data():
+	if node != null:
+		update_label(hp_label, hp, base_hp)
+		update_label(atk_label, atk, base_atk)
+		var sprite = node.get_node(image)
+		if sprite != null and face != null:
+			sprite.texture = load(face)
 
 func set_hp(new_hp):
 	hp = new_hp
