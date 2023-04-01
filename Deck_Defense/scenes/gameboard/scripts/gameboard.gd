@@ -21,7 +21,7 @@ const enemy_cards_left = "Enemy/CardsLeft"
 const ENEMY_THINKING_TIME = 1.5
 const CARD_DRAW_TIME = 0.2
 
-var GameboardUtil = preload("res://scripts/util/gameboard-util.gd").new()
+var GameboardUtil = preload("res://scenes/gameboard/scripts/gameboard-util.gd").new()
 
 var rng = RandomNumberGenerator.new()
 var playerMaxHp

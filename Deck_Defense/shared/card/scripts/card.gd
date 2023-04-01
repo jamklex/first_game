@@ -6,7 +6,7 @@ func _ready():
 	pass
 
 func initialize_new():
-	initialize_from(preload("res://scripts/obj/card-obj.gd").new())
+	initialize_from(preload("res://shared/card/scripts/properties.gd").new())
 
 func initialize_from(card):
 	properties = card
@@ -14,4 +14,4 @@ func initialize_from(card):
 	properties.load_labels()
 
 func initialize_from_id(id):
-	initialize_from(preload("res://scripts/obj/card-obj.gd").new())
+	initialize_from(preload("res://shared/card/scripts/properties.gd").new())

@@ -16,10 +16,10 @@ func _ready():
 		resizeDropdown.add_item(String.num(size.x) + " x " + String.num(size.y))
 
 func _on_StartButton_pressed():
-	get_tree().change_scene_to_file("res://scenes/Gameboard.tscn")
+	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
 
 func _on_PackagesButton_pressed():
-	get_tree().change_scene_to_file("res://scenes/packages.tscn")
+	get_tree().change_scene_to_file("res://scenes/packages/_main.tscn")
 
 func _on_QuitButton_pressed():
 	get_tree().quit()

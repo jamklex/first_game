@@ -1,14 +1,14 @@
-[gd_scene load_steps=16 format=3 uid="uid://cy1g05xwfqc3k"]
+[gd_scene load_steps=16 format=3 uid="uid://swrgxci4mvda"]
 
-[ext_resource type="Script" path="res://scripts/gameboard.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://cpamhaingobwl" path="res://prefabs/card-space.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://de38q4xua11xu" path="res://prefabs/healthbar.tscn" id="6"]
-[ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://prefabs/cardsLeft.tscn" id="7"]
-[ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://prefabs/blockOpponent.tscn" id="7_luclj"]
-[ext_resource type="PackedScene" uid="uid://bvcn0w7wgi4kl" path="res://prefabs/waitWhileFight.tscn" id="8"]
-[ext_resource type="PackedScene" uid="uid://ccc2tywi8eumf" path="res://prefabs/player-looses.tscn" id="8_vb3l3"]
-[ext_resource type="PackedScene" uid="uid://c3s7600f7wysf" path="res://prefabs/attackOpponent.tscn" id="9"]
-[ext_resource type="PackedScene" uid="uid://vjthyer42ikq" path="res://prefabs/player-wins.tscn" id="9_aphqi"]
+[ext_resource type="Script" path="res://scenes/gameboard/scripts/gameboard.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://cpamhaingobwl" path="res://scenes/gameboard/prefabs/card-space.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://de38q4xua11xu" path="res://scenes/gameboard/prefabs/healthbar.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://scenes/gameboard/prefabs/cardsLeft.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://scenes/gameboard/prefabs/blockOpponent.tscn" id="7_luclj"]
+[ext_resource type="PackedScene" uid="uid://bvcn0w7wgi4kl" path="res://scenes/gameboard/prefabs/waitWhileFight.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://ccc2tywi8eumf" path="res://scenes/gameboard/prefabs/player-looses.tscn" id="8_vb3l3"]
+[ext_resource type="PackedScene" uid="uid://c3s7600f7wysf" path="res://scenes/gameboard/prefabs/attackOpponent.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://vjthyer42ikq" path="res://scenes/gameboard/prefabs/player-wins.tscn" id="9_aphqi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8sp8"]
 bg_color = Color(0.576471, 0, 0.117647, 1)
@@ -135,6 +135,8 @@ offset_left = 379.0
 offset_top = -49.0
 offset_right = 479.0
 offset_bottom = 51.0
+grow_horizontal = 1
+grow_vertical = 1
 
 [node name="AttackOpponent" parent="TurnOptions" instance=ExtResource("9")]
 visible = false

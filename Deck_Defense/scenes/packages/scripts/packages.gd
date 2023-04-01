@@ -3,8 +3,8 @@ extends Control
 
 var pointsLabel:Label
 var packageHolder: GridContainer
-var packageScene:PackedScene
-var packageCardScene:PackedScene
+var packageScene:PackedScene = preload("res://scenes/packages/prefabs/package.tscn")
+var packageCardScene:PackedScene = preload("res://scenes/packages/prefabs/packageCard.tscn")
 var points = 100
 var packages = []
 var minPackageWidth = -1
@@ -27,8 +27,6 @@ func _ready():
 	resultWindow = get_node("resultWindow")
 	resultCardHolder = resultWindow.get_node("cardWindow/scrollWrapper/CenterContainer/cardHolder")
 	animationPackage = resultWindow.get_node("package")
-	packageScene = load("res://prefabs/package.tscn")
-	packageCardScene = load("res://prefabs/packageCard.tscn")
 	_loadPackages()
 	_refreshPoints()
 	_afterResize()
@@ -55,7 +53,7 @@ func _loadPackages():
 		var name = "Moin" + String.num_int64(i)
 		var price = rng.randi_range(1,10)
 		var coverIndex = String.num_int64(rng.randi_range(1,4))
-		var imagePath = "res://images/packCovers/cover" + coverIndex + ".png"
+		var imagePath = "res://data/packs/covers/cover" + coverIndex + ".png"
 		newPackage.setCover(imagePath)
 		newPackage.setName(name)
 		newPackage.setPrice(price)
@@ -86,7 +84,7 @@ func onBuyButton(packageIndex):
 
 
 func _on_back_pressed():
-	get_tree().change_scene_to_file("res://scenes/Menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
 
 
 func _on_close_pressed():

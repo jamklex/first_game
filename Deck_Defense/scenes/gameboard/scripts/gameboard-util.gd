@@ -4,9 +4,9 @@ var player_deck = []
 var enemy_deck = []
 var rng = RandomNumberGenerator.new()
 
-var CardProperties = preload("res://scripts/obj/card-obj.gd")
-var enemy_card = preload("res://prefabs/cards/card-back.tscn")
-var player_card = preload("res://prefabs/cards/card.tscn")
+var CardProperties = preload("res://shared/card/scripts/properties.gd")
+var enemy_card = preload("res://shared/card/back.tscn")
+var player_card = preload("res://shared/card/front.tscn")
 
 func _ready():
 	rng.randomize()

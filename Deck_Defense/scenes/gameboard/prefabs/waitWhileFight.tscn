@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bvcn0w7wgi4kl"]
 
-[ext_resource type="Texture2D" uid="uid://d3dfrmy7qjywr" path="res://images/wait.png" id="1"]
+[ext_resource type="Texture2D" uid="uid://b0y4w3fxkqn0a" path="res://scenes/gameboard/images/wait.png" id="1_b20w4"]
 
 [node name="WaitWhileFight" type="Control"]
 custom_minimum_size = Vector2(100, 100)
@@ -10,9 +10,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -512.0
 offset_bottom = -88.0
+grow_horizontal = 2
+grow_vertical = 2
 tooltip_text = "Wait for Opponent Move"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(52, 52)
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("1")
+texture = ExtResource("1_b20w4")
