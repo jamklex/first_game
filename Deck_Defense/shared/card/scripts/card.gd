@@ -16,4 +16,5 @@ func initialize_from(card):
 func initialize_from_id(id):
 	properties = preload("res://shared/card/scripts/properties.gd").new()
 	properties.link_node(self)
+	properties.load_data(id)
 	properties.reload_data()

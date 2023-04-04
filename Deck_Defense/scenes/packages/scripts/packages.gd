@@ -76,6 +76,7 @@ func onBuyButton(packageIndex):
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	for i in 5:
 		var packageCard = packageCardScene.instantiate() as PackageCard
+		packageCard.get_node("front").initialize_from_id(rng.randi_range(1,20))
 		resultCardHolder.add_child(packageCard)
 		packageCard.setVisibility(false)
 	playOpeningAnimation(selectedPackage)
