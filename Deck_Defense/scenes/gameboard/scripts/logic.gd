@@ -40,7 +40,7 @@ func initialize_game():
 	set_hp(enemy_healt, Properties.enemyCurrentHp, Properties.enemyMaxHp)
 	set_hp(player_healt, Properties.playerCurrentHp, Properties.playerMaxHp)
 	await place_cards_in_hand(get_node(enemy_hand), Properties.initial_hand_cards, Properties.enemy_deck, Properties.enemy_initial, false)
-	await place_cards_in_hand(get_node(player_hand), Properties.initial_hand_cards, Properties.player_deck, null, true)
+	await place_cards_in_hand(get_node(player_hand), Properties.initial_hand_cards, Properties.player_deck, Properties.player_initial, true)
 	reset_hand_card_focus()
 	switch_to_player()
 
@@ -89,7 +89,7 @@ func switch_to_player():
 		Util.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 		Util.set_visibility(get_node(ATTACK_PLAYER), true)
 		Util.set_visibility(get_node(BLOCK_PLAYER), false)
-		await place_cards_in_hand(get_node(player_hand), Properties.cards_per_turn, Properties.player_deck, null, true)
+		await place_cards_in_hand(get_node(player_hand), Properties.cards_per_turn, Properties.player_deck, Properties.player_initial, true)
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.MY_TURN
 

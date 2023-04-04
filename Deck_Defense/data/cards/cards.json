@@ -4,7 +4,8 @@
 		"image": "res://data/cards/images/1.png",
 		"atk": 12,
 		"hp": 19,
-		"max_owned": 3
+		"max_owned": 3,
+		"multi_attack": true
 	},
 	{
 		"id": 2,
