@@ -36,7 +36,7 @@ func _on_StartButton_pressed():
 	
 
 func _on_deck_button_pressed():
-	get_tree().change_scene_to_file("res://scenes/deck/_main.tscn")
+	get_tree().change_scene_to_file("res://scenes/deckBuilder/_main.tscn")
 
 func _on_PackagesButton_pressed():
 	get_tree().change_scene_to_file("res://scenes/packages/_main.tscn")
