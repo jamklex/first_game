@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cdlnfhoq0id5"]
+[gd_scene load_steps=10 format=3 uid="uid://cdlnfhoq0id5"]
 
 [ext_resource type="Script" path="res://scenes/deckBuilder/scripts/selectableCard.gd" id="1_p3uqk"]
-[ext_resource type="PackedScene" uid="uid://cf1km1wp18aim" path="res://shared/card/front.tscn" id="2_aa1w8"]
+[ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="2_qjfys"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayioc"]
 draw_center = false
@@ -25,6 +25,18 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
+bg_color = Color(0.992157, 0.788235, 0.486275, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
 [node name="selectableCard" type="Button"]
 custom_minimum_size = Vector2(160, 240)
@@ -53,7 +65,13 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_kdbc1")
 
-[node name="Card" parent="." instance=ExtResource("2_aa1w8")]
+[node name="Card" type="Panel" parent="."]
+custom_minimum_size = Vector2(160, 240)
 layout_mode = 0
+offset_right = 160.0
+offset_bottom = 240.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
+script = ExtResource("2_qjfys")
 
 [connection signal="pressed" from="." to="." method="_switchSelect"]
