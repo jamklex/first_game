@@ -6,6 +6,8 @@ const boni_right = "Layout/Top/Right/Image"
 const virus = "Layout/Boottom/Virus"
 const hp_label = "Layout/Bottom/HP/Value"
 const atk_label = "Layout/Bottom/ATK/Value"
+const multi_attack_panel = "MultiAttack"
+const virus_panel = "VirusFrame"
 const boosted_color = Color("#1e9a12")
 const damaged_color = Color("#bb0c0e")
 const default_color = Color("#000000")
@@ -20,6 +22,7 @@ var atk = 0
 var virus_level = 3
 var node
 var type_id
+var multi_attack = false
 
 func load_data(id):
 	type_id = id
@@ -29,9 +32,11 @@ func load_data(id):
 			load_properties(card)
 			return
 
-func load_properties(card_prop_dict):
+func load_properties(card_prop_dict: Dictionary):
 	face = card_prop_dict["image"]
 	initialize(card_prop_dict["hp"], card_prop_dict["atk"])
+	if card_prop_dict.has("multi_attack"):
+		multi_attack = card_prop_dict["multi_attack"]
 	reload_data()
 
 func initialize(init_hp, init_atk):
@@ -47,6 +52,8 @@ func reload_data():
 	if node != null:
 		update_label(hp_label, hp, base_hp)
 		update_label(atk_label, atk, base_atk)
+		if multi_attack:
+			make_visible(multi_attack_panel)
 		var sprite = node.get_node(image)
 		if sprite != null and face != null:
 			sprite.texture = load(face)
@@ -72,3 +79,11 @@ func update_label(path, value, base_value):
 	if value < base_value:
 		color = damaged_color
 	label.add_theme_color_override("font_color", color)
+
+func make_visible(path):
+	if node == null:
+		return
+	var panel = node.get_node(path) as Panel
+	if panel == null:
+		return
+	panel.visible = true

@@ -1,8 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://cf1km1wp18aim"]
+[gd_scene load_steps=13 format=3 uid="uid://cf1km1wp18aim"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
 [ext_resource type="Texture2D" uid="uid://cvitf3ym1dqgc" path="res://shared/card/images/dar.png" id="2_adqpx"]
-[ext_resource type="Texture2D" uid="uid://bsvb8drke7wbr" path="res://icon.png" id="3_3e5lh"]
+[ext_resource type="Texture2D" uid="uid://bos36tmmimwtn" path="res://data/cards/images/placeholder.png" id="3_yalfj"]
 [ext_resource type="PackedScene" uid="uid://bnqlb5xu4p5m" path="res://shared/card/prefabs/VirusNode.tscn" id="4_jnkyy"]
 [ext_resource type="Texture2D" uid="uid://dq3sw27kkx3rl" path="res://shared/card/images/hp.png" id="5_ymmfd"]
 [ext_resource type="Texture2D" uid="uid://c2e84jpy12psd" path="res://shared/card/images/atk.png" id="6_3c03p"]
@@ -14,6 +14,19 @@ border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_usscq"]
+draw_center = false
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0.192157, 0.572549, 0.470588, 1)
+border_blend = true
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -36,7 +49,7 @@ corner_radius_bottom_left = 15
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dwj0"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+bg_color = Color(0.615686, 0.0392157, 0.364706, 0.580392)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdeoe"]
 draw_center = false
@@ -48,6 +61,15 @@ offset_bottom = 240.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
 script = ExtResource("1_3i4m2")
+
+[node name="MultiAttack" type="Panel" parent="."]
+visible = false
+custom_minimum_size = Vector2(160, 240)
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 240.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_usscq")
 
 [node name="VirusFrame" type="Panel" parent="."]
 visible = false
@@ -107,7 +129,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_4dwj0")
 
 [node name="Image" type="Sprite2D" parent="Layout/Top/Face"]
 scale = Vector2(0.225, 0.225)
-texture = ExtResource("3_3e5lh")
+texture = ExtResource("3_yalfj")
 centered = false
 
 [node name="Right" type="Panel" parent="Layout/Top"]

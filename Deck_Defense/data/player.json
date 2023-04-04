@@ -81,6 +81,9 @@
 			"amount": 1
 		},
 	],
+	"initial": [
+		
+	],
 	"decks": [
 		{
 			"name": "Mein geiles Deck",

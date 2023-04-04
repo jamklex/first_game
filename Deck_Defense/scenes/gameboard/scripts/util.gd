@@ -43,27 +43,30 @@ func adjust_separation(hand):
 
 func attack(attacker_cards, target_cards):
 	const attack_animation_time = 0.25
-	for atk in attacker_cards:
-		if atk != null:
-			var atk_prop = atk.properties
+	const direct_attack_animation_time = 0.35
+	var direct_damage = 0
+	for attacker in attacker_cards:
+		var dmg = attacker.properties.atk
+		var has_attacked = false
+		for defender in target_cards:
+			if defender == null:
+				continue
 			await tree.create_timer(attack_animation_time).timeout
-			for def in target_cards:
-				if def != null:
-					var def_prop = def.properties
-					await tree.create_timer(attack_animation_time).timeout
-					var new_card_hp = abs(def_prop.hp - atk_prop.hp)
-					if new_card_hp == 0:
-						remove_from_game(atk)
-						remove_from_game(def)
-						break
-					if def_prop.hp < atk_prop.hp:
-						remove_from_game(def)
-						atk_prop.set_hp(new_card_hp)
-					elif def_prop.hp > atk_prop.hp:
-						remove_from_game(atk)
-						def_prop.set_hp(new_card_hp)
-						break
-	return 0
+			has_attacked = true
+			var hp = defender.properties.hp
+			var new_card_hp = hp - dmg
+			if new_card_hp <= 0:
+				remove_from_game(defender)
+			else:
+				defender.properties.set_hp(new_card_hp)
+			dmg -= hp
+			if !attacker.properties.multi_attack or dmg <= 0:
+				break
+			has_attacked = false
+		if !has_attacked:
+			direct_damage += dmg
+		await tree.create_timer(attack_animation_time).timeout
+	return direct_damage
 
 func remove_from_game(card):
 	if card != null:
