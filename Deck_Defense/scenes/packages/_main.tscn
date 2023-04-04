@@ -104,7 +104,6 @@ size_flags_vertical = 3
 columns = 5
 
 [node name="resultWindow" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

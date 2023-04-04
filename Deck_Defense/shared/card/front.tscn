@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://cf1km1wp18aim"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
-[ext_resource type="Texture2D" uid="uid://cvitf3ym1dqgc" path="res://shared/card/images/dar.png" id="2_adqpx"]
-[ext_resource type="Texture2D" uid="uid://bsvb8drke7wbr" path="res://icon.png" id="3_3e5lh"]
+[ext_resource type="Texture2D" uid="uid://htrvehxqn0qo" path="res://shared/card/images/dar.png" id="2_adqpx"]
+[ext_resource type="Texture2D" uid="uid://cglel4mkfi83a" path="res://icon.png" id="3_3e5lh"]
 [ext_resource type="PackedScene" uid="uid://bnqlb5xu4p5m" path="res://shared/card/prefabs/VirusNode.tscn" id="4_jnkyy"]
-[ext_resource type="Texture2D" uid="uid://dq3sw27kkx3rl" path="res://shared/card/images/hp.png" id="5_ymmfd"]
-[ext_resource type="Texture2D" uid="uid://c2e84jpy12psd" path="res://shared/card/images/atk.png" id="6_3c03p"]
+[ext_resource type="Texture2D" uid="uid://s3olrd53k6fn" path="res://shared/card/images/hp.png" id="5_ymmfd"]
+[ext_resource type="Texture2D" uid="uid://b2dkujvlwqkmb" path="res://shared/card/images/atk.png" id="6_3c03p"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
 bg_color = Color(0.992157, 0.788235, 0.486275, 1)

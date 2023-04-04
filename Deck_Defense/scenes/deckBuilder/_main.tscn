@@ -1,0 +1,141 @@
+[gd_scene load_steps=5 format=3 uid="uid://dot06br0k3e7s"]
+
+[ext_resource type="Script" path="res://scenes/deckBuilder/scripts/deckBuilder.gd" id="1_ssxq1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0aopp"]
+bg_color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvwtu"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_px33g"]
+bg_color = Color(0.176471, 0.176471, 0.176471, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 0, 0, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[node name="deckBuilder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ssxq1")
+
+[node name="bg" type="Panel" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0aopp")
+
+[node name="back" type="Button" parent="bg"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 70.0
+offset_bottom = 35.0
+text = "Back
+"
+
+[node name="deckWrapper" type="ScrollContainer" parent="bg"]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 55.0
+offset_top = 50.0
+offset_right = -69.0
+offset_bottom = -50.0
+
+[node name="center" type="CenterContainer" parent="bg/deckWrapper"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="deckHolder" type="GridContainer" parent="bg/deckWrapper/center"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 5
+
+[node name="editDeck" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0aopp")
+
+[node name="done" type="Button" parent="editDeck"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 70.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_nvwtu")
+disabled = true
+text = "Done"
+
+[node name="cancel" type="Button" parent="editDeck"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -41.0
+offset_right = 70.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_px33g")
+text = "Cancel"
+
+[node name="vertAlign" type="HBoxContainer" parent="editDeck"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 52.0
+offset_bottom = -51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="requirements" type="VBoxContainer" parent="editDeck/vertAlign"]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+
+[node name="cardWrapper" type="ScrollContainer" parent="editDeck/vertAlign"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="center" type="CenterContainer" parent="editDeck/vertAlign/cardWrapper"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="cardHolder" type="GridContainer" parent="editDeck/vertAlign/cardWrapper/center"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 5
+
+[connection signal="pressed" from="bg/back" to="." method="_on_back_pressed"]
+[connection signal="resized" from="bg/deckWrapper" to="." method="onResized"]
+[connection signal="pressed" from="editDeck/done" to="." method="onEditDeckDone"]
+[connection signal="pressed" from="editDeck/cancel" to="." method="onEditDeckCanceled"]
+[connection signal="resized" from="editDeck/vertAlign/cardWrapper" to="." method="onResized"]

@@ -33,6 +33,10 @@ func _ready():
 
 func _on_StartButton_pressed():
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
+	
+
+func _on_deck_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/deck/_main.tscn")
 
 func _on_PackagesButton_pressed():
 	get_tree().change_scene_to_file("res://scenes/packages/_main.tscn")
@@ -88,3 +92,5 @@ func getIndexByWidthAndHeigth(width, height):
 		if windowSize.x == width and windowSize.y == height:
 			return index
 	return 0
+
+

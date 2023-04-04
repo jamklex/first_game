@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://cdlnfhoq0id5"]
+
+[ext_resource type="Script" path="res://scenes/deckBuilder/scripts/selectableCard.gd" id="1_p3uqk"]
+[ext_resource type="PackedScene" uid="uid://cf1km1wp18aim" path="res://shared/card/front.tscn" id="2_aa1w8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayioc"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xb7mk"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pmnl1"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ddjs6"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xblpj"]
+draw_center = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdbc1"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
+
+[node name="selectableCard" type="Button"]
+custom_minimum_size = Vector2(160, 240)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -992.0
+offset_bottom = -408.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ayioc")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xb7mk")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pmnl1")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_ddjs6")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xblpj")
+script = ExtResource("1_p3uqk")
+
+[node name="indicator" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kdbc1")
+
+[node name="Card" parent="." instance=ExtResource("2_aa1w8")]
+layout_mode = 0
+
+[connection signal="pressed" from="." to="." method="_switchSelect"]
