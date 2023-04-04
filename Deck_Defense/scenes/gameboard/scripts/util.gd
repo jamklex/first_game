@@ -110,12 +110,17 @@ func bump_child_y(node, increase):
 func total_card_size(deck, card_space, hand):
 	return deck.size() + cards_ltr_in(card_space).size() + hand.get_child_count()
 
-func draw_cards(node, amount, deck, visible_card, card_draw_time):
+func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
 	for n in amount:
 		if node.get_child_count() == properties.max_hand_cards:
 			break
-		var card = get_card_from_deck(deck)
-		if card == null:
+		var card
+		if prefered_ids != null:
+			while !prefered_ids.is_empty() and card == null:
+				card = get_specific_card_from_deck(deck, prefered_ids.pop_front())
+		if card == null and deck.size() > 0:
+			card = get_card_from_deck(deck)
+		elif card == null:
 			return
 		add_card_to(node, create_visible_instance(card, visible_card))
 		await tree.create_timer(card_draw_time).timeout
@@ -124,6 +129,14 @@ func get_card_from_deck(deck):
 	if deck.size() == 0:
 		return
 	return deck.pop_at(rng.randi_range(0, deck.size()-1))
+
+func get_specific_card_from_deck(deck: Array, id):
+	var i = 0
+	for card in deck:
+		if card.type_id == id:
+			break
+		i += 1
+	return deck.pop_at(i)
 
 func add_card_to(hand, card):
 	hand.add_child(card)

@@ -19,12 +19,14 @@ var base_atk = 0
 var atk = 0
 var virus_level = 3
 var node
+var type_id
 
 func load_data(id):
+	type_id = id
 	var content = JsonReader.read_json(CardData)
-	for i in content:
-		if i["id"] == id:
-			load_properties(i)
+	for card in content:
+		if card["id"] == id:
+			load_properties(card)
 			return
 
 func load_properties(card_prop_dict):
