@@ -7,7 +7,7 @@ var cardScene:PackedScene = preload("res://scenes/deckBuilder/prefabs/selectable
 var rng = RandomNumberGenerator.new()
 var decks = []
 var cards = []
-var editDeck:Control
+var editDeck:Control   
 var deckHolder:GridContainer
 var cardHolder:GridContainer
 
