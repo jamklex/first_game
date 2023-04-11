@@ -3,7 +3,7 @@ extends Control
 var settingsPanel:Panel
 
 ## actual settings
-var settings = Settings.new()
+var settings = preload("res://shared/settings.gd").new()
 var KEY_FULLSCREEN = "fullscreen"
 var KEY_WINDOWSIZE_WIDTH = "windowSizeWidth"
 var KEY_WINDOWSIZE_HEIGHT = "windowSizeHeight"

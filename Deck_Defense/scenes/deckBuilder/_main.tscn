@@ -1,9 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://dot06br0k3e7s"]
+[gd_scene load_steps=8 format=3 uid="uid://dot06br0k3e7s"]
 
 [ext_resource type="Script" path="res://scenes/deckBuilder/scripts/deckBuilder.gd" id="1_ssxq1"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0aopp"]
 bg_color = Color(0.301961, 0.301961, 0.301961, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0iu15"]
+bg_color = Color(0.333333, 0.333333, 0.333333, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tb8ml"]
+bg_color = Color(0.333333, 0.333333, 0.333333, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sp8t1"]
+bg_color = Color(0.333333, 0.333333, 0.333333, 1)
+draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nvwtu"]
 bg_color = Color(0.176471, 0.176471, 0.176471, 1)
@@ -53,20 +67,53 @@ offset_bottom = 35.0
 text = "Back
 "
 
-[node name="deckWrapper" type="ScrollContainer" parent="bg"]
-layout_mode = 0
+[node name="newDeck" type="Button" parent="bg"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -183.0
+offset_top = 28.0
+offset_right = -69.0
+offset_bottom = 59.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_0iu15")
+text = "New Deck"
+
+[node name="deckBg" type="Panel" parent="bg"]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 55.0
-offset_top = 50.0
+offset_left = 69.0
+offset_top = 64.0
 offset_right = -69.0
-offset_bottom = -50.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tb8ml")
 
-[node name="center" type="CenterContainer" parent="bg/deckWrapper"]
+[node name="margin" type="MarginContainer" parent="bg/deckBg"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="deckWrapper" type="ScrollContainer" parent="bg/deckBg/margin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_sp8t1")
+
+[node name="center" type="CenterContainer" parent="bg/deckBg/margin/deckWrapper"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="deckHolder" type="GridContainer" parent="bg/deckWrapper/center"]
+[node name="deckHolder" type="GridContainer" parent="bg/deckBg/margin/deckWrapper/center"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -138,7 +185,8 @@ size_flags_vertical = 3
 columns = 5
 
 [connection signal="pressed" from="bg/back" to="." method="_on_back_pressed"]
-[connection signal="resized" from="bg/deckWrapper" to="." method="onResized"]
+[connection signal="pressed" from="bg/newDeck" to="." method="_on_new_deck_pressed"]
+[connection signal="resized" from="bg/deckBg/margin/deckWrapper" to="." method="onResized"]
 [connection signal="pressed" from="editDeck/done" to="." method="onEditDeckDone"]
 [connection signal="pressed" from="editDeck/cancel" to="." method="onEditDeckCanceled"]
 [connection signal="resized" from="editDeck/vertAlign/cardWrapper" to="." method="onResized"]

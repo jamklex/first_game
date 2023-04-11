@@ -5,28 +5,33 @@ class_name Deck
 ### on click edit button
 var editFuncObj:Control
 var editFunctionName
-var editFunctionArg
 ####
 ### on click active check
 var activeFuncObj:Control
 var activeFunctionName
-var activeFunctionArg
 ####
+### on click delete button
+var deleteFuncObj:Control
+var deleteFunctionName
+####
+var active = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 	
-func setOnActiveCheckClicked(newFuncObj, funcName, funcArg):
+func setOnActiveCheckClicked(newFuncObj, funcName):
 	activeFuncObj = newFuncObj
 	activeFunctionName = funcName
-	activeFunctionArg = funcArg
 
-func setOnEditButtonClicked(newFuncObj, funcName, funcArg):
+func setOnEditButtonClicked(newFuncObj, funcName):
 	editFuncObj = newFuncObj
 	editFunctionName = funcName
-	editFunctionArg = funcArg
+	
+func setOnDeleteButtonClicked(newFuncObj, funcName):
+	deleteFuncObj = newFuncObj
+	deleteFunctionName = funcName
 	
 func setDeckName(newName):
 	var labelName = $name as Label
@@ -34,12 +39,39 @@ func setDeckName(newName):
 	
 func setActive(newActive):
 	var activeBox = $active as CheckBox
-	activeBox.button_pressed = newActive	
+	activeBox.button_pressed = newActive
+	var deleteBtn = $deleteBtn as Button
+	deleteBtn.disabled = newActive
+	active = newActive
+	
+func _showNameEdit(show:bool):
+	var name = $name as Label
+	var nameEdit = $nameEdit as LineEdit
+	name.visible = not show
+	nameEdit.visible = show
+	if show:
+		nameEdit.grab_focus()
 
 func _on_edit_btn_pressed():
 	if editFuncObj:
-		editFuncObj.call(editFunctionName, editFunctionArg)
+		editFuncObj.call(editFunctionName, self)
 
 func _on_active_pressed():
 	if activeFuncObj:
-		activeFuncObj.call(activeFunctionName, activeFunctionArg)
+		activeFuncObj.call(activeFunctionName, self)
+
+func _on_delete_btn_pressed():
+	if deleteFuncObj:
+		deleteFuncObj.call(deleteFunctionName, self)
+
+func _on_name_gui_input(event):
+	if event is InputEventMouseButton:
+		event = event as InputEventMouseButton
+		if event.double_click:
+			print("double clicked name...")
+			_showNameEdit(true)
+
+func _on_name_edit_text_submitted(newName:String):
+	if newName.length() > 0:
+		setDeckName(newName)
+		_showNameEdit(false)
