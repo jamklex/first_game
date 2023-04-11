@@ -3,7 +3,7 @@ extends Panel
 class_name Deck
 
 ### on click edit button
-var editFuncObj:Control
+var editFuncObj:Control   
 var editFunctionName
 ####
 ### on click active check
