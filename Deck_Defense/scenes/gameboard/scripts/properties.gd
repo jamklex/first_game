@@ -10,6 +10,11 @@ var enemyCurrentHp
 var enemy_deck = []
 var enemy_initial = []
 
+var selected_card_spot
+var player_hand_node
+var player_card_space_node
+var selected_action_card
+var old_selected_action_card
 var max_hand_cards = 5;
 var initial_hand_cards = 3;
 var cards_per_turn = 3;

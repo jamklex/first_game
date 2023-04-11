@@ -22,7 +22,6 @@ const ENEMY_THINKING_TIME = 1.5
 const CARD_DRAW_TIME = 0.2
 
 var Util = preload("res://scenes/gameboard/scripts/util.gd").new()
-var Properties = preload("res://scenes/gameboard/scripts/properties.gd").new()
 var rng:RandomNumberGenerator = Properties.rng
 
 var max_card_space_spots = 10;
@@ -43,6 +42,8 @@ func initialize_game():
 	await place_cards_in_hand(get_node(player_hand), Properties.initial_hand_cards, Properties.player_deck, Properties.player_initial, true)
 	reset_hand_card_focus()
 	switch_to_player()
+	Properties.player_hand_node = get_node(player_hand)
+	Properties.player_card_space_node = get_node(player_card_space)
 
 func _on_Hand_gui_input(event):
 	if Util.is_mouse_click(event) and can_place_cards():
@@ -57,9 +58,9 @@ func _on_Hand_gui_input(event):
 func _on_CardSpace_gui_input(event):
 	if Util.is_mouse_click(event) and can_place_cards():
 		var node = get_node(player_card_space) as HBoxContainer
-		var card_space_spot_selected = Util.get_child_index(node, make_input_local(event).position, false, -1)
+		var card_space_spot_selected = Properties.selected_card_spot
 		if card_space_spot_selected >= 0 and selected_action_card >= 0:
-			if Util.lay_card_on_space(get_node(player_card_space), selected_action_card, card_space_spot_selected, get_node(player_hand)):
+			if Util.lay_card_on_space(Properties.player_card_space_node, selected_action_card, card_space_spot_selected, Properties.player_hand_node):
 				Util.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 				Util.set_visibility(get_node(ATTACK_PLAYER), false)
 				Util.set_visibility(get_node(BLOCK_PLAYER), true)

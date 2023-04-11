@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://jup0l63xkqs0"]
 
 [ext_resource type="Script" path="res://scenes/gameboard/scripts/logic.gd" id="1"]
-[ext_resource type="PackedScene" uid="uid://cpamhaingobwl" path="res://scenes/gameboard/prefabs/card-space.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://ddnfpi8nnt6o0" path="res://scenes/gameboard/prefabs/card-space.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://de38q4xua11xu" path="res://scenes/gameboard/prefabs/healthbar.tscn" id="6"]
 [ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://scenes/gameboard/prefabs/cardsLeft.tscn" id="7"]
 [ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://scenes/gameboard/prefabs/blockOpponent.tscn" id="7_luclj"]
@@ -67,9 +67,6 @@ offset_right = 1575.0
 offset_bottom = 1322.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(576, 324)
 
 [node name="Enemy" type="Control" parent="."]
 layout_mode = 3
