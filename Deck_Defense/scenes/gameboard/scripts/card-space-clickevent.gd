@@ -1,7 +1,5 @@
 extends HBoxContainer
 
-var Util = preload("res://scenes/gameboard/scripts/util.gd").new()
-
 func _ready():
 	pass
 

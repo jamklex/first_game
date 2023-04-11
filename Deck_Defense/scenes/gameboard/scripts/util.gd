@@ -1,19 +1,16 @@
-extends Object
+extends Node
 
 var player_deck = []
 var enemy_deck = []
-var rng = RandomNumberGenerator.new()
+var rng = Properties.rng
 
 var enemy_card = preload("res://shared/card/back.tscn")
 var player_card = preload("res://shared/card/front.tscn")
 
 var tree:SceneTree
-var properties
 
-func initialize(given_tree, given_properties):
+func initialize(given_tree):
 	tree = given_tree
-	properties = given_properties
-	rng.randomize()
 
 func lay_card_on_space(card_spots, from, to, hand_node):
 	var initial_card = hand_node.get_child(from)
@@ -115,7 +112,7 @@ func total_card_size(deck, card_space, hand):
 
 func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
 	for n in amount:
-		if node.get_child_count() == properties.max_hand_cards:
+		if node.get_child_count() == Properties.max_hand_cards:
 			break
 		var card
 		if prefered_ids != null:

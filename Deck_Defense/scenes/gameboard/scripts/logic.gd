@@ -1,4 +1,4 @@
-extends Node2D
+extends CenterContainer
 
 const WAIT_WHILE_FIGHT = "TurnOptions/WaitWhileFight"
 const ATTACK_PLAYER = "TurnOptions/AttackOpponent"
@@ -21,7 +21,6 @@ const enemy_cards_left = "Enemy/CardsLeft"
 const ENEMY_THINKING_TIME = 1.5
 const CARD_DRAW_TIME = 0.2
 
-var Util = preload("res://scenes/gameboard/scripts/util.gd").new()
 var rng:RandomNumberGenerator = Properties.rng
 
 var max_card_space_spots = 10;
@@ -35,7 +34,7 @@ func _ready():
 func initialize_game():
 	var level = 1
 	Properties.initialize(level)
-	Util.initialize(get_tree(), Properties)
+	Util.initialize(get_tree())
 	set_hp(enemy_healt, Properties.enemyCurrentHp, Properties.enemyMaxHp)
 	set_hp(player_healt, Properties.playerCurrentHp, Properties.playerMaxHp)
 	await place_cards_in_hand(get_node(enemy_hand), Properties.initial_hand_cards, Properties.enemy_deck, Properties.enemy_initial, false)
