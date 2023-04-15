@@ -2,19 +2,19 @@
 	"cards": [
 		{
 			"id": 1,
-			"amount": 2
+			"amount": 3
 		},
 		{
 			"id": 2,
-			"amount": 2
+			"amount": 3
 		},
 		{
 			"id": 3,
-			"amount": 2
+			"amount": 3
 		},
 		{
 			"id": 4,
-			"amount": 2
+			"amount": 3
 		},
 		{
 			"id": 5,
@@ -42,15 +42,15 @@
 		},
 		{
 			"id": 11,
-			"amount": 1
+			"amount": 3
 		},
 		{
 			"id": 12,
-			"amount": 1
+			"amount": 3
 		},
 		{
 			"id": 13,
-			"amount": 1
+			"amount": 3
 		},
 		{
 			"id": 14,
