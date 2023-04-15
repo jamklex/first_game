@@ -1,10 +1,12 @@
 {
 	"name": "Basic Cards #1",
-	"price": 15,
-	"image": "res://images/packCovers/cover1.png",
+	"price": 10,
+	"image": "res://data/packs/covers/cover1.png",
 	"cards": [
 		1,
 		2,
-		3
+		3,
+		4,
+		5
 	]
 }

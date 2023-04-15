@@ -1,0 +1,10 @@
+{
+	"name": "Super Pack",
+	"price": 100,
+	"image": "res://data/packs/covers/test.jpg",
+	"cards": [
+		18,
+		19,
+		20
+	]
+}
