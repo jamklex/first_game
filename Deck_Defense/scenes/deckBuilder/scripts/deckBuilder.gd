@@ -104,6 +104,7 @@ func onDeckActiveCheckClicked(activeDeck:Deck):
 	for index in decks.size():
 		var deck = decks[index] as Deck
 		deck.setActive(deck == activeDeck)
+	_save()
 
 func loadCards():
 	var playerData = jsonReader.read_json(playerDataJsonPath)
@@ -127,6 +128,7 @@ func _on_back_pressed():
 	
 func _beforeLeave():
 	print("_beforeLeave")
+	_save()
 
 #func _notification(what):    # actually u can handle then the close request here
 #	if what == NOTIFICATION_WM_CLOSE_REQUEST:
