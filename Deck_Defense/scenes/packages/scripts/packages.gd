@@ -38,7 +38,7 @@ func _refreshPoints():
 func _refreshPackageCards(cards_to_remove, except_pack):
 	for pack in packages:
 		if pack == except_pack:
-			break
+			continue
 		for id in cards_to_remove:
 			if pack.cards.has(id):
 				pack.cards.erase(id)
