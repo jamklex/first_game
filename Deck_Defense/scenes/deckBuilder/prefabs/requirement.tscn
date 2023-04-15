@@ -1,0 +1,49 @@
+[gd_scene load_steps=3 format=3 uid="uid://dur3jo6v7lqji"]
+
+[ext_resource type="Script" path="res://scenes/deckBuilder/scripts/requirement.gd" id="1_rmf6f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1rdv"]
+bg_color = Color(0, 0.176471, 0.0156863, 1)
+
+[node name="requirement" type="Panel"]
+custom_minimum_size = Vector2(250, 50)
+offset_right = 250.0
+offset_bottom = 50.0
+script = ExtResource("1_rmf6f")
+
+[node name="text" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -144.0
+offset_top = -11.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 2
+text = "Requirement"
+
+[node name="activeWrapper" type="Panel" parent="."]
+layout_mode = 1
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 45.0
+offset_bottom = 45.0
+
+[node name="active" type="Panel" parent="activeWrapper"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.0
+offset_top = -15.0
+offset_right = 15.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_e1rdv")

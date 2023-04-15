@@ -15,6 +15,7 @@ var deleteFuncObj:Control
 var deleteFunctionName
 ####
 var active = false
+var cards = []
 
 
 # Called when the node enters the scene tree for the first time.
@@ -36,6 +37,11 @@ func setOnDeleteButtonClicked(newFuncObj, funcName):
 func setDeckName(newName):
 	var labelName = $name as Label
 	labelName.text = newName
+	
+func getDeckName():
+	var labelName = $name as Label
+	return labelName.text
+	
 	
 func setActive(newActive):
 	var activeBox = $active as CheckBox

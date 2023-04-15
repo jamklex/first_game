@@ -4,12 +4,29 @@ var playerDataJsonPath = "res://data/player.json"
 var jsonReader = preload("res://shared/scripts/json_reader.gd").new()
 var deckScene:PackedScene = preload("res://scenes/deckBuilder/prefabs/deck.tscn")
 var cardScene:PackedScene = preload("res://scenes/deckBuilder/prefabs/selectableCard.tscn")
+var requirmentScene:PackedScene = preload("res://scenes/deckBuilder/prefabs/requirement.tscn")
 var rng = RandomNumberGenerator.new()
 var decks = []
 var cards = []
 var editDeck:Control   
 var deckHolder:GridContainer
 var cardHolder:GridContainer
+var selectedDeck: Deck = null
+
+var requirements = [
+	["Min number of cards (10)", "minNumberOfCards"]
+]
+var requirementObjs = []
+
+func minNumberOfCards(deck: Deck):
+	var numberOfSelectedCards = 0
+	for c in cards:
+		var selectedableCard = c as SelectableCard
+		if selectedableCard.selected:
+			numberOfSelectedCards += 1
+	if numberOfSelectedCards >= 10:
+		return true
+	return false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -19,9 +36,12 @@ func _ready():
 	cardHolder = $editDeck/vertAlign/cardWrapper/center/cardHolder
 	rng.randomize()
 	_loadDecks()
+	_loadRequirements()
 #	get_tree().set_auto_accept_quit(false)  # for reacting on close request
 	
 func _loadDecks():
+	cleanDeckHolder()
+	decks.clear()
 	var decksData = jsonReader.read_json(playerDataJsonPath)
 	for deckData in decksData["decks"]:
 		var newDeck = deckScene.instantiate() as Deck
@@ -30,6 +50,7 @@ func _loadDecks():
 		newDeck.setOnActiveCheckClicked(self, "onDeckActiveCheckClicked")
 		newDeck.setOnDeleteButtonClicked(self, "onDeckDeleteBtnClicked")
 		newDeck.setActive(deckData["active"])
+		newDeck.cards = deckData["cards"]
 		deckHolder.add_child(newDeck)
 		decks.append(newDeck)
 	setDeckHolderColumns()
@@ -38,13 +59,46 @@ func onDeckDeleteBtnClicked(deck: Deck):
 	print("delete pack with name: " + deck.name)
 	decks.remove_at(decks.find(deck))
 	deckHolder.remove_child(deck)
-	setDeckHolderColumns()	
+	setDeckHolderColumns()
 		
 func onDeckEditBtnClicked(deck: Deck):
 	print("opening pack with name: " + deck.name)
 	loadCards()
+	activateDeckCards(deck)
+	sortCards_activeFirst()
+	loadCardHolder()
 	setCardHolderColumns()
 	editDeck.visible = true
+	selectedDeck = deck
+	checkRequirements()
+	
+func activateDeckCards(deck: Deck):
+	for cardData in deck.cards:
+		var cardAmount = cardData["amount"]
+		var cardId = cardData["id"]
+		for i in cardAmount:
+			for c in cards:
+				var selectedableCard = c as SelectableCard
+				if selectedableCard.selected:
+					continue
+				if cardId == selectedableCard.getCard().properties.type_id:
+					selectedableCard.setSelected(true)
+					break
+	
+func sortCards_activeFirst():
+	cleanCardHolder()
+	var sortedCards = []
+	### ADDS ONLY THE SELECTED CARDS
+	var notSelected = []
+	for c in cards:
+		var selectedableCard = c as SelectableCard
+		if selectedableCard.selected:
+			sortedCards.append(selectedableCard)
+		else:
+			notSelected.append(selectedableCard)
+	### ADDS THE REST
+	sortedCards.append_array(notSelected)
+	cards = sortedCards
 	
 func onDeckActiveCheckClicked(activeDeck:Deck):
 	for index in decks.size():
@@ -55,10 +109,14 @@ func loadCards():
 	var playerData = jsonReader.read_json(playerDataJsonPath)
 	for cardData in playerData["cards"]:
 		for i in range(cardData["amount"]):
-			var newCard = cardScene.instantiate()
+			var newCard = cardScene.instantiate() as SelectableCard
 			newCard.get_node("Card").initialize_from_id(cardData["id"])
-			cardHolder.add_child(newCard)
+			newCard.setOnClick(self, "onCardClicked")
 			cards.append(newCard)
+	loadCardHolder()
+
+func onCardClicked():
+	checkRequirements()
 
 func _on_deck_wrapper_resized():
 	pass
@@ -115,15 +173,27 @@ func setCardHolderColumns():
 
 func onEditDeckCanceled():
 	editDeck.visible = false
+	selectedDeck = null
 	cleanCardHolder()
+	cards.clear()
+	
+func loadCardHolder():
+	for card in cards:
+		cardHolder.add_child(card)
 
 func cleanCardHolder():
 	for child in cardHolder.get_children():
 		cardHolder.remove_child(child)
-	cards.clear()
+		
+func cleanDeckHolder():
+	for child in deckHolder.get_children():
+		deckHolder.remove_child(child)
 
 func onEditDeckDone():
-	pass # Replace with function body.
+	if checkRequirements():
+		_save()
+		_loadDecks()
+		onEditDeckCanceled()
 
 func _on_new_deck_pressed():
 	var newDeck = deckScene.instantiate() as Deck
@@ -133,3 +203,65 @@ func _on_new_deck_pressed():
 	newDeck.setOnDeleteButtonClicked(self, "onDeckDeleteBtnClicked")
 	deckHolder.add_child(newDeck)
 	decks.append(newDeck)
+
+func _loadRequirements():
+	var reqHolder = $editDeck/vertAlign/requirements
+	for requirement in requirements:
+		var text = requirement[0]
+		var newRequirmentObj = requirmentScene.instantiate() as Requirement
+		newRequirmentObj.setText(requirement[0])
+		requirementObjs.append(newRequirmentObj)
+		reqHolder.add_child(newRequirmentObj)
+	
+func checkRequirements():
+	if selectedDeck == null:
+		return false
+	for i in requirements.size():
+		var requirementFunc = requirements[i][1]
+		var requirementObj = requirementObjs[i] as Requirement
+		var check = self.call(requirementFunc, selectedDeck)
+		requirementObj.setActive(check)
+		if not check:
+			return false
+	return true
+
+func _save():
+	var file = FileAccess.open(playerDataJsonPath, FileAccess.READ)
+	var currentData = JSON.parse_string(file.get_as_text())
+	file.close()
+	var newDecks = []
+	for d in decks:
+		var newDeck = {}
+		var deck = d as Deck
+		newDeck["name"] = deck.getDeckName()
+		newDeck["active"] = deck.active
+		var newCards = []
+		var doneIds = []
+		for c in cards:
+			var selectedableCard = c as SelectableCard
+			if not selectedableCard.selected:
+				continue
+			var id = selectedableCard.getCard().properties.type_id
+			if id in doneIds:
+				continue
+			var amount = 1
+			for c1 in cards:
+				var selectedableCard1 = c1 as SelectableCard
+				if not selectedableCard1.selected:
+					continue
+				if selectedableCard == selectedableCard1:
+					continue
+				if id == selectedableCard1.getCard().properties.type_id:
+					amount += 1
+			var newCard = {}
+			newCard["id"] = id
+			newCard["amount"] = amount
+			newCards.append(newCard)
+			doneIds.append(id)
+		newDeck["cards"] = newCards
+		newDecks.append(newDeck)
+	currentData["decks"] = newDecks
+	file = FileAccess.open(playerDataJsonPath, FileAccess.WRITE)
+	file.store_line(JSON.stringify(currentData, "\t"))
+	file.flush()
+	file.close()
