@@ -2,21 +2,17 @@ extends Control
 
 class_name Package
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 enum Style {Available, NotEnoughMoney, Sold}
 
 var style = Style.Available
 var price
+var cards
 var numberOfPacks = 10
 var funcObj:Control
 var functionName
 var functionArg
 
 var buyBtn:Button
-#var buyBtnStyle = StyleBoxFlat.new()
 var availableColor = Color.WHITE
 var notAvailableColor = Color.BLACK
 var soldLayer:Panel
@@ -26,20 +22,20 @@ var coverTexture:Texture2D
 func _ready():
 	buyBtn = get_node("main/bar/MarginContainer/buyButton")
 	soldLayer = get_node("soldLayer")
-#	buyBtnStyle.bg_color = availableColor
-#	buyBtn.add_theme_stylebox_override("normal", buyBtnStyle)
 
 
 func setName(name):
 	var label = get_node("main/name") as Label
 	label.text = name
-	
+
 func setPrice(newPrice):
 	var label = get_node("main/bar/price") as Label
 	label.text = String.num_int64(newPrice) + " Pt"
 	price = newPrice
-	
-	
+
+func setCards(newCards):
+	cards = newCards
+
 func setCover(imagePath):
 	var texture = load(imagePath) as Texture2D
 	coverTexture = texture
@@ -50,10 +46,9 @@ func setCover(imagePath):
 		cover.texture = texture
 		
 
-func setOnClick(target, funcName, arg):
+func setOnClick(target, funcName):
 	funcObj = target
 	functionName = funcName
-	functionArg = arg
 	
 	
 func setStyle(newStyle):
@@ -63,7 +58,6 @@ func setStyle(newStyle):
 		buyBtn.disabled = false
 		buyBtn.add_theme_color_override("font_color", availableColor)
 		soldLayer.visible = false
-#		buyBtnStyle.bg_color = availableColor
 	else:
 		if style == Style.NotEnoughMoney:
 			buyBtn.text = "Buy"
@@ -73,10 +67,8 @@ func setStyle(newStyle):
 			soldLayer.visible = true
 		buyBtn.add_theme_color_override("font_color", notAvailableColor)
 		buyBtn.disabled = true
-#		buyBtnStyle.bg_color = notAvailableColor
-#	buyBtn.update()
 	
 
 func _on_buyButton_pressed():
 	if style == Style.Available:
-		funcObj.call(functionName, functionArg)
+		funcObj.call(functionName, self)

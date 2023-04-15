@@ -30,34 +30,41 @@ func _ready():
 	_loadPackages()
 	_refreshPoints()
 	_afterResize()
-
+	_refreshPackages()
 
 func _refreshPoints():
 	pointsLabel.text = String.num_int64(points) + " Pt"
-
+	
+func _refreshPackageCards(cards_to_remove, except_pack):
+	for pack in packages:
+		if pack == except_pack:
+			break
+		for id in cards_to_remove:
+			if pack.cards.has(id):
+				pack.cards.erase(id)
 
 func _refreshPackages():
 	for pack in packages:
 		pack = pack as Package
-		if pack.numberOfPacks == 0:
+		if pack.numberOfPacks == 0 or pack.cards.is_empty():
 			pack.setStyle(Package.Style.Sold)
 		elif points < pack.price:
 			pack.setStyle(Package.Style.NotEnoughMoney)
 		else:
 			pack.setStyle(Package.Style.Available)
 
-
 func _loadPackages():
-	for i in 10:
+	var packs = JsonReader.package_paths()
+	var player_card_amounts = flat_map(JsonReader.read_player_data()["cards"])
+	for pack in packs:
+		var pack_data = JsonReader.read_json(pack)
+		var card_difference = card_difference(player_card_amounts, pack_data["cards"])
 		var newPackage = packageScene.instantiate() as Package
-		var name = "Moin" + String.num_int64(i)
-		var price = rng.randi_range(1,10)
-		var coverIndex = String.num_int64(rng.randi_range(1,4))
-		var imagePath = "res://data/packs/covers/cover" + coverIndex + ".png"
-		newPackage.setCover(imagePath)
-		newPackage.setName(name)
-		newPackage.setPrice(price)
-		newPackage.setOnClick(self, "onBuyButton", i)
+		newPackage.setCover(pack_data["image"])
+		newPackage.setName(pack_data["name"])
+		newPackage.setPrice(pack_data["price"])
+		newPackage.setCards(card_difference)
+		newPackage.setOnClick(self, "onBuyButton")
 		packageHolder.add_child(newPackage)
 		packages.append(newPackage)
 		if minPackageHeight == -1:
@@ -65,20 +72,43 @@ func _loadPackages():
 			minPackageWidth = rect[0]
 			minPackageHeight = rect[1]
 
+func flat_map(card_info_array):
+	var card_dict = {} as Dictionary
+	for card_info in card_info_array:
+		card_dict[card_info["id"]] = card_info["amount"]
+	return card_dict
 
-func onBuyButton(packageIndex):
-	var selectedPackage = packages[packageIndex] as Package
+func card_difference(player_cards, pack_cards):
+	var remaining_cards = []
+	for id in pack_cards:
+		var properties = CardProperties.of(id) as CardProperties
+		var max = properties.max_owned
+		if player_cards.has(id):
+			max = max(0, max - player_cards[id])
+		for x in max:
+			remaining_cards.append(id)
+	return remaining_cards
+
+func onBuyButton(selectedPackage):
 	points -= selectedPackage.price
 	selectedPackage.numberOfPacks -= 1
-	_refreshPoints()
-	_refreshPackages()
+	var cards_for_player = []
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	for i in 5:
+		var relevant_cards = selectedPackage.cards
+		if relevant_cards.is_empty():
+			break
 		var packageCard = packageCardScene.instantiate() as PackageCard
-		packageCard.get_node("front").initialize_from_id(rng.randi_range(1,20))
+		var random_card_id = relevant_cards.pop_at(rng.randi_range(0, relevant_cards.size()-1))
+		cards_for_player.append(random_card_id)
+		packageCard.get_node("front").initialize_from_id(random_card_id)
 		resultCardHolder.add_child(packageCard)
 		packageCard.setVisibility(false)
+	_refreshPoints()
+	JsonReader.add_player_cards(cards_for_player)
+	_refreshPackageCards(cards_for_player, selectedPackage)
+	_refreshPackages()
 	playOpeningAnimation(selectedPackage)
 
 

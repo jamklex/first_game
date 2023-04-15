@@ -9,6 +9,7 @@ var enemyMaxHp
 var enemyCurrentHp
 var enemy_deck = []
 var enemy_initial = []
+var enemy_level
 
 var selected_card_spot
 var player_hand_node
@@ -20,15 +21,12 @@ var initial_hand_cards = 3;
 var cards_per_turn = 3;
 
 var CardProperties = preload("res://shared/card/scripts/properties.gd")
-var JsonReader = preload("res://shared/scripts/json_reader.gd").new()
-var PlayerData = "res://data/player.json"
-var EnemyData = "res://data/enemies/%s.json"
 
 func _ready():
 	rng.randomize()
 
 func initialize(level):
-	EnemyData = EnemyData % str(level)
+	enemy_level = level
 	playerMaxHp = 50
 	playerCurrentHp = playerMaxHp
 	enemyMaxHp = 50
@@ -40,7 +38,7 @@ func initialize(level):
 
 func get_player_deck():
 	var array = []
-	var content = JsonReader.read_json(PlayerData)
+	var content = JsonReader.read_player_data()
 	var active_deck
 	for deck in content["decks"]:
 		if deck["active"] == true:
@@ -50,13 +48,13 @@ func get_player_deck():
 
 func get_player_initial():
 	var array = []
-	var content = JsonReader.read_json(PlayerData)
+	var content = JsonReader.read_player_data()
 	array.append_array(content["initial"])
 	return array
 
 func get_enemy_deck():
 	var array = []
-	var content = JsonReader.read_json(EnemyData)
+	var content = JsonReader.read_enemy_data(enemy_level)
 	var deck = content["deck"]
 	for card in deck:
 		array.append_array(get_cards(card["id"], card["amount"]))
@@ -64,7 +62,7 @@ func get_enemy_deck():
 
 func get_enemy_initial():
 	var array = []
-	var content = JsonReader.read_json(EnemyData)
+	var content = JsonReader.read_enemy_data(enemy_level)
 	array.append_array(content["initial"])
 	return array
 
