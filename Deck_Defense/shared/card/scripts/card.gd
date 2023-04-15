@@ -1,6 +1,8 @@
 extends Panel
 
-var properties
+class_name Card
+
+var properties: CardProperties
 
 func _ready():
 	pass
@@ -14,7 +16,6 @@ func initialize_from(card):
 	properties.reload_data()
 
 func initialize_from_id(id):
-	properties = preload("res://shared/card/scripts/properties.gd").new()
+	properties = CardProperties.of(id)
 	properties.link_node(self)
-	properties.load_data(id)
 	properties.reload_data()

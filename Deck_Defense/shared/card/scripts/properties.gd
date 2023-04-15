@@ -1,5 +1,7 @@
 extends Object
 
+class_name CardProperties
+
 const image = "Layout/Top/Face/Image"
 const boni_left = "Layout/Top/Left/Image"
 const boni_right = "Layout/Top/Right/Image"
@@ -12,7 +14,6 @@ const boosted_color = Color("#1e9a12")
 const damaged_color = Color("#bb0c0e")
 const default_color = Color("#000000")
 
-var JsonReader = preload("res://shared/scripts/json_reader.gd").new()
 var CardData = "res://data/cards/cards.json"
 var face
 var base_hp = 0
@@ -23,6 +24,12 @@ var virus_level = 3
 var node
 var type_id
 var multi_attack = false
+var max_owned = 3
+
+static func of(id):
+	var properties = preload("res://shared/card/scripts/properties.gd").new()
+	properties.load_data(id)
+	return properties
 
 func load_data(id):
 	type_id = id
@@ -34,6 +41,7 @@ func load_data(id):
 
 func load_properties(card_prop_dict: Dictionary):
 	face = card_prop_dict["image"]
+	max_owned = card_prop_dict["max_owned"]
 	initialize(card_prop_dict["hp"], card_prop_dict["atk"])
 	if card_prop_dict.has("multi_attack"):
 		multi_attack = card_prop_dict["multi_attack"]
