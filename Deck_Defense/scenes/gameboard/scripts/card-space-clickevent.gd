@@ -4,8 +4,8 @@ func _ready():
 	pass
 
 func send_place_request(spot, event):
-	if Util.is_mouse_click(event):
-		Properties.selected_card_spot = spot
+	if GameboardUtil.is_mouse_click(event):
+		GameboardProperties.selected_card_spot = spot
 
 func _on_0_gui_input(event):
 	send_place_request(0, event)

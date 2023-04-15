@@ -2,7 +2,7 @@ extends Node
 
 var player_deck = []
 var enemy_deck = []
-var rng = Properties.rng
+var rng = GameboardProperties.rng
 
 var enemy_card = preload("res://shared/card/back.tscn")
 var player_card = preload("res://shared/card/front.tscn")
@@ -112,7 +112,7 @@ func total_card_size(deck, card_space, hand):
 
 func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
 	for n in amount:
-		if node.get_child_count() == Properties.max_hand_cards:
+		if node.get_child_count() == GameboardProperties.max_hand_cards:
 			break
 		var card
 		if prefered_ids != null:

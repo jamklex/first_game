@@ -17,8 +17,8 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Properties="*res://scenes/gameboard/scripts/properties.gd"
-Util="*res://scenes/gameboard/scripts/util.gd"
+GameboardProperties="*res://scenes/gameboard/scripts/properties.gd"
+GameboardUtil="*res://scenes/gameboard/scripts/util.gd"
 JsonReader="*res://shared/scripts/json_reader.gd"
 
 [gui]
