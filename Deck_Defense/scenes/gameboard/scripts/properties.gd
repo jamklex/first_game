@@ -19,6 +19,7 @@ var old_selected_action_card
 var max_hand_cards = 5;
 var initial_hand_cards = 3;
 var cards_per_turn = 3;
+var max_card_space_spots = 10;
 
 var CardProperties = preload("res://shared/card/scripts/properties.gd")
 

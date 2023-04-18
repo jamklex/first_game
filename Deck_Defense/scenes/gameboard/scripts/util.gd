@@ -22,8 +22,15 @@ func lay_card_on_space(card_spots, from, to, hand_node):
 		card.pivot_offset = Vector2(0, 10)
 		hand_node.remove_child(hand_node.get_child(from))
 		adjust_separation(hand_node)
+		apply_card_effects(card_spots)
 		return true
 	return false
+
+func apply_card_effects(card_spots: HBoxContainer):
+	for spot in card_spots.get_children():
+		if spot.get_child_count() > 0:
+			var card = (spot.get_child(0) as Card)
+			card.apply_effects(card_spots, spot.get_index())
 
 func create_visible_instance(card, for_player):
 	var base_card = enemy_card

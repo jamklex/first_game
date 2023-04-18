@@ -86,11 +86,31 @@
 			"active": true,
 			"cards": [
 				{
-					"amount": 1,
+					"amount": 3,
 					"id": 1
 				},
 				{
-					"amount": 1,
+					"amount": 2,
+					"id": 6
+				},
+				{
+					"amount": 2,
+					"id": 7
+				},
+				{
+					"amount": 2,
+					"id": 8
+				},
+				{
+					"amount": 2,
+					"id": 9
+				},
+				{
+					"amount": 2,
+					"id": 10
+				},
+				{
+					"amount": 3,
 					"id": 2
 				},
 				{
@@ -98,24 +118,52 @@
 					"id": 3
 				},
 				{
-					"amount": 1,
+					"amount": 3,
 					"id": 4
 				},
 				{
-					"amount": 1,
-					"id": 7
+					"amount": 2,
+					"id": 5
 				},
 				{
-					"amount": 1,
-					"id": 8
+					"amount": 3,
+					"id": 11
 				},
 				{
-					"amount": 1,
+					"amount": 3,
+					"id": 12
+				},
+				{
+					"amount": 3,
+					"id": 13
+				},
+				{
+					"amount": 3,
+					"id": 14
+				},
+				{
+					"amount": 3,
 					"id": 15
 				},
 				{
-					"amount": 1,
+					"amount": 3,
 					"id": 16
+				},
+				{
+					"amount": 1,
+					"id": 18
+				},
+				{
+					"amount": 1,
+					"id": 19
+				},
+				{
+					"amount": 1,
+					"id": 20
+				},
+				{
+					"amount": 3,
+					"id": 17
 				}
 			],
 			"name": "Mein geiles Deck"
@@ -126,6 +174,10 @@
 				{
 					"amount": 1,
 					"id": 3
+				},
+				{
+					"amount": 1,
+					"id": 4
 				},
 				{
 					"amount": 2,
@@ -144,20 +196,8 @@
 					"id": 12
 				},
 				{
-					"amount": 2,
+					"amount": 1,
 					"id": 13
-				},
-				{
-					"amount": 1,
-					"id": 19
-				},
-				{
-					"amount": 1,
-					"id": 20
-				},
-				{
-					"amount": 1,
-					"id": 4
 				}
 			],
 			"name": "sadjasdjdsaj"

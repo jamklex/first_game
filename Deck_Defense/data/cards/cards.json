@@ -12,28 +12,32 @@
 		"image": "res://data/cards/images/2.png",
 		"atk": 17,
 		"hp": 14,
-		"max_owned": 3
+		"max_owned": 3,
+		"soldier_left": true
 	},
 	{
 		"id": 3,
 		"image": "res://data/cards/images/3.png",
 		"atk": 9,
 		"hp": 7,
-		"max_owned": 3
+		"max_owned": 3,
+		"soldier_right": true
 	},
 	{
 		"id": 4,
 		"image": "res://data/cards/images/4.png",
 		"atk": 6,
 		"hp": 9,
-		"max_owned": 3
+		"max_owned": 3,
+		"flexer_left": true
 	},
 	{
 		"id": 5,
 		"image": "res://data/cards/images/5.png",
 		"atk": 16,
 		"hp": 6,
-		"max_owned": 3
+		"max_owned": 3,
+		"flexer_right": true
 	},
 	{
 		"id": 6,

@@ -23,12 +23,12 @@ const CARD_DRAW_TIME = 0.2
 
 var rng:RandomNumberGenerator = GameboardProperties.rng
 
-var max_card_space_spots = 10;
 var selected_action_card = -1
 var current_cycle
 var bump_factor = 100;
 
 func _ready():
+	get_tree().set_auto_accept_quit(true)
 	initialize_game()
 
 func initialize_game():
@@ -89,6 +89,7 @@ func switch_to_player():
 		GameboardUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 		GameboardUtil.set_visibility(get_node(ATTACK_PLAYER), true)
 		GameboardUtil.set_visibility(get_node(BLOCK_PLAYER), false)
+		GameboardUtil.apply_card_effects(get_node(player_card_space))
 		await place_cards_in_hand(get_node(player_hand), GameboardProperties.cards_per_turn, GameboardProperties.player_deck, GameboardProperties.player_initial, true)
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.MY_TURN
@@ -99,6 +100,7 @@ func switch_to_enemy():
 		GameboardUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GameboardUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GameboardUtil.set_visibility(get_node(BLOCK_PLAYER), false)
+		GameboardUtil.apply_card_effects(get_node(enemy_card_space))
 		await place_cards_in_hand(get_node(enemy_hand), GameboardProperties.cards_per_turn, GameboardProperties.enemy_deck, GameboardProperties.enemy_initial, false)
 		reset_hand_card_focus()
 		await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
@@ -107,8 +109,8 @@ func switch_to_enemy():
 func enemy_move():
 	var enemyHandCards = get_node(enemy_hand).get_child_count()
 	var free_spots = GameboardUtil.get_free_spots(get_node(enemy_card_space))
-	var will_attack = rng.randi_range(1,max_card_space_spots) > free_spots.size()
-	if will_attack or (enemyHandCards == 0 and free_spots.size() < max_card_space_spots):
+	var will_attack = rng.randi_range(1,GameboardProperties.max_card_space_spots) > free_spots.size()
+	if will_attack or (enemyHandCards == 0 and free_spots.size() < GameboardProperties.max_card_space_spots):
 		var player_cards = GameboardUtil.cards_ltr_in(get_node(player_card_space))
 		var enemy_cards = GameboardUtil.cards_ltr_in(get_node(enemy_card_space))
 		var new_hp = max(0, GameboardProperties.playerCurrentHp - await GameboardUtil.attack(enemy_cards, player_cards))

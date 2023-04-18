@@ -19,3 +19,7 @@ func initialize_from_id(id):
 	properties = CardProperties.of(id)
 	properties.link_node(self)
 	properties.reload_data()
+
+func apply_effects(my_container: HBoxContainer, my_position):
+	properties.apply_effects(my_container, my_position)
+	
