@@ -5,7 +5,7 @@ var pointsLabel:Label
 var packageHolder: GridContainer
 var packageScene:PackedScene = preload("res://scenes/packages/prefabs/package.tscn")
 var packageCardScene:PackedScene = preload("res://scenes/packages/prefabs/packageCard.tscn")
-var points = 100
+var points = 1000
 var packages = []
 var minPackageWidth = -1
 var minPackageHeight = -1
@@ -18,6 +18,8 @@ var rng = RandomNumberGenerator.new()
 #Open package animation stuff
 var animationPackage:TextureRect
 
+var playerData = JsonReader.read_player_data()
+
 
 func _ready():
 	rng.randomize()
@@ -27,10 +29,13 @@ func _ready():
 	resultWindow = get_node("resultWindow")
 	resultCardHolder = resultWindow.get_node("cardWindow/scrollWrapper/CenterContainer/cardHolder")
 	animationPackage = resultWindow.get_node("package")
+	if "points" in playerData:
+		points = playerData["points"]
 	_loadPackages()
 	_refreshPoints()
 	_afterResize()
 	_refreshPackages()
+	get_tree().set_auto_accept_quit(false)  # block normal close request
 
 func _refreshPoints():
 	pointsLabel.text = String.num_int64(points) + " Pt"
@@ -55,7 +60,7 @@ func _refreshPackages():
 
 func _loadPackages():
 	var packs = JsonReader.package_paths()
-	var player_card_amounts = flat_map(JsonReader.read_player_data()["cards"])
+	var player_card_amounts = flat_map(playerData["cards"])
 	for pack in packs:
 		var pack_data = JsonReader.read_json(pack)
 		var card_difference = card_difference(player_card_amounts, pack_data["cards"])
@@ -106,25 +111,27 @@ func onBuyButton(selectedPackage):
 		resultCardHolder.add_child(packageCard)
 		packageCard.setVisibility(false)
 	_refreshPoints()
-	JsonReader.add_player_cards(cards_for_player)
+	add_player_cards(cards_for_player)
 	_refreshPackageCards(cards_for_player, selectedPackage)
 	_refreshPackages()
 	playOpeningAnimation(selectedPackage)
 
 
 func _on_back_pressed():
+	_savePlayerData()
 	get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
 
+func _savePlayerData():
+	playerData["points"] = points
+	JsonReader.save_player_data(playerData)
 
 func _on_close_pressed():
 	for child in resultCardHolder.get_children():
 		resultCardHolder.remove_child(child)
 	resultWindow.visible = false
 
-
 func _on_scrollWrapper_resized():
 	_afterResize()
-
 
 func _afterResize():
 #	setPackageHolderSeparation()
@@ -249,3 +256,24 @@ func onAllCardsRevealed():
 	var closeBtn = $resultWindow/cardWindow/close as Button
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
 	closeBtn.visible = true
+
+func add_player_cards(cards_for_player):
+	for cardId in cards_for_player:
+		var playerCardData = null
+		for cardData in playerData["cards"]:
+			if cardData["id"] == cardId:
+				playerCardData = cardData
+				break
+		if playerCardData == null:
+			playerCardData = {}
+			playerCardData["id"] = cardId
+			playerCardData["amount"] = 1
+			playerData["cards"].append(playerCardData)
+		else:
+			playerCardData["amount"] += 1
+
+# handle close request
+func _notification(what):   
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_savePlayerData()
+		get_tree().quit()

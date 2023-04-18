@@ -34,11 +34,10 @@ func _ready():
 	editDeck = $editDeck
 	deckHolder = $bg/deckBg/margin/deckWrapper/center/deckHolder
 	cardHolder = $editDeck/marginVertAlign/vertAlign/cardWrapper/center/cardHolder
-	
 	rng.randomize()
 	_loadDecks()
 	_loadRequirements()
-	get_tree().set_auto_accept_quit(false)  # for reacting on close request
+	get_tree().set_auto_accept_quit(false)  # block normal close request
 	
 func _loadDecks():
 	cleanDeckHolder()
@@ -131,7 +130,8 @@ func _beforeLeave():
 	print("_beforeLeave")
 	_saveDecks()
 
-func _notification(what):    # actually u can handle then the close request here
+# handle close request
+func _notification(what):   
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_beforeLeave()
 		get_tree().quit()

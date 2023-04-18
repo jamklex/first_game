@@ -53,20 +53,16 @@
 			"id": 13
 		},
 		{
-			"amount": 1,
+			"amount": 3,
 			"id": 14
 		},
 		{
-			"amount": 1,
+			"amount": 3,
 			"id": 15
 		},
 		{
-			"amount": 1,
+			"amount": 3,
 			"id": 16
-		},
-		{
-			"amount": 1,
-			"id": 17
 		},
 		{
 			"amount": 1,
@@ -79,6 +75,10 @@
 		{
 			"amount": 1,
 			"id": 20
+		},
+		{
+			"amount": 3,
+			"id": 17
 		}
 	],
 	"decks": [
@@ -163,5 +163,6 @@
 			"name": "sadjasdjdsaj"
 		}
 	],
-	"initial": []
+	"initial": [],
+	"points": 710
 }

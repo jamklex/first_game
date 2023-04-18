@@ -7,12 +7,24 @@ const PackagePath = "res://data/packs/%s"
 func read_json(path):
 	var file = FileAccess.open(path, FileAccess.READ)
 	return JSON.parse_string(file.get_as_text())
+	
+func save_json(path, json):
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	file.store_line(JSON.stringify(json, '\t'))
+	file.flush()
+	file.close()
 
 func read_player_data():
 	return read_json(PlayerData)
+	
+func save_player_data(playerDataJson):
+	return save_json(PlayerData, playerDataJson)
 
 func read_enemy_data(level):
 	return read_json(EnemyData % level)
+	
+func save_enemy_data(level, enemyDataJson):
+	return save_json(EnemyData % level, enemyDataJson)
 
 func package_paths():
 	var files = []
@@ -25,7 +37,3 @@ func package_paths():
 				files.append(PackagePath % file_name)
 			file_name = dir.get_next()
 	return files
-
-func add_player_cards(cards_for_player):
-	print("should add " + str(cards_for_player) + " to player cards")
-	pass
