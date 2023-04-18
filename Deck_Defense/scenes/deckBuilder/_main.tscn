@@ -153,31 +153,39 @@ theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_px33g")
 text = "Cancel"
 
-[node name="vertAlign" type="HBoxContainer" parent="editDeck"]
+[node name="marginVertAlign" type="MarginContainer" parent="editDeck"]
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = 14
+anchor_top = 0.5
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 52.0
-offset_bottom = -51.0
+anchor_bottom = 0.5
+offset_top = -279.0
+offset_bottom = 279.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="vertAlign" type="HBoxContainer" parent="editDeck/marginVertAlign"]
+layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="requirements" type="VBoxContainer" parent="editDeck/vertAlign"]
+[node name="requirements" type="VBoxContainer" parent="editDeck/marginVertAlign/vertAlign"]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 
-[node name="cardWrapper" type="ScrollContainer" parent="editDeck/vertAlign"]
+[node name="cardWrapper" type="ScrollContainer" parent="editDeck/marginVertAlign/vertAlign"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="center" type="CenterContainer" parent="editDeck/vertAlign/cardWrapper"]
+[node name="center" type="CenterContainer" parent="editDeck/marginVertAlign/vertAlign/cardWrapper"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="cardHolder" type="GridContainer" parent="editDeck/vertAlign/cardWrapper/center"]
+[node name="cardHolder" type="GridContainer" parent="editDeck/marginVertAlign/vertAlign/cardWrapper/center"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -188,4 +196,4 @@ columns = 5
 [connection signal="resized" from="bg/deckBg/margin/deckWrapper" to="." method="onResized"]
 [connection signal="pressed" from="editDeck/done" to="." method="onEditDeckDone"]
 [connection signal="pressed" from="editDeck/cancel" to="." method="onEditDeckCanceled"]
-[connection signal="resized" from="editDeck/vertAlign/cardWrapper" to="." method="onResized"]
+[connection signal="resized" from="editDeck/marginVertAlign/vertAlign/cardWrapper" to="." method="onResized"]

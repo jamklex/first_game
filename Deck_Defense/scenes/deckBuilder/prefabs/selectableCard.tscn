@@ -19,12 +19,13 @@ draw_center = false
 draw_center = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kdbc1"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0, 1, 1, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0.905882, 0.8, 1)
 
 [node name="selectableCard" type="Button"]
 custom_minimum_size = Vector2(160, 240)
@@ -42,8 +43,10 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_ddjs6")
 theme_override_styles/focus = SubResource("StyleBoxFlat_xblpj")
 script = ExtResource("1_p3uqk")
 
+[node name="Card" parent="." instance=ExtResource("2_1nyxu")]
+layout_mode = 0
+
 [node name="indicator" type="Panel" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -52,8 +55,5 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_kdbc1")
-
-[node name="Card" parent="." instance=ExtResource("2_1nyxu")]
-layout_mode = 0
 
 [connection signal="pressed" from="." to="." method="_switchSelect"]

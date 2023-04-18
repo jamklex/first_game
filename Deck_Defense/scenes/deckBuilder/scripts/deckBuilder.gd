@@ -33,11 +33,12 @@ func minNumberOfCards(deck: Deck):
 func _ready():
 	editDeck = $editDeck
 	deckHolder = $bg/deckBg/margin/deckWrapper/center/deckHolder
-	cardHolder = $editDeck/vertAlign/cardWrapper/center/cardHolder
+	cardHolder = $editDeck/marginVertAlign/vertAlign/cardWrapper/center/cardHolder
+	
 	rng.randomize()
 	_loadDecks()
 	_loadRequirements()
-#	get_tree().set_auto_accept_quit(false)  # for reacting on close request
+	get_tree().set_auto_accept_quit(false)  # for reacting on close request
 	
 func _loadDecks():
 	cleanDeckHolder()
@@ -104,7 +105,7 @@ func onDeckActiveCheckClicked(activeDeck:Deck):
 	for index in decks.size():
 		var deck = decks[index] as Deck
 		deck.setActive(deck == activeDeck)
-	_save()
+	_saveDecks()
 
 func loadCards():
 	var playerData = jsonReader.read_json(playerDataJsonPath)
@@ -128,16 +129,16 @@ func _on_back_pressed():
 	
 func _beforeLeave():
 	print("_beforeLeave")
-	_save()
+	_saveDecks()
 
-#func _notification(what):    # actually u can handle then the close request here
-#	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-#		_beforeLeave()
-#		get_tree().quit()
+func _notification(what):    # actually u can handle then the close request here
+	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+		_beforeLeave()
+		get_tree().quit()
 
 func onResized():
 	setDeckHolderColumns()
-	setCardHolderColumns()	
+	setCardHolderColumns()
 	
 func setDeckHolderColumns():
 	if not deckHolder:
@@ -193,8 +194,8 @@ func cleanDeckHolder():
 
 func onEditDeckDone():
 	if checkRequirements():
-		_save()
-		_loadDecks()
+		_saveSelectedCardsToDeck()
+#		_loadDecks()
 		onEditDeckCanceled()
 
 func _on_new_deck_pressed():
@@ -207,13 +208,13 @@ func _on_new_deck_pressed():
 	decks.append(newDeck)
 
 func _loadRequirements():
-	var reqHolder = $editDeck/vertAlign/requirements
+	var reqHolder = $editDeck/marginVertAlign/vertAlign/requirements
 	for requirement in requirements:
 		var text = requirement[0]
 		var newRequirmentObj = requirmentScene.instantiate() as Requirement
-		newRequirmentObj.setText(requirement[0])
 		requirementObjs.append(newRequirmentObj)
 		reqHolder.add_child(newRequirmentObj)
+		newRequirmentObj.setText(requirement[0])
 	
 func checkRequirements():
 	if selectedDeck == null:
@@ -227,7 +228,7 @@ func checkRequirements():
 			return false
 	return true
 
-func _save():
+func _saveDecks():
 	var file = FileAccess.open(playerDataJsonPath, FileAccess.READ)
 	var currentData = JSON.parse_string(file.get_as_text())
 	file.close()
@@ -237,33 +238,36 @@ func _save():
 		var deck = d as Deck
 		newDeck["name"] = deck.getDeckName()
 		newDeck["active"] = deck.active
-		var newCards = []
-		var doneIds = []
-		for c in cards:
-			var selectedableCard = c as SelectableCard
-			if not selectedableCard.selected:
-				continue
-			var id = selectedableCard.getCard().properties.type_id
-			if id in doneIds:
-				continue
-			var amount = 1
-			for c1 in cards:
-				var selectedableCard1 = c1 as SelectableCard
-				if not selectedableCard1.selected:
-					continue
-				if selectedableCard == selectedableCard1:
-					continue
-				if id == selectedableCard1.getCard().properties.type_id:
-					amount += 1
-			var newCard = {}
-			newCard["id"] = id
-			newCard["amount"] = amount
-			newCards.append(newCard)
-			doneIds.append(id)
-		newDeck["cards"] = newCards
+		newDeck["cards"] = deck.cards
 		newDecks.append(newDeck)
 	currentData["decks"] = newDecks
 	file = FileAccess.open(playerDataJsonPath, FileAccess.WRITE)
 	file.store_line(JSON.stringify(currentData, "\t"))
 	file.flush()
 	file.close()
+
+func _saveSelectedCardsToDeck():
+	var newCards = []
+	var doneIds = []
+	for c in cards:
+		var selectedableCard = c as SelectableCard
+		if not selectedableCard.selected:
+			continue
+		var id = selectedableCard.getCard().properties.type_id
+		if id in doneIds:
+			continue
+		var amount = 1
+		for c1 in cards:
+			var selectedableCard1 = c1 as SelectableCard
+			if not selectedableCard1.selected:
+				continue
+			if selectedableCard == selectedableCard1:
+				continue
+			if id == selectedableCard1.getCard().properties.type_id:
+				amount += 1
+		var newCard = {}
+		newCard["id"] = id
+		newCard["amount"] = amount
+		newCards.append(newCard)
+		doneIds.append(id)
+	selectedDeck.cards = newCards

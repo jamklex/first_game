@@ -1,27 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://dur3jo6v7lqji"]
+[gd_scene load_steps=4 format=3 uid="uid://dur3jo6v7lqji"]
 
 [ext_resource type="Script" path="res://scenes/deckBuilder/scripts/requirement.gd" id="1_rmf6f"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ycwar"]
+load_path = "res://.godot/imported/check.png-82ebd46047449a24813c9ef3532e3cbb.ctex"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1rdv"]
 bg_color = Color(0, 0.176471, 0.0156863, 1)
 
 [node name="requirement" type="Panel"]
-custom_minimum_size = Vector2(250, 50)
-offset_right = 250.0
+custom_minimum_size = Vector2(300, 50)
+offset_right = 300.0
 offset_bottom = 50.0
 script = ExtResource("1_rmf6f")
 
 [node name="text" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
+anchors_preset = 4
 anchor_top = 0.5
-anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -144.0
-offset_top = -11.0
-offset_bottom = 12.0
-grow_horizontal = 0
+offset_left = 55.0
+offset_top = -13.0
+offset_right = 199.0
+offset_bottom = 13.0
 grow_vertical = 2
 text = "Requirement"
 
@@ -32,7 +33,14 @@ offset_top = 5.0
 offset_right = 45.0
 offset_bottom = 45.0
 
-[node name="active" type="Panel" parent="activeWrapper"]
+[node name="active" type="Sprite2D" parent="activeWrapper"]
+visible = false
+modulate = Color(0, 1, 0, 1)
+position = Vector2(20, 20)
+scale = Vector2(0.0820313, 0.0820313)
+texture = SubResource("CompressedTexture2D_ycwar")
+
+[node name="aaa" type="Panel" parent="activeWrapper"]
 visible = false
 layout_mode = 1
 anchors_preset = 8
