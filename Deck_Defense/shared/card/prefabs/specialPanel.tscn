@@ -13,5 +13,10 @@ corner_radius_bottom_left = 15
 
 [node name="specialPanel" type="Panel"]
 custom_minimum_size = Vector2(160, 240)
+anchors_preset = -1
+anchor_right = 0.138889
+anchor_bottom = 0.37037
+offset_bottom = 1.52588e-05
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_lab4c")
+metadata/_edit_use_anchors_ = true
