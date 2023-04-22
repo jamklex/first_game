@@ -1,4 +1,4 @@
-extends CenterContainer
+extends Control
 
 const WAIT_WHILE_FIGHT = "TurnOptions/WaitWhileFight"
 const ATTACK_PLAYER = "TurnOptions/AttackOpponent"

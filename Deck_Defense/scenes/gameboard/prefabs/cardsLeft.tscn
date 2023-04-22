@@ -7,9 +7,18 @@ offset_bottom = 40.0
 
 [node name="Amount" type="Label" parent="."]
 custom_minimum_size = Vector2(100, 150)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 14.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -75.0
+offset_right = 50.0
+offset_bottom = 75.0
+grow_horizontal = 2
+grow_vertical = 2
 text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1

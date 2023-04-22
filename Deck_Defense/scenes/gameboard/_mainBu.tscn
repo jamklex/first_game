@@ -1,0 +1,194 @@
+[gd_scene load_steps=16 format=3 uid="uid://jup0l63xkqs0"]
+
+[ext_resource type="Script" path="res://scenes/gameboard/scripts/logic.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://ddnfpi8nnt6o0" path="res://scenes/gameboard/prefabs/card-space.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://de38q4xua11xu" path="res://scenes/gameboard/prefabs/healthbar.tscn" id="6"]
+[ext_resource type="PackedScene" uid="uid://dhl21c73fohma" path="res://scenes/gameboard/prefabs/cardsLeft.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://dys067fcb2jup" path="res://scenes/gameboard/prefabs/blockOpponent.tscn" id="7_luclj"]
+[ext_resource type="PackedScene" uid="uid://bvcn0w7wgi4kl" path="res://scenes/gameboard/prefabs/waitWhileFight.tscn" id="8"]
+[ext_resource type="PackedScene" uid="uid://ccc2tywi8eumf" path="res://scenes/gameboard/prefabs/player-looses.tscn" id="8_vb3l3"]
+[ext_resource type="PackedScene" uid="uid://c3s7600f7wysf" path="res://scenes/gameboard/prefabs/attackOpponent.tscn" id="9"]
+[ext_resource type="PackedScene" uid="uid://vjthyer42ikq" path="res://scenes/gameboard/prefabs/player-wins.tscn" id="9_aphqi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8sp8"]
+bg_color = Color(0.576471, 0, 0.117647, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fu1b1"]
+bg_color = Color(0.576471, 0, 0.117647, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aa5pe"]
+bg_color = Color(0.576471, 0, 0.117647, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c82is"]
+bg_color = Color(0.0862745, 0.27451, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fojdk"]
+bg_color = Color(0.0862745, 0.27451, 0, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fhtdn"]
+bg_color = Color(0.0862745, 0.27451, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="Gameboard" type="CenterContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Enemy" type="Control" parent="."]
+layout_mode = 2
+
+[node name="Hand" type="HBoxContainer" parent="Enemy"]
+layout_mode = 0
+offset_left = -351.0
+offset_top = -419.0
+offset_right = 349.0
+offset_bottom = -179.0
+alignment = 1
+
+[node name="Health" parent="Enemy" instance=ExtResource("6")]
+layout_mode = 0
+offset_left = -500.0
+offset_top = -176.0
+offset_right = -300.0
+offset_bottom = -146.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_e8sp8")
+
+[node name="CardsLeft" parent="Enemy" instance=ExtResource("7")]
+layout_mode = 0
+offset_left = 384.0
+offset_top = -269.0
+offset_right = 484.0
+offset_bottom = -119.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fu1b1")
+
+[node name="CardSpace" type="Panel" parent="Enemy"]
+custom_minimum_size = Vector2(846, 140)
+layout_mode = 0
+offset_left = -500.0
+offset_top = -143.0
+offset_right = 346.0
+offset_bottom = -3.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_aa5pe")
+
+[node name="Spots" parent="Enemy/CardSpace" instance=ExtResource("2")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 841.0
+offset_bottom = 135.0
+
+[node name="TurnOptions" type="Control" parent="."]
+layout_mode = 2
+
+[node name="WaitWhileFight" parent="TurnOptions" instance=ExtResource("8")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 379.0
+offset_top = -49.0
+offset_right = 479.0
+offset_bottom = 51.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="AttackOpponent" parent="TurnOptions" instance=ExtResource("9")]
+visible = false
+light_mask = 141
+offset_left = 379.0
+offset_top = -49.0
+offset_right = 479.0
+offset_bottom = 51.0
+
+[node name="BlockOpponent" parent="TurnOptions" instance=ExtResource("7_luclj")]
+visible = false
+offset_left = 379.0
+offset_top = -49.0
+offset_right = 479.0
+offset_bottom = 51.0
+
+[node name="Player" type="Control" parent="."]
+layout_mode = 2
+
+[node name="CardSpace" type="Panel" parent="Player"]
+custom_minimum_size = Vector2(846, 140)
+layout_mode = 0
+offset_left = -500.0
+offset_top = 3.0
+offset_right = 346.0
+offset_bottom = 143.0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_c82is")
+
+[node name="Spots" parent="Player/CardSpace" instance=ExtResource("2")]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 841.0
+offset_bottom = 135.0
+
+[node name="Health" parent="Player" instance=ExtResource("6")]
+layout_mode = 0
+offset_left = -500.0
+offset_top = 147.0
+offset_right = -300.0
+offset_bottom = 177.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fojdk")
+
+[node name="Hand" type="HBoxContainer" parent="Player"]
+layout_mode = 0
+offset_left = -351.0
+offset_top = 181.0
+offset_right = 349.0
+offset_bottom = 421.0
+alignment = 1
+
+[node name="CardsLeft" parent="Player" instance=ExtResource("7")]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 124.0
+offset_right = 484.0
+offset_bottom = 274.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_fhtdn")
+
+[node name="PlayerWins" parent="." instance=ExtResource("9_aphqi")]
+visible = false
+top_level = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PlayerLooses" parent="." instance=ExtResource("8_vb3l3")]
+visible = false
+top_level = true
+layout_mode = 2
+
+[connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
+[connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
+[connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
+[connection signal="gui_input" from="Player/Hand" to="." method="_on_Hand_gui_input"]
