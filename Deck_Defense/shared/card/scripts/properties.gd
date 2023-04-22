@@ -5,15 +5,32 @@ class_name CardProperties
 const image = "Layout/Top/Face/Image"
 const boni_left = "Layout/Top/Left/Image"
 const boni_right = "Layout/Top/Right/Image"
-const virus = "Layout/Boottom/Virus"
 const hp_label = "Layout/Bottom/HP/Value"
 const atk_label = "Layout/Bottom/ATK/Value"
+
 const multi_attack_panel = "MultiAttack"
+var multi_attack = false
+
 const soldier_panel = "Soldier"
 const soldier_left_image = "Soldier/Left"
+var soldier_left = false
+var soldier_right = false
+
 const flexer_panel = "Flexer"
 const flexer_left_image = "Flexer/Left"
-const virus_panel = "VirusFrame"
+var flexer_left = false
+var flexer_right = false
+
+const angel_panel = "Angel"
+const angel_left_image = "Angel/Left"
+var angel_left = false
+var angel_right = false
+
+const kanonenrohr_panel = "Kanonenrohr"
+const kanonenrohr_counter_label = "Kanonenrohr/Counter"
+var kanonenrohr = false
+var kanonenrohr_counter = 0
+
 const boosted_color = Color("#1e9a12")
 const damaged_color = Color("#bb0c0e")
 const default_color = Color("#000000")
@@ -24,14 +41,8 @@ var base_hp = 0
 var hp = 0
 var base_atk = 0
 var atk = 0
-var virus_level = 3
-var node
+var node: Card
 var type_id
-var multi_attack = false
-var soldier_left = false
-var soldier_right = false
-var flexer_left = false
-var flexer_right = false
 var max_owned = 3
 
 static func of(id):
@@ -78,6 +89,12 @@ func load_properties(card_prop_dict: Dictionary):
 		flexer_left = card_prop_dict["flexer_left"]
 	if card_prop_dict.has("flexer_right"):
 		flexer_right = card_prop_dict["flexer_right"]
+	if card_prop_dict.has("angel_left"):
+		angel_left = card_prop_dict["angel_left"]
+	if card_prop_dict.has("angel_right"):
+		angel_right = card_prop_dict["angel_right"]
+	if card_prop_dict.has("kanonenrohr"):
+		kanonenrohr = card_prop_dict["kanonenrohr"]
 	reload_data()
 
 func apply_effects(my_container: HBoxContainer, my_position):
@@ -93,7 +110,56 @@ func apply_effects(my_container: HBoxContainer, my_position):
 			apply_effects_from_right(neighbour.get_child(0).properties as CardProperties)
 		else:
 			retract_effects_from_right()
+	kanonenrohr_effect()
 	reload_data()
+
+func apply_next_turn(myContainer: HBoxContainer, my_position):
+	kanonenrohr_count_effect()
+	reload_data()
+
+func apply_card_laydown(myContainer: HBoxContainer, my_position):
+	kanonenrohr_count_effect()
+	angel_effect(myContainer, my_position)
+	reload_data()
+
+func kanonenrohr_count_effect():
+	if kanonenrohr:
+		kanonenrohr_counter = kanonenrohr_counter + 1
+
+func kanonenrohr_effect():
+	if kanonenrohr:
+		set_atk(base_atk * kanonenrohr_counter)
+
+func angel_effect(myContainer: HBoxContainer, my_position):
+	var cards: = []
+	if angel_left:
+		if my_position > 0:
+			for i in range(my_position):
+				var space = myContainer.get_child(i)
+				if space.get_child_count() > 0:
+					cards.append(space.get_child(0).properties)
+	if angel_right:
+		var spots_to_right_count = GameboardProperties.max_card_space_spots - my_position - 1
+		if spots_to_right_count > 0:
+			for i in range(spots_to_right_count):
+				var space = myContainer.get_child(i + 1 + my_position)
+				if space.get_child_count() > 0:
+					cards.append(space.get_child(0).properties)
+	var card_size = cards.size()
+	var full_hp = 0
+	var extra = 0
+	if card_size > 0:
+		var for_me = 1
+		var hp_to_give = hp - for_me
+		full_hp = floor(hp_to_give / card_size)
+		extra = hp_to_give - full_hp * card_size
+		set_hp(for_me)
+	for props in cards:
+		var additional = 0
+		if extra > 0:
+			extra = extra -1
+			additional = 1
+		props.set_hp(props.hp + full_hp + additional)
 
 func apply_effects_from_left(left_props):
 	if soldier_left:
@@ -135,10 +201,26 @@ func reload_data():
 		if flexer_right:
 			make_visible(flexer_panel)
 			flip_image(flexer_left_image)
+		if angel_left:
+			make_visible(angel_panel)
+		if angel_right:
+			make_visible(angel_panel)
+			flip_image(angel_left_image)
+		if kanonenrohr:
+			make_visible(kanonenrohr_panel)
+			var label = node.get_node(kanonenrohr_counter_label) as Label
+			if label == null:
+				return
+			if kanonenrohr_counter > 0:
+				label.set_text(str(kanonenrohr_counter))
 		var sprite = node.get_node(image)
 		if sprite != null and face != null:
 			sprite.texture = load(face)
+		check_self_destroy()
 
+func check_self_destroy():
+	if hp <= 0:
+		GameboardUtil.remove_from_game(node)
 
 func update_label(path, value, base_value):
 	if node == null:

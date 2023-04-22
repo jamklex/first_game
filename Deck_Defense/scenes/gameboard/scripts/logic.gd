@@ -85,6 +85,7 @@ func _on_AttackOpponent_gui_input(event):
 		switch_to_enemy()
 
 func switch_to_player():
+	GameboardUtil.apply_next_turn_effects(get_node(player_card_space))
 	if not check_winning_state():
 		GameboardUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 		GameboardUtil.set_visibility(get_node(ATTACK_PLAYER), true)
@@ -95,14 +96,15 @@ func switch_to_player():
 		current_cycle = TURN_CYCLE.MY_TURN
 
 func switch_to_enemy():
+	GameboardUtil.apply_next_turn_effects(get_node(enemy_card_space))
 	if not check_winning_state():
-		current_cycle = TURN_CYCLE.OPPONENT_TURN
 		GameboardUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GameboardUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GameboardUtil.set_visibility(get_node(BLOCK_PLAYER), false)
 		GameboardUtil.apply_card_effects(get_node(enemy_card_space))
 		await place_cards_in_hand(get_node(enemy_hand), GameboardProperties.cards_per_turn, GameboardProperties.enemy_deck, GameboardProperties.enemy_initial, false)
 		reset_hand_card_focus()
+		current_cycle = TURN_CYCLE.OPPONENT_TURN
 		await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
 		enemy_move()
 

@@ -44,21 +44,24 @@
 		"image": "res://data/cards/images/6.png",
 		"atk": 5,
 		"hp": 15,
-		"max_owned": 3
+		"max_owned": 3,
+		"kanonenrohr": true
 	},
 	{
 		"id": 7,
 		"image": "res://data/cards/images/7.png",
 		"atk": 17,
 		"hp": 8,
-		"max_owned": 3
+		"max_owned": 3,
+		"angel_left": true
 	},
 	{
 		"id": 8,
 		"image": "res://data/cards/images/8.png",
 		"atk": 13,
 		"hp": 19,
-		"max_owned": 3
+		"max_owned": 3,
+		"angel_right": true
 	},
 	{
 		"id": 9,

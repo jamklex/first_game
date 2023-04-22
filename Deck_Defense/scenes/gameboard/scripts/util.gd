@@ -16,10 +16,11 @@ func lay_card_on_space(card_spots, from, to, hand_node):
 	var initial_card = hand_node.get_child(from)
 	var contender = card_spots.get_child(to)
 	if initial_card != null and contender.get_child_count() == 0:
-		var card = create_visible_instance(initial_card.properties, true)
+		var card = create_visible_instance(initial_card.properties, true) as Card
 		contender.add_child(card)
 		card.scale = Vector2(0.5, 0.5)
 		card.pivot_offset = Vector2(0, 10)
+		card.apply_card_laydown(card_spots, to)
 		hand_node.remove_child(hand_node.get_child(from))
 		adjust_separation(hand_node)
 		apply_card_effects(card_spots)
@@ -31,6 +32,12 @@ func apply_card_effects(card_spots: HBoxContainer):
 		if spot.get_child_count() > 0:
 			var card = (spot.get_child(0) as Card)
 			card.apply_effects(card_spots, spot.get_index())
+
+func apply_next_turn_effects(card_spots: HBoxContainer):
+	for spot in card_spots.get_children():
+		if spot.get_child_count() > 0:
+			var card = (spot.get_child(0) as Card)
+			card.apply_next_turn(card_spots, spot.get_index())
 
 func create_visible_instance(card, for_player):
 	var base_card = enemy_card

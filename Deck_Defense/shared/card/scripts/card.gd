@@ -4,9 +4,6 @@ class_name Card
 
 var properties: CardProperties
 
-func _ready():
-	pass
-
 func initialize_new():
 	initialize_from(preload("res://shared/card/scripts/properties.gd").new())
 
@@ -22,4 +19,9 @@ func initialize_from_id(id):
 
 func apply_effects(my_container: HBoxContainer, my_position):
 	properties.apply_effects(my_container, my_position)
-	
+
+func apply_next_turn(my_container: HBoxContainer, my_position):
+	properties.apply_next_turn(my_container, my_position)
+
+func apply_card_laydown(my_container: HBoxContainer, my_position):
+	properties.apply_card_laydown(my_container, my_position)

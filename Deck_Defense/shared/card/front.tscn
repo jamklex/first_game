@@ -1,14 +1,15 @@
-[gd_scene load_steps=18 format=3 uid="uid://cf1km1wp18aim"]
+[gd_scene load_steps=20 format=3 uid="uid://cf1km1wp18aim"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
 [ext_resource type="Texture2D" uid="uid://cvitf3ym1dqgc" path="res://shared/card/images/dar.png" id="2_adqpx"]
 [ext_resource type="Texture2D" uid="uid://dglnpkdxa77df" path="res://data/cards/type-frames/multi-attack.png" id="2_px8g5"]
 [ext_resource type="Texture2D" uid="uid://ccxpdlui0oyyq" path="res://data/cards/type-frames/soldier-left.png" id="3_qmo2m"]
 [ext_resource type="Texture2D" uid="uid://bos36tmmimwtn" path="res://data/cards/images/placeholder.png" id="3_yalfj"]
-[ext_resource type="PackedScene" uid="uid://bnqlb5xu4p5m" path="res://shared/card/prefabs/VirusNode.tscn" id="4_jnkyy"]
+[ext_resource type="PackedScene" uid="uid://1jap73kre8fw" path="res://shared/card/prefabs/specialPanel.tscn" id="5_0hdso"]
 [ext_resource type="Texture2D" uid="uid://bnbu46fngsu14" path="res://data/cards/type-frames/flexer-left.png" id="5_vkb8n"]
 [ext_resource type="Texture2D" uid="uid://dq3sw27kkx3rl" path="res://shared/card/images/hp.png" id="5_ymmfd"]
 [ext_resource type="Texture2D" uid="uid://c2e84jpy12psd" path="res://shared/card/images/atk.png" id="6_3c03p"]
+[ext_resource type="Texture2D" uid="uid://djln77rrc8p5t" path="res://data/cards/type-frames/angel-left.png" id="6_x8j1j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
 bg_color = Color(0.992157, 0.788235, 0.486275, 1)
@@ -22,10 +23,19 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ex1yi"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtp1m"]
 draw_center = false
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5tlcp"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b2ow7"]
 bg_color = Color(0.866667, 0.952941, 0.729412, 1)
 border_width_left = 3
 border_width_top = 3
@@ -37,7 +47,7 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qj4an"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xbi7m"]
 bg_color = Color(0.996078, 0.811765, 0.862745, 1)
 border_width_left = 3
 border_width_top = 3
@@ -49,14 +59,25 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15hua"]
-draw_center = false
-border_width_left = 10
-border_width_top = 10
-border_width_right = 10
-border_width_bottom = 10
-border_color = Color(0.8, 0.137255, 0.458824, 1)
-border_blend = true
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bp13"]
+bg_color = Color(0.996078, 0.67451, 0.247059, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mcw2b"]
+bg_color = Color(0.956863, 0.992157, 0.984314, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -79,56 +100,85 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
 script = ExtResource("1_3i4m2")
 
-[node name="MultiAttack" type="Panel" parent="."]
+[node name="MultiAttack" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(160, 240)
-layout_mode = 0
-offset_right = 160.0
-offset_bottom = 240.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ex1yi")
-
-[node name="Image" type="Sprite2D" parent="MultiAttack"]
-texture = ExtResource("2_px8g5")
-centered = false
-
-[node name="Soldier" type="Panel" parent="."]
-visible = false
-custom_minimum_size = Vector2(160, 240)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_5tlcp")
-
-[node name="Left" type="Sprite2D" parent="Soldier"]
-texture = ExtResource("3_qmo2m")
-centered = false
-
-[node name="Flexer" type="Panel" parent="."]
-visible = false
-custom_minimum_size = Vector2(160, 240)
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_qj4an")
-
-[node name="Left" type="Sprite2D" parent="Flexer"]
-texture = ExtResource("5_vkb8n")
-centered = false
-
-[node name="VirusFrame" type="Panel" parent="."]
-visible = false
-custom_minimum_size = Vector2(160, 240)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_15hua")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xtp1m")
+
+[node name="Image" type="Sprite2D" parent="MultiAttack"]
+texture = ExtResource("2_px8g5")
+centered = false
+
+[node name="Soldier" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_b2ow7")
+
+[node name="Left" type="Sprite2D" parent="Soldier"]
+texture = ExtResource("3_qmo2m")
+centered = false
+
+[node name="Flexer" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_xbi7m")
+
+[node name="Left" type="Sprite2D" parent="Flexer"]
+texture = ExtResource("5_vkb8n")
+centered = false
+
+[node name="Kanonenrohr" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1bp13")
+
+[node name="Counter" type="Label" parent="Kanonenrohr"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 31.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0.34902, 0.462745, 1)
+theme_override_constants/outline_size = 10
+text = "?"
+horizontal_alignment = 2
+
+[node name="Angel" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_mcw2b")
+
+[node name="Left" type="Sprite2D" parent="Angel"]
+texture = ExtResource("6_x8j1j")
+centered = false
 
 [node name="Layout" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -198,23 +248,6 @@ layout_mode = 2
 mouse_filter = 2
 alignment = 2
 
-[node name="Virus" type="HBoxContainer" parent="Layout/Bottom"]
-visible = false
-layout_mode = 2
-size_flags_horizontal = 4
-
-[node name="1" parent="Layout/Bottom/Virus" instance=ExtResource("4_jnkyy")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="2" parent="Layout/Bottom/Virus" instance=ExtResource("4_jnkyy")]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="3" parent="Layout/Bottom/Virus" instance=ExtResource("4_jnkyy")]
-layout_mode = 2
-mouse_filter = 2
-
 [node name="HP" type="HBoxContainer" parent="Layout/Bottom"]
 layout_mode = 2
 theme_override_constants/separation = 5
@@ -224,7 +257,7 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
-text = "8"
+text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -247,7 +280,7 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
-text = "10"
+text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
