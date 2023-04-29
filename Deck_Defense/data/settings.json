@@ -1,5 +1,5 @@
 {
-	"fullscreen": false,
+	"fullscreen": true,
 	"windowSizeHeight": 900,
 	"windowSizeWidth": 1600
 }
