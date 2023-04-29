@@ -90,7 +90,7 @@ func switch_to_player():
 		GameboardUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 		GameboardUtil.set_visibility(get_node(ATTACK_PLAYER), true)
 		GameboardUtil.set_visibility(get_node(BLOCK_PLAYER), false)
-		GameboardUtil.apply_card_effects(get_node(player_card_space))
+		GameboardUtil.apply_lane_effects(get_node(player_card_space))
 		await place_cards_in_hand(get_node(player_hand), GameboardProperties.cards_per_turn, GameboardProperties.player_deck, GameboardProperties.player_initial, true)
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.MY_TURN
@@ -101,7 +101,7 @@ func switch_to_enemy():
 		GameboardUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GameboardUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GameboardUtil.set_visibility(get_node(BLOCK_PLAYER), false)
-		GameboardUtil.apply_card_effects(get_node(enemy_card_space))
+		GameboardUtil.apply_lane_effects(get_node(enemy_card_space))
 		await place_cards_in_hand(get_node(enemy_hand), GameboardProperties.cards_per_turn, GameboardProperties.enemy_deck, GameboardProperties.enemy_initial, false)
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.OPPONENT_TURN

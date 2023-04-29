@@ -23,15 +23,15 @@ func lay_card_on_space(card_spots, from, to, hand_node):
 		card.apply_card_laydown(card_spots, to)
 		hand_node.remove_child(hand_node.get_child(from))
 		adjust_separation(hand_node)
-		apply_card_effects(card_spots)
+		apply_lane_effects(card_spots)
 		return true
 	return false
 
-func apply_card_effects(card_spots: HBoxContainer):
+func apply_lane_effects(card_spots: HBoxContainer):
 	for spot in card_spots.get_children():
 		if spot.get_child_count() > 0:
 			var card = (spot.get_child(0) as Card)
-			card.apply_effects(card_spots, spot.get_index())
+			card.apply_lane_effects(card_spots, spot.get_index())
 
 func apply_next_turn_effects(card_spots: HBoxContainer):
 	for spot in card_spots.get_children():
@@ -57,25 +57,22 @@ func attack(attacker_cards, target_cards):
 	const direct_attack_animation_time = 0.35
 	var direct_damage = 0
 	for attacker in attacker_cards:
-		var dmg = attacker.properties.atk
-		var has_attacked = false
 		for defender in target_cards:
 			if defender == null:
 				continue
+			if not attacker.can_attack(defender):
+				continue
+			attacker.prepare_attack(defender)
+			var dmg = attacker.properties.atk
 			await tree.create_timer(attack_animation_time).timeout
-			has_attacked = true
 			var hp = defender.properties.hp
 			var new_card_hp = hp - dmg
 			if new_card_hp <= 0:
 				remove_from_game(defender)
 			else:
 				defender.properties.set_hp(new_card_hp)
-			dmg -= hp
-			if !attacker.properties.multi_attack or dmg <= 0:
-				break
-			has_attacked = false
-		if !has_attacked:
-			direct_damage += dmg
+		if attacker.can_attack_directly():
+			direct_damage += attacker.properties.atk
 		await tree.create_timer(attack_animation_time).timeout
 	return direct_damage
 
