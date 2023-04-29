@@ -1,15 +1,13 @@
-[gd_scene load_steps=19 format=3 uid="uid://cf1km1wp18aim"]
+[gd_scene load_steps=17 format=3 uid="uid://cf1km1wp18aim"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
-[ext_resource type="Texture2D" uid="uid://htrvehxqn0qo" path="res://shared/card/images/dar.png" id="2_adqpx"]
-[ext_resource type="Texture2D" uid="uid://cyqr3h0d251k4" path="res://data/cards/type-frames/multi-attack.png" id="2_px8g5"]
-[ext_resource type="Texture2D" uid="uid://ciyixu36f3sqx" path="res://data/cards/type-frames/soldier-left.png" id="3_qmo2m"]
+[ext_resource type="Texture2D" uid="uid://drj5avgxwqd4p" path="res://data/cards/type-frames/multi-attack.png" id="3_75ajg"]
+[ext_resource type="Texture2D" uid="uid://dl4kgkwufjdl1" path="res://data/cards/type-frames/soldier-left.png" id="4_6rf5k"]
 [ext_resource type="PackedScene" uid="uid://degq7nbnngki2" path="res://shared/card/prefabs/specialPanel.tscn" id="5_0hdso"]
-[ext_resource type="Texture2D" uid="uid://klddqk21sb45" path="res://data/cards/type-frames/flexer-left.png" id="5_vkb8n"]
-[ext_resource type="Texture2D" uid="uid://s3olrd53k6fn" path="res://shared/card/images/hp.png" id="5_ymmfd"]
-[ext_resource type="Texture2D" uid="uid://b2dkujvlwqkmb" path="res://shared/card/images/atk.png" id="6_3c03p"]
-[ext_resource type="Texture2D" uid="uid://blbxmist6ef6h" path="res://data/cards/type-frames/angel-left.png" id="6_x8j1j"]
-[ext_resource type="Texture2D" uid="uid://dv2k7dnm5nfcv" path="res://data/cards/images/1.png" id="8_t1d8d"]
+[ext_resource type="Texture2D" uid="uid://batw3q3a5dcnu" path="res://data/cards/type-frames/flexer-left.png" id="5_br2xe"]
+[ext_resource type="Texture2D" uid="uid://der8sqhd4ipix" path="res://data/cards/type-frames/angel-left.png" id="6_7t1kf"]
+[ext_resource type="Texture2D" uid="uid://l12saielyye1" path="res://shared/card/images/hp.png" id="7_ghvif"]
+[ext_resource type="Texture2D" uid="uid://blus6vquyh7ba" path="res://shared/card/images/atk.png" id="8_4uxmh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
 bg_color = Color(0.992157, 0.788235, 0.486275, 1)
@@ -113,7 +111,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xtp1m")
 
 [node name="Image" type="Sprite2D" parent="MultiAttack"]
-texture = ExtResource("2_px8g5")
+texture = ExtResource("3_75ajg")
 centered = false
 
 [node name="Soldier" parent="." instance=ExtResource("5_0hdso")]
@@ -128,7 +126,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b2ow7")
 
 [node name="Left" type="Sprite2D" parent="Soldier"]
-texture = ExtResource("3_qmo2m")
+texture = ExtResource("4_6rf5k")
 centered = false
 
 [node name="Flexer" parent="." instance=ExtResource("5_0hdso")]
@@ -143,7 +141,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xbi7m")
 
 [node name="Left" type="Sprite2D" parent="Flexer"]
-texture = ExtResource("5_vkb8n")
+texture = ExtResource("5_br2xe")
 centered = false
 
 [node name="Kanonenrohr" parent="." instance=ExtResource("5_0hdso")]
@@ -183,7 +181,7 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mcw2b")
 
 [node name="Left" type="Sprite2D" parent="Angel"]
-texture = ExtResource("6_x8j1j")
+texture = ExtResource("6_7t1kf")
 centered = false
 
 [node name="LayoutMargin" type="MarginContainer" parent="."]
@@ -220,7 +218,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_3teaj")
 visible = false
 position = Vector2(-7, 0)
 scale = Vector2(0.08, 0.25)
-texture = ExtResource("2_adqpx")
 centered = false
 offset = Vector2(-10, 0)
 flip_h = true
@@ -230,7 +227,6 @@ custom_minimum_size = Vector2(115, 100)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
-texture = ExtResource("8_t1d8d")
 expand_mode = 2
 
 [node name="Right" type="Panel" parent="LayoutMargin/Layout/Top"]
@@ -243,7 +239,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bdeoe")
 visible = false
 position = Vector2(-17, 0)
 scale = Vector2(0.08, 0.25)
-texture = ExtResource("2_adqpx")
 centered = false
 
 [node name="Bottom" type="VBoxContainer" parent="LayoutMargin/Layout"]
@@ -272,7 +267,7 @@ mouse_filter = 2
 
 [node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Bottom/HP/Symbol"]
 scale = Vector2(0.15, 0.15)
-texture = ExtResource("5_ymmfd")
+texture = ExtResource("7_ghvif")
 centered = false
 offset = Vector2(0, 35)
 
@@ -296,6 +291,6 @@ mouse_filter = 2
 
 [node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Bottom/ATK/Symbol"]
 scale = Vector2(0.15, 0.15)
-texture = ExtResource("6_3c03p")
+texture = ExtResource("8_4uxmh")
 centered = false
 offset = Vector2(0, 35)
