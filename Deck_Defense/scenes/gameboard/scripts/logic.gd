@@ -179,6 +179,9 @@ func set_hp(path, amount, max_amount):
 func reset_hand_card_focus():
 	if(selected_action_card >= 0):
 		var card = get_node(player_hand).get_child(selected_action_card) as Card
+		if card == null:
+			selected_action_card = -1
+			return
 		var cardHeight = card.size.y
 		GameboardUtil.bump_child_y(card, cardHeight*bump_factor)
 	selected_action_card = -1
