@@ -2,11 +2,11 @@ extends Object
 
 class_name CardProperties
 
-const image = "Layout/Top/Face/Image"
-const boni_left = "Layout/Top/Left/Image"
-const boni_right = "Layout/Top/Right/Image"
-const hp_label = "Layout/Bottom/HP/Value"
-const atk_label = "Layout/Bottom/ATK/Value"
+const image = "LayoutMargin/Layout/Top/Face"
+const boni_left = "LayoutMargin/Layout/Top/Left/Image"
+const boni_right = "LayoutMargin/Layout/Top/Right/Image"
+const hp_label = "LayoutMargin/Layout/Bottom/HP/Value"
+const atk_label = "LayoutMargin/Layout/Bottom/ATK/Value"
 
 const multi_attack_panel = "MultiAttack"
 var multi_attack = false
@@ -213,7 +213,7 @@ func reload_data():
 				return
 			if kanonenrohr_counter > 0:
 				label.set_text(str(kanonenrohr_counter))
-		var sprite = node.get_node(image)
+		var sprite = node.get_node(image) # HERE
 		if sprite != null and face != null:
 			sprite.texture = load(face)
 		check_self_destroy()

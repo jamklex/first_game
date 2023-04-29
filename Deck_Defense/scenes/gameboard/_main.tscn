@@ -126,55 +126,6 @@ offset_right = 0.0
 offset_bottom = 0.0
 metadata/_edit_use_anchors_ = true
 
-[node name="EnemyOldPosses" type="Control" parent="."]
-visible = false
-layout_mode = 2
-anchors_preset = 0
-offset_left = 576.0
-offset_top = 324.0
-offset_right = 576.0
-offset_bottom = 324.0
-
-[node name="Hand" type="HBoxContainer" parent="EnemyOldPosses"]
-layout_mode = 0
-offset_left = -351.0
-offset_top = -419.0
-offset_right = 349.0
-offset_bottom = -179.0
-alignment = 1
-
-[node name="Health" parent="EnemyOldPosses" instance=ExtResource("6")]
-layout_mode = 0
-offset_left = -500.0
-offset_top = -176.0
-offset_right = -300.0
-offset_bottom = -146.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_e8sp8")
-
-[node name="CardsLeft" parent="EnemyOldPosses" instance=ExtResource("7")]
-layout_mode = 0
-offset_left = 384.0
-offset_top = -269.0
-offset_right = 484.0
-offset_bottom = -119.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_fu1b1")
-
-[node name="CardSpace" type="Panel" parent="EnemyOldPosses"]
-custom_minimum_size = Vector2(846, 140)
-layout_mode = 0
-offset_left = -500.0
-offset_top = -143.0
-offset_right = 346.0
-offset_bottom = -3.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_aa5pe")
-
-[node name="Spots" parent="EnemyOldPosses/CardSpace" instance=ExtResource("2")]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 841.0
-offset_bottom = 135.0
-
 [node name="TurnOptions" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -287,56 +238,6 @@ offset_bottom = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_fhtdn")
 metadata/_edit_use_anchors_ = true
 
-[node name="PlayerOldPosses3" type="Control" parent="."]
-visible = false
-layout_mode = 2
-anchors_preset = 0
-offset_left = 576.0
-offset_top = 324.0
-offset_right = 576.0
-offset_bottom = 324.0
-
-[node name="CardSpace" type="Panel" parent="PlayerOldPosses3"]
-custom_minimum_size = Vector2(846, 140)
-layout_mode = 0
-offset_left = -500.0
-offset_top = 3.0
-offset_right = 346.0
-offset_bottom = 143.0
-mouse_filter = 1
-theme_override_styles/panel = SubResource("StyleBoxFlat_c82is")
-
-[node name="Spots" parent="PlayerOldPosses3/CardSpace" instance=ExtResource("2")]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 5.0
-offset_right = 841.0
-offset_bottom = 135.0
-
-[node name="Health" parent="PlayerOldPosses3" instance=ExtResource("6")]
-layout_mode = 0
-offset_left = -500.0
-offset_top = 147.0
-offset_right = -300.0
-offset_bottom = 177.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_fojdk")
-
-[node name="Hand" type="HBoxContainer" parent="PlayerOldPosses3"]
-layout_mode = 0
-offset_left = -351.0
-offset_top = 181.0
-offset_right = 349.0
-offset_bottom = 421.0
-alignment = 1
-
-[node name="CardsLeft" parent="PlayerOldPosses3" instance=ExtResource("7")]
-layout_mode = 0
-offset_left = 384.0
-offset_top = 124.0
-offset_right = 484.0
-offset_bottom = 274.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_fhtdn")
-
 [node name="PlayerWins" parent="." instance=ExtResource("9_aphqi")]
 visible = false
 top_level = true
@@ -363,5 +264,3 @@ anchors_preset = 0
 [connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
 [connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
 [connection signal="gui_input" from="Player/Hand" to="." method="_on_Hand_gui_input"]
-[connection signal="gui_input" from="PlayerOldPosses3/CardSpace" to="." method="_on_CardSpace_gui_input"]
-[connection signal="gui_input" from="PlayerOldPosses3/Hand" to="." method="_on_Hand_gui_input"]

@@ -1,15 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://cf1km1wp18aim"]
+[gd_scene load_steps=19 format=3 uid="uid://cf1km1wp18aim"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
 [ext_resource type="Texture2D" uid="uid://htrvehxqn0qo" path="res://shared/card/images/dar.png" id="2_adqpx"]
 [ext_resource type="Texture2D" uid="uid://cyqr3h0d251k4" path="res://data/cards/type-frames/multi-attack.png" id="2_px8g5"]
 [ext_resource type="Texture2D" uid="uid://ciyixu36f3sqx" path="res://data/cards/type-frames/soldier-left.png" id="3_qmo2m"]
-[ext_resource type="Texture2D" uid="uid://d2fwul4wpuruw" path="res://data/cards/images/placeholder.png" id="3_yalfj"]
 [ext_resource type="PackedScene" uid="uid://degq7nbnngki2" path="res://shared/card/prefabs/specialPanel.tscn" id="5_0hdso"]
 [ext_resource type="Texture2D" uid="uid://klddqk21sb45" path="res://data/cards/type-frames/flexer-left.png" id="5_vkb8n"]
 [ext_resource type="Texture2D" uid="uid://s3olrd53k6fn" path="res://shared/card/images/hp.png" id="5_ymmfd"]
 [ext_resource type="Texture2D" uid="uid://b2dkujvlwqkmb" path="res://shared/card/images/atk.png" id="6_3c03p"]
 [ext_resource type="Texture2D" uid="uid://blbxmist6ef6h" path="res://data/cards/type-frames/angel-left.png" id="6_x8j1j"]
+[ext_resource type="Texture2D" uid="uid://dv2k7dnm5nfcv" path="res://data/cards/images/1.png" id="8_t1d8d"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
 bg_color = Color(0.992157, 0.788235, 0.486275, 1)
@@ -86,9 +86,6 @@ corner_radius_bottom_left = 15
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3teaj"]
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4dwj0"]
-bg_color = Color(0.615686, 0.0392157, 0.364706, 0.580392)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bdeoe"]
 draw_center = false
 
@@ -97,7 +94,8 @@ custom_minimum_size = Vector2(160, 240)
 anchors_preset = -1
 anchor_right = 0.138889
 anchor_bottom = 0.37037
-offset_bottom = 1.52588e-05
+offset_right = -0.00012207
+offset_bottom = 0.000244141
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
 script = ExtResource("1_3i4m2")
@@ -188,35 +186,37 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_mcw2b")
 texture = ExtResource("6_x8j1j")
 centered = false
 
-[node name="Layout" type="VBoxContainer" parent="."]
+[node name="LayoutMargin" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -77.0
-offset_top = -105.0
-offset_right = 77.0
-offset_bottom = 115.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Layout" type="VBoxContainer" parent="LayoutMargin"]
+layout_mode = 2
 mouse_filter = 2
 
-[node name="Top" type="HBoxContainer" parent="Layout"]
+[node name="Top" type="HBoxContainer" parent="LayoutMargin/Layout"]
 clip_contents = true
 custom_minimum_size = Vector2(130, 115)
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 alignment = 1
 
-[node name="Left" type="Panel" parent="Layout/Top"]
+[node name="Left" type="Panel" parent="LayoutMargin/Layout/Top"]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3teaj")
 
-[node name="Image" type="Sprite2D" parent="Layout/Top/Left"]
+[node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Top/Left"]
 visible = false
 position = Vector2(-7, 0)
 scale = Vector2(0.08, 0.25)
@@ -225,43 +225,40 @@ centered = false
 offset = Vector2(-10, 0)
 flip_h = true
 
-[node name="Face" type="Panel" parent="Layout/Top"]
-clip_contents = true
+[node name="Face" type="TextureRect" parent="LayoutMargin/Layout/Top"]
 custom_minimum_size = Vector2(115, 100)
 layout_mode = 2
+size_flags_horizontal = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4dwj0")
+texture = ExtResource("8_t1d8d")
+expand_mode = 2
 
-[node name="Image" type="Sprite2D" parent="Layout/Top/Face"]
-scale = Vector2(0.225, 0.225)
-texture = ExtResource("3_yalfj")
-centered = false
-
-[node name="Right" type="Panel" parent="Layout/Top"]
+[node name="Right" type="Panel" parent="LayoutMargin/Layout/Top"]
 custom_minimum_size = Vector2(15, 0)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bdeoe")
 
-[node name="Image" type="Sprite2D" parent="Layout/Top/Right"]
+[node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Top/Right"]
 visible = false
 position = Vector2(-17, 0)
 scale = Vector2(0.08, 0.25)
 texture = ExtResource("2_adqpx")
 centered = false
 
-[node name="Bottom" type="VBoxContainer" parent="Layout"]
+[node name="Bottom" type="VBoxContainer" parent="LayoutMargin/Layout"]
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
+size_flags_vertical = 3
 mouse_filter = 2
 alignment = 2
 
-[node name="HP" type="HBoxContainer" parent="Layout/Bottom"]
+[node name="HP" type="HBoxContainer" parent="LayoutMargin/Layout/Bottom"]
 layout_mode = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="Value" type="Label" parent="Layout/Bottom/HP"]
+[node name="Value" type="Label" parent="LayoutMargin/Layout/Bottom/HP"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
@@ -269,22 +266,22 @@ text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Symbol" type="Panel" parent="Layout/Bottom/HP"]
+[node name="Symbol" type="Panel" parent="LayoutMargin/Layout/Bottom/HP"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Image" type="Sprite2D" parent="Layout/Bottom/HP/Symbol"]
+[node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Bottom/HP/Symbol"]
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("5_ymmfd")
 centered = false
 offset = Vector2(0, 35)
 
-[node name="ATK" type="HBoxContainer" parent="Layout/Bottom"]
+[node name="ATK" type="HBoxContainer" parent="LayoutMargin/Layout/Bottom"]
 layout_mode = 2
 theme_override_constants/separation = 5
 alignment = 1
 
-[node name="Value" type="Label" parent="Layout/Bottom/ATK"]
+[node name="Value" type="Label" parent="LayoutMargin/Layout/Bottom/ATK"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
@@ -293,11 +290,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="Symbol" type="Panel" parent="Layout/Bottom/ATK"]
+[node name="Symbol" type="Panel" parent="LayoutMargin/Layout/Bottom/ATK"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Image" type="Sprite2D" parent="Layout/Bottom/ATK/Symbol"]
+[node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Bottom/ATK/Symbol"]
 scale = Vector2(0.15, 0.15)
 texture = ExtResource("6_3c03p")
 centered = false

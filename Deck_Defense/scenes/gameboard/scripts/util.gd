@@ -152,9 +152,16 @@ func get_specific_card_from_deck(deck: Array, id):
 		i += 1
 	return deck.pop_at(i)
 
-func add_card_to(hand, card):
+func add_card_to(hand:HBoxContainer, card:Card):
 	hand.add_child(card)
 	adjust_separation(hand)
-
+	adjust_size(card, hand.size.y)
+	
+func adjust_size(card:Card, newHeight:int):
+	var sizeMultiplier = newHeight / card.custom_minimum_size.y
+	var newWidth = card.custom_minimum_size.x * sizeMultiplier
+	var newSize = Vector2(newWidth, newHeight)
+	card.custom_minimum_size = newSize
+		
 func set_visibility(node, status):
 	node.visible = status

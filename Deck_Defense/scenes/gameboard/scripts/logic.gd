@@ -25,7 +25,7 @@ var rng:RandomNumberGenerator = GameboardProperties.rng
 
 var selected_action_card = -1
 var current_cycle
-var bump_factor = 100;
+var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 
 func _ready():
 	get_tree().set_auto_accept_quit(true)
@@ -52,7 +52,9 @@ func _on_Hand_gui_input(event):
 		var new_selected_card = GameboardUtil.get_child_index(node, make_input_local(event).position, true, -1)
 		if new_selected_card >= 0 and new_selected_card != old_selected:
 			selected_action_card = new_selected_card
-			GameboardUtil.bump_child_y(node.get_child(selected_action_card), bump_factor*-1)
+			var card = node.get_child(selected_action_card) as Card
+			var cardHeight = card.size.y
+			GameboardUtil.bump_child_y(card, cardHeight * bump_factor * -1)
 
 func _on_CardSpace_gui_input(event):
 	if GameboardUtil.is_mouse_click(event) and can_place_cards():
@@ -176,5 +178,7 @@ func set_hp(path, amount, max_amount):
 
 func reset_hand_card_focus():
 	if(selected_action_card >= 0):
-		GameboardUtil.bump_child_y(get_node(player_hand).get_child(selected_action_card), bump_factor)
+		var card = get_node(player_hand).get_child(selected_action_card) as Card
+		var cardHeight = card.size.y
+		GameboardUtil.bump_child_y(card, cardHeight*bump_factor)
 	selected_action_card = -1
