@@ -14,6 +14,8 @@ var enemy_level
 var selected_card_spot
 var player_hand_node
 var player_card_space_node
+var enemy_hand_node
+var enemy_card_space_node
 var selected_action_card
 var old_selected_action_card
 var max_hand_cards = 5;

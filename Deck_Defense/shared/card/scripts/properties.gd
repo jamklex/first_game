@@ -83,16 +83,16 @@ func prepare_attack(target: CardProperties):
 func can_attack_directly():
 	return direct_allowed
 
-func apply_lane_effects(my_container: HBoxContainer, my_position):
+func apply_lane_effects(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	for effect in possible_effects:
-		effect.apply_lane_effects(my_container, my_position)
+		effect.apply_lane_effects(my_container, my_position, enemy_container)
 	if my_position > 0:
 		var neighbour = my_container.get_child(my_position-1)
 		if neighbour.get_child_count() > 0:
 			apply_effects_from_left(neighbour.get_child(0).properties as CardProperties)
 		else:
 			retract_effects_from_left()
-	if my_position < GameboardProperties.max_card_space_spots - 1:
+	if my_position < GbProps.max_card_space_spots - 1:
 		var neighbour = my_container.get_child(my_position+1)
 		if neighbour.get_child_count() > 0:
 			apply_effects_from_right(neighbour.get_child(0).properties as CardProperties)
@@ -100,16 +100,16 @@ func apply_lane_effects(my_container: HBoxContainer, my_position):
 			retract_effects_from_right()
 	reload_data()
 
-func apply_next_turn(my_container: HBoxContainer, my_position):
+func apply_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	attacks_remaining = 1
 	direct_allowed = true
 	for effect in possible_effects:
-		effect.apply_next_turn(my_container, my_position)
+		effect.apply_next_turn(my_container, my_position, enemy_container)
 	reload_data()
 
-func apply_card_laydown(my_container: HBoxContainer, my_position):
+func apply_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	for effect in possible_effects:
-		effect.apply_card_laydown(my_container, my_position)
+		effect.apply_card_laydown(my_container, my_position, enemy_container)
 	reload_data()
 
 func apply_effects_from_left(left_props):
@@ -141,7 +141,7 @@ func reload_data():
 
 func check_self_destroy():
 	if hp <= 0:
-		GameboardUtil.remove_from_game(node)
+		GbUtil.remove_from_game(node)
 
 func update_label(path, value, base_value):
 	if node == null:
