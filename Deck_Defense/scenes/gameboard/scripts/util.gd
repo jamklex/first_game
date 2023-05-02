@@ -2,7 +2,7 @@ extends Node
 
 var player_deck = []
 var enemy_deck = []
-var rng = GameboardProperties.rng
+var rng = GbProps.rng
 
 var enemy_card = preload("res://shared/card/back.tscn")
 var player_card = preload("res://shared/card/front.tscn")
@@ -12,7 +12,7 @@ var tree:SceneTree
 func initialize(given_tree):
 	tree = given_tree
 
-func lay_card_on_space(card_spots, from, to, hand_node):
+func lay_card_on_space(card_spots: HBoxContainer, from, to, hand_node, enemy_spots: HBoxContainer):
 	var initial_card = hand_node.get_child(from)
 	var contender = card_spots.get_child(to) as Panel
 	if initial_card != null and contender.get_child_count() == 0:
@@ -30,24 +30,24 @@ func lay_card_on_space(card_spots, from, to, hand_node):
 		print(card.size)
 #		card.scale = Vector2(0.5, 0.5)
 #		card.pivot_offset = Vector2(0, 10)
-		card.apply_card_laydown(card_spots, to)
+		card.apply_card_laydown(card_spots, to, enemy_spots)
 		hand_node.remove_child(hand_node.get_child(from))
 		adjust_separation(hand_node)
-		apply_lane_effects(card_spots)
+		apply_lane_effects(card_spots, enemy_spots)
 		return true
 	return false
 
-func apply_lane_effects(card_spots: HBoxContainer):
+func apply_lane_effects(card_spots: HBoxContainer, enemy_spots: HBoxContainer):
 	for spot in card_spots.get_children():
 		if spot.get_child_count() > 0:
 			var card = (spot.get_child(0) as Card)
-			card.apply_lane_effects(card_spots, spot.get_index())
+			card.apply_lane_effects(card_spots, spot.get_index(), enemy_spots)
 
-func apply_next_turn_effects(card_spots: HBoxContainer):
+func apply_next_turn_effects(card_spots: HBoxContainer, enemy_spots: HBoxContainer):
 	for spot in card_spots.get_children():
 		if spot.get_child_count() > 0:
 			var card = (spot.get_child(0) as Card)
-			card.apply_next_turn(card_spots, spot.get_index())
+			card.apply_next_turn(card_spots, spot.get_index(), enemy_spots)
 
 func create_visible_instance(card, for_player):
 	var base_card = enemy_card
@@ -92,15 +92,17 @@ func remove_from_game(card):
 
 func get_free_spots(node):
 	var free_spaces = []
-	for child in node.get_children():
-		if child.get_child_count() <= 0:
-			free_spaces.append(child.get_index())
+	for i in range(GbProps.max_card_space_spots):
+		var card = get_card_from_container(node, i)
+		if card == null:
+			free_spaces.append(i)
 	return free_spaces
 
 func cards_ltr_in(node):
 	var cards = []
-	for child in node.get_children():
-		for card in child.get_children():
+	for i in range(GbProps.max_card_space_spots):
+		var card = get_card_from_container(node, i)
+		if card != null:
 			cards.append(card)
 	return cards
 
@@ -133,7 +135,7 @@ func total_card_size(deck, card_space, hand):
 
 func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
 	for n in amount:
-		if node.get_child_count() == GameboardProperties.max_hand_cards:
+		if node.get_child_count() == GbProps.max_hand_cards:
 			break
 		var card
 		if prefered_ids != null:
@@ -173,3 +175,14 @@ func adjust_size(card:Card, newHeight:int):
 		
 func set_visibility(node, status):
 	node.visible = status
+
+func get_card_from_container(container: HBoxContainer, index: int):
+	var holder = container.get_child(index)
+	if holder is Card:
+		return holder
+	if holder == null:
+		return null
+	for child in holder.get_children():
+		if child is Card:
+			return child
+		return null

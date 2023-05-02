@@ -15,7 +15,7 @@ func apply_attack_effect(target: CardProperties):
 	if active and me.attacks_remaining > 1:
 			me.direct_allowed = true
 
-func apply_lane_effects(lane: HBoxContainer, my_pos):
+func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass
 
 func apply_effects_from_left(other: CardProperties):
@@ -30,11 +30,11 @@ func retract_effects_from_left():
 func retract_effects_from_right():
 	pass
 
-func apply_next_turn(lane: HBoxContainer, my_pos):
+func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if active:
 		me.attacks_remaining = TOTAL_ATTACKS
 
-func apply_card_laydown(lane: HBoxContainer, my_pos):
+func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if active:
 		me.attacks_remaining = TOTAL_ATTACKS
 

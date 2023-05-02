@@ -15,7 +15,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 func apply_attack_effect(target: CardProperties):
 	pass
 
-func apply_lane_effects(lane: HBoxContainer, my_pos):
+func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if active:
 		me.set_atk(me.base_atk * counter)
 
@@ -31,11 +31,11 @@ func retract_effects_from_left():
 func retract_effects_from_right():
 	pass
 
-func apply_next_turn(lane: HBoxContainer, my_pos):
+func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if active:
 		counter = counter + 1
 
-func apply_card_laydown(lane: HBoxContainer, my_pos):
+func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if active:
 		counter = counter + 1
 
