@@ -82,15 +82,17 @@ func remove_from_game(card):
 
 func get_free_spots(node):
 	var free_spaces = []
-	for child in node.get_children():
-		if child.get_child_count() <= 0:
-			free_spaces.append(child.get_index())
+	for i in range(GbProps.max_card_space_spots):
+		var card = get_card_from_container(node, i)
+		if card == null:
+			free_spaces.append(i)
 	return free_spaces
 
 func cards_ltr_in(node):
 	var cards = []
-	for child in node.get_children():
-		for card in child.get_children():
+	for i in range(GbProps.max_card_space_spots):
+		var card = get_card_from_container(node, i)
+		if card != null:
 			cards.append(card)
 	return cards
 
@@ -162,3 +164,14 @@ func adjust_size(card:Card, newHeight:int):
 		
 func set_visibility(node, status):
 	node.visible = status
+
+func get_card_from_container(container: HBoxContainer, index: int):
+	var holder = container.get_child(index)
+	if holder is Card:
+		return holder
+	if holder == null:
+		return null
+	for child in holder.get_children():
+		if child is Card:
+			return child
+		return null

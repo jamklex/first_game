@@ -11,7 +11,7 @@ var enemy_deck = []
 var enemy_initial = []
 var enemy_level
 
-var selected_card_spot
+var selected_card_spot = -1
 var player_hand_node
 var player_card_space_node
 var enemy_hand_node

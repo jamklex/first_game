@@ -54,7 +54,7 @@ func _on_Hand_gui_input(event):
 		var new_selected_card = GbUtil.get_child_index(node, make_input_local(event).position, true, -1)
 		if new_selected_card >= 0 and new_selected_card != old_selected:
 			selected_action_card = new_selected_card
-			var card = node.get_child(selected_action_card) as Card
+			var card = GbUtil.get_card_from_container(node, selected_action_card)
 			var cardHeight = card.size.y
 			GbUtil.bump_child_y(card, cardHeight * bump_factor * -1)
 
@@ -179,7 +179,7 @@ func set_hp(path, amount, max_amount):
 
 func reset_hand_card_focus():
 	if(selected_action_card >= 0):
-		var card = GbProps.player_hand_node.get_child(selected_action_card) as Card
+		var card = GbUtil.get_card_from_container(GbProps.player_hand_node, selected_action_card)
 		if card == null:
 			selected_action_card = -1
 			return

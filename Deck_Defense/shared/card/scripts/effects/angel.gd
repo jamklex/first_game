@@ -17,7 +17,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 func apply_attack_effect(target: CardProperties):
 	pass
 
-func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_container: HBoxContainer):
+func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass
 
 func apply_effects_from_left(other: CardProperties):
@@ -32,10 +32,10 @@ func retract_effects_from_left():
 func retract_effects_from_right():
 	pass
 
-func apply_next_turn(lane: HBoxContainer, my_pos, enemy_container: HBoxContainer):
+func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass
 
-func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_container: HBoxContainer):
+func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	var cards: = []
 	if left:
 		if my_pos > 0:
