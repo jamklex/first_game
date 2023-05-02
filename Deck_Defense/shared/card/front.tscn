@@ -96,8 +96,8 @@ custom_minimum_size = Vector2(160, 240)
 anchors_preset = -1
 anchor_right = 0.138889
 anchor_bottom = 0.37037
-offset_right = -0.00012207
-offset_bottom = 0.000244141
+offset_right = -73.0001
+offset_bottom = -110.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
 script = ExtResource("1_3i4m2")
@@ -105,6 +105,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MultiAttack" parent="." instance=ExtResource("5_0hdso")]
 visible = false
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,12 +115,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xtp1m")
 
-[node name="Image" type="Sprite2D" parent="MultiAttack"]
+[node name="Image" type="TextureRect" parent="MultiAttack"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("3_75ajg")
-centered = false
+expand_mode = 1
 
 [node name="Soldier" parent="." instance=ExtResource("5_0hdso")]
 visible = false
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,12 +137,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b2ow7")
 
-[node name="Left" type="Sprite2D" parent="Soldier"]
+[node name="Image" type="TextureRect" parent="Soldier"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("4_6rf5k")
-centered = false
+expand_mode = 1
 
 [node name="Flexer" parent="." instance=ExtResource("5_0hdso")]
 visible = false
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -144,12 +159,19 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xbi7m")
 
-[node name="Left" type="Sprite2D" parent="Flexer"]
+[node name="Image" type="TextureRect" parent="Flexer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("5_br2xe")
-centered = false
+expand_mode = 1
 
 [node name="Kanonenrohr" parent="." instance=ExtResource("5_0hdso")]
 visible = false
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -170,11 +192,14 @@ grow_vertical = 0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(1, 0.34902, 0.462745, 1)
 theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 20
 text = "?"
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Angel" parent="." instance=ExtResource("5_0hdso")]
 visible = false
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -184,9 +209,15 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mcw2b")
 
-[node name="Left" type="Sprite2D" parent="Angel"]
+[node name="Image" type="TextureRect" parent="Angel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("6_7t1kf")
-centered = false
+expand_mode = 1
 
 [node name="LayoutMargin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -205,14 +236,13 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="Buffer" type="Panel" parent="LayoutMargin/Layout"]
-custom_minimum_size = Vector2(0, 15)
+custom_minimum_size = Vector2(0, 5)
 layout_mode = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ucxha")
 
 [node name="Top" type="HBoxContainer" parent="LayoutMargin/Layout"]
 clip_contents = true
-custom_minimum_size = Vector2(130, 115)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -225,7 +255,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_3teaj")
 
 [node name="Face" type="TextureRect" parent="LayoutMargin/Layout/Top"]
-custom_minimum_size = Vector2(115, 100)
+custom_minimum_size = Vector2(65, 50)
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
@@ -239,7 +269,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bdeoe")
 
 [node name="Bottom" type="VBoxContainer" parent="LayoutMargin/Layout"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -252,21 +282,19 @@ alignment = 1
 
 [node name="Value" type="Label" parent="LayoutMargin/Layout/Bottom/HP"]
 layout_mode = 2
+size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Symbol" type="Panel" parent="LayoutMargin/Layout/Bottom/HP"]
+[node name="Symbol" type="TextureRect" parent="LayoutMargin/Layout/Bottom/HP"]
 layout_mode = 2
-mouse_filter = 2
-
-[node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Bottom/HP/Symbol"]
-scale = Vector2(0.15, 0.15)
+size_flags_horizontal = 3
 texture = ExtResource("7_ghvif")
-centered = false
-offset = Vector2(0, 35)
+expand_mode = 1
+stretch_mode = 4
 
 [node name="ATK" type="HBoxContainer" parent="LayoutMargin/Layout/Bottom"]
 layout_mode = 2
@@ -275,6 +303,7 @@ alignment = 1
 
 [node name="Value" type="Label" parent="LayoutMargin/Layout/Bottom/ATK"]
 layout_mode = 2
+size_flags_horizontal = 10
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
 text = "?"
@@ -282,12 +311,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 uppercase = true
 
-[node name="Symbol" type="Panel" parent="LayoutMargin/Layout/Bottom/ATK"]
+[node name="Symbol" type="TextureRect" parent="LayoutMargin/Layout/Bottom/ATK"]
 layout_mode = 2
-mouse_filter = 2
-
-[node name="Image" type="Sprite2D" parent="LayoutMargin/Layout/Bottom/ATK/Symbol"]
-scale = Vector2(0.15, 0.15)
+size_flags_horizontal = 3
 texture = ExtResource("8_4uxmh")
-centered = false
-offset = Vector2(0, 35)
+expand_mode = 1
+stretch_mode = 4
