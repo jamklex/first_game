@@ -4,12 +4,17 @@ class_name Card
 
 var properties: CardProperties
 
-# For rescaling
+# For scaling font
+var LABELS = [
+	"LayoutMargin/Layout/Bottom/ATK/Value", # this entry should be always visible, used for getting baseSize
+	"LayoutMargin/Layout/Bottom/HP/Value",
+	"Kanonenrohr/Counter",
+]
 var relationalScaleSize:Vector2
+var baseSize:int
 
 func _init():
 	relationalScaleSize = custom_minimum_size
-	print("setted relationalScaleSize")
 
 func initialize_new():
 	initialize_from(preload("res://shared/card/scripts/properties.gd").new())
@@ -41,3 +46,22 @@ func prepare_attack(target: Card):
 
 func can_attack_directly():
 	return properties.can_attack_directly()
+
+func _resizeLabels():
+	_initBaseFontSize()
+	if not baseSize:
+		return
+	var newFontSize = int((baseSize / relationalScaleSize.y) * custom_minimum_size.y)
+	for l in LABELS:
+		var label = get_node(l) as Label
+		if not label:
+			continue
+		label.add_theme_font_size_override("font_size", newFontSize)
+		
+func _initBaseFontSize():
+	if baseSize:
+		return
+	var label = get_node(LABELS[0]) as Label
+	if not label:
+		return
+	baseSize = label.get_theme_font_size("font_size")

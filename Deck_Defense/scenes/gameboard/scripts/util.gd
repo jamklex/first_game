@@ -17,19 +17,13 @@ func lay_card_on_space(card_spots: HBoxContainer, from, to, hand_node, enemy_spo
 	var contender = card_spots.get_child(to) as Panel
 	if initial_card != null and contender.get_child_count() == 0:
 		var card = create_visible_instance(initial_card.properties, true) as Card
-		print("before")
-		print(card.custom_minimum_size)
-		print(card.size)
-		adjust_size(card, contender.size.y)
-		print("after resize")
-		print(card.custom_minimum_size)
-		print(card.size)
+		var yScaleSub = 20
+		adjust_size(card, contender.size.y-yScaleSub)
 		contender.add_child(card)
-		print("after added")
-		print(card.custom_minimum_size)
-		print(card.size)
-#		card.scale = Vector2(0.5, 0.5)
-#		card.pivot_offset = Vector2(0, 10)
+		var xOffset = (contender.size.x - card.custom_minimum_size.x) / 2
+		var yOffset = yScaleSub / 2
+		card.position = Vector2(card.position.x + xOffset, card.position.y + yOffset)
+		card.set_size(card.custom_minimum_size)
 		card.apply_card_laydown(card_spots, to, enemy_spots)
 		hand_node.remove_child(hand_node.get_child(from))
 		adjust_separation(hand_node)
