@@ -13,7 +13,7 @@
 		"atk": 17,
 		"hp": 14,
 		"max_owned": 3,
-		"soldier_left": true
+		"bomb": true
 	},
 	{
 		"id": 3,

@@ -21,9 +21,9 @@ var atk = 0
 var node: Card
 var type_id
 var max_owned = 3
-var possible_effects = []
 var attacks_remaining = 1
 var direct_allowed = true
+var effects = []
 
 static func of(id):
 	var properties = CardProperties.new()
@@ -48,7 +48,6 @@ func link_node(link):
 	node = link
 
 func load_data(id):
-	add_possible_effects()
 	type_id = id
 	var content = JsonReader.read_json(CardData)
 	for card in content:
@@ -56,19 +55,23 @@ func load_data(id):
 			load_properties(card)
 			return
 
-func add_possible_effects():
+func get_possible_effects():
+	var possible_effects = []
 	possible_effects.append(FlexerEffect.new())
 	possible_effects.append(MultiAttackEffect.new())
 	possible_effects.append(SoldierEffect.new())
 	possible_effects.append(AngelEffect.new())
 	possible_effects.append(KanonenrohrEffect.new())
+	possible_effects.append(BombEffect.new())
+	return possible_effects
 
 func load_properties(card_prop_dict: Dictionary):
 	face = card_prop_dict["image"]
 	max_owned = card_prop_dict["max_owned"]
 	initialize(card_prop_dict["hp"], card_prop_dict["atk"])
-	for effect in possible_effects:
-		effect.load_properties(card_prop_dict, self)
+	for effect in get_possible_effects():
+		if effect.load_properties(card_prop_dict, self):
+			effects.append(effect)
 	reload_data()
 
 func can_attack(target: CardProperties):
@@ -77,14 +80,14 @@ func can_attack(target: CardProperties):
 func prepare_attack(target: CardProperties):
 	attacks_remaining = attacks_remaining - 1
 	direct_allowed = false
-	for effect in possible_effects:
+	for effect in effects:
 		effect.apply_attack_effect(target)
 
 func can_attack_directly():
 	return direct_allowed
 
 func apply_lane_effects(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	for effect in possible_effects:
+	for effect in effects:
 		effect.apply_lane_effects(my_container, my_position, enemy_container)
 	if my_position > 0:
 		var neighbour = my_container.get_child(my_position-1)
@@ -103,36 +106,36 @@ func apply_lane_effects(my_container: HBoxContainer, my_position, enemy_containe
 func apply_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	attacks_remaining = 1
 	direct_allowed = true
-	for effect in possible_effects:
+	for effect in effects:
 		effect.apply_next_turn(my_container, my_position, enemy_container)
 	reload_data()
 
 func apply_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	for effect in possible_effects:
+	for effect in effects:
 		effect.apply_card_laydown(my_container, my_position, enemy_container)
 	reload_data()
 
 func apply_effects_from_left(left_props):
-	for effect in possible_effects:
+	for effect in effects:
 		effect.apply_effects_from_left(left_props)
 
 func apply_effects_from_right(right_props):
-	for effect in possible_effects:
+	for effect in effects:
 		effect.apply_effects_from_right(right_props)
 
 func retract_effects_from_left():
-	for effect in possible_effects:
+	for effect in effects:
 		effect.retract_effects_from_left()
 
 func retract_effects_from_right():
-	for effect in possible_effects:
+	for effect in effects:
 		effect.retract_effects_from_right()
 
 func reload_data():
 	if node != null:
 		update_label(hp_label, hp, base_hp)
 		update_label(atk_label, atk, base_atk)
-		for effect in possible_effects:
+		for effect in effects:
 			effect.reload_data()
 		var sprite = node.get_node(image)
 		if sprite != null and face != null:
@@ -158,17 +161,21 @@ func update_label(path, value, base_value):
 	label.add_theme_color_override("font_color", color)
 
 func make_visible(path):
-	if node == null:
-		return
-	var panel = node.get_node(path)
-	if panel == null:
-		return
-	panel.visible = true
+	var panel = get_node(path)
+	if panel != null:
+		panel.visible = true
+
+func make_invisible(path):
+	var panel = get_node(path)
+	if panel != null:
+		panel.visible = false
 
 func flip_image(path):
+	var panel = get_node(path)
+	if panel != null:
+		panel.flip_h = true
+
+func get_node(path):
 	if node == null:
 		return
-	var panel = node.get_node(path)
-	if panel == null:
-		return
-	panel.flip_h = true
+	return node.get_node(path)

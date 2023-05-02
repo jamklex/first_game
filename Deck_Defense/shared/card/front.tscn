@@ -1,13 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://cf1km1wp18aim"]
+[gd_scene load_steps=21 format=3 uid="uid://llfmaboqxn2d"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
-[ext_resource type="Texture2D" uid="uid://drj5avgxwqd4p" path="res://data/cards/type-frames/multi-attack.png" id="3_75ajg"]
-[ext_resource type="Texture2D" uid="uid://dl4kgkwufjdl1" path="res://data/cards/type-frames/soldier-left.png" id="4_6rf5k"]
+[ext_resource type="Texture2D" uid="uid://drj5avgxwqd4p" path="res://shared/card/images/effects/multi-attack.png" id="3_75ajg"]
+[ext_resource type="Texture2D" uid="uid://dl4kgkwufjdl1" path="res://shared/card/images/effects/soldier-left.png" id="4_6rf5k"]
 [ext_resource type="PackedScene" uid="uid://degq7nbnngki2" path="res://shared/card/prefabs/specialPanel.tscn" id="5_0hdso"]
-[ext_resource type="Texture2D" uid="uid://batw3q3a5dcnu" path="res://data/cards/type-frames/flexer-left.png" id="5_br2xe"]
-[ext_resource type="Texture2D" uid="uid://der8sqhd4ipix" path="res://data/cards/type-frames/angel-left.png" id="6_7t1kf"]
+[ext_resource type="Texture2D" uid="uid://batw3q3a5dcnu" path="res://shared/card/images/effects/flexer-left.png" id="5_br2xe"]
+[ext_resource type="Texture2D" uid="uid://der8sqhd4ipix" path="res://shared/card/images/effects/angel-left.png" id="6_7t1kf"]
 [ext_resource type="Texture2D" uid="uid://bei880jwcycis" path="res://data/cards/images/placeholder.png" id="7_bje5q"]
 [ext_resource type="Texture2D" uid="uid://l12saielyye1" path="res://shared/card/images/hp.png" id="7_ghvif"]
+[ext_resource type="Texture2D" uid="uid://i7dq6a4bptru" path="res://shared/card/images/effects/bombe.png" id="7_v38cc"]
 [ext_resource type="Texture2D" uid="uid://blus6vquyh7ba" path="res://shared/card/images/atk.png" id="8_4uxmh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
@@ -82,6 +83,18 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1alif"]
+bg_color = Color(0.905882, 0.435294, 0.419608, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ucxha"]
 draw_center = false
 
@@ -107,14 +120,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MultiAttack" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xtp1m")
 
 [node name="Image" type="TextureRect" parent="MultiAttack"]
@@ -129,14 +135,7 @@ expand_mode = 1
 
 [node name="Soldier" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_b2ow7")
 
 [node name="Image" type="TextureRect" parent="Soldier"]
@@ -151,14 +150,7 @@ expand_mode = 1
 
 [node name="Flexer" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_xbi7m")
 
 [node name="Image" type="TextureRect" parent="Flexer"]
@@ -173,14 +165,7 @@ expand_mode = 1
 
 [node name="Kanonenrohr" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_1bp13")
 
 [node name="Counter" type="Label" parent="Kanonenrohr"]
@@ -201,14 +186,7 @@ vertical_alignment = 1
 
 [node name="Angel" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 0.0
-grow_horizontal = 2
-grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_mcw2b")
 
 [node name="Image" type="TextureRect" parent="Angel"]
@@ -220,6 +198,22 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_7t1kf")
 expand_mode = 1
+
+[node name="Bomb" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_1alif")
+
+[node name="Image" type="TextureRect" parent="Bomb"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_v38cc")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="LayoutMargin" type="MarginContainer" parent="."]
 layout_mode = 1

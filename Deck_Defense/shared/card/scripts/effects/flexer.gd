@@ -1,7 +1,7 @@
 class_name FlexerEffect
 
 const PANEL = "Flexer"
-const IMAGE = "Flexer/Left"
+const IMAGE = "Flexer/Image"
 
 var left = false
 var right = false
@@ -13,6 +13,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 		left = card_prop_dict["flexer_left"]
 	if card_prop_dict.has("flexer_right"):
 		right = card_prop_dict["flexer_right"]
+	return left or right
 
 func apply_attack_effect(target: CardProperties):
 	pass
