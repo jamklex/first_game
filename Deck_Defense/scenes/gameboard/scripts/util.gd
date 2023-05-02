@@ -14,12 +14,22 @@ func initialize(given_tree):
 
 func lay_card_on_space(card_spots, from, to, hand_node):
 	var initial_card = hand_node.get_child(from)
-	var contender = card_spots.get_child(to)
+	var contender = card_spots.get_child(to) as Panel
 	if initial_card != null and contender.get_child_count() == 0:
 		var card = create_visible_instance(initial_card.properties, true) as Card
+		print("before")
+		print(card.custom_minimum_size)
+		print(card.size)
+		adjust_size(card, contender.size.y)
+		print("after resize")
+		print(card.custom_minimum_size)
+		print(card.size)
 		contender.add_child(card)
-		card.scale = Vector2(0.5, 0.5)
-		card.pivot_offset = Vector2(0, 10)
+		print("after added")
+		print(card.custom_minimum_size)
+		print(card.size)
+#		card.scale = Vector2(0.5, 0.5)
+#		card.pivot_offset = Vector2(0, 10)
 		card.apply_card_laydown(card_spots, to)
 		hand_node.remove_child(hand_node.get_child(from))
 		adjust_separation(hand_node)
@@ -159,6 +169,7 @@ func adjust_size(card:Card, newHeight:int):
 	var newWidth = card.custom_minimum_size.x * sizeMultiplier
 	var newSize = Vector2(newWidth, newHeight)
 	card.custom_minimum_size = newSize
+#	card.set_size(newSize)
 		
 func set_visibility(node, status):
 	node.visible = status

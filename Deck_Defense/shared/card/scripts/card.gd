@@ -4,6 +4,13 @@ class_name Card
 
 var properties: CardProperties
 
+# For rescaling
+var relationalScaleSize:Vector2
+
+func _init():
+	relationalScaleSize = custom_minimum_size
+	print("setted relationalScaleSize")
+
 func initialize_new():
 	initialize_from(preload("res://shared/card/scripts/properties.gd").new())
 
