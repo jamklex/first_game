@@ -4,15 +4,14 @@ const PANEL = "MultiAttack"
 const TOTAL_ATTACKS = 2
 
 var me: CardProperties
-var active = false
 
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("multi_attack"):
-		active = card_prop_dict["multi_attack"]
+		return card_prop_dict["multi_attack"]
 
 func apply_attack_effect(target: CardProperties):
-	if active and me.attacks_remaining > 1:
+	if me.attacks_remaining > 1:
 		me.direct_allowed = true
 
 func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
@@ -31,13 +30,10 @@ func retract_effects_from_right():
 	pass
 
 func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
-	if active:
-		me.attacks_remaining = TOTAL_ATTACKS
+	me.attacks_remaining = TOTAL_ATTACKS
 
 func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
-	if active:
-		me.attacks_remaining = TOTAL_ATTACKS
+	me.attacks_remaining = TOTAL_ATTACKS
 
 func reload_data():
-	if active:
-		me.make_visible(PANEL)
+	me.make_visible(PANEL)

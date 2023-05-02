@@ -118,7 +118,6 @@ metadata/_edit_use_anchors_ = true
 
 [node name="MultiAttack" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_xtp1m")
 
@@ -134,7 +133,6 @@ expand_mode = 1
 
 [node name="Soldier" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_b2ow7")
 
@@ -150,7 +148,6 @@ expand_mode = 1
 
 [node name="Flexer" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_xbi7m")
 
@@ -166,7 +163,6 @@ expand_mode = 1
 
 [node name="Kanonenrohr" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_1bp13")
 
@@ -188,7 +184,6 @@ vertical_alignment = 1
 
 [node name="Angel" parent="." instance=ExtResource("5_0hdso")]
 visible = false
-custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_mcw2b")
 

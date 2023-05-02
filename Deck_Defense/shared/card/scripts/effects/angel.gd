@@ -13,6 +13,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 		left = card_prop_dict["angel_left"]
 	if card_prop_dict.has("angel_right"):
 		right = card_prop_dict["angel_right"]
+	return left or right
 
 func apply_attack_effect(target: CardProperties):
 	pass
@@ -36,8 +37,6 @@ func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass
 
 func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
-	if !left and !right:
-		return
 	var cards = []
 	var range = []
 	if left and my_pos > 0:

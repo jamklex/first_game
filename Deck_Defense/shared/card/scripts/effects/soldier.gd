@@ -13,6 +13,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 		left = card_prop_dict["soldier_left"]
 	if card_prop_dict.has("soldier_right"):
 		right = card_prop_dict["soldier_right"]
+	return left or right
 
 func apply_attack_effect(target: CardProperties):
 	pass
