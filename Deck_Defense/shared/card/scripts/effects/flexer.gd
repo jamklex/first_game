@@ -1,7 +1,7 @@
 class_name FlexerEffect
 
 const PANEL = "Flexer"
-const IMAGE = "Flexer/Left"
+const IMAGE = "Flexer/Image"
 
 var left = false
 var right = false

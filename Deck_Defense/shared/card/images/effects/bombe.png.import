@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://der8sqhd4ipix"
-path="res://.godot/imported/angel-left.png-eb5d0292b1c197fcc494e3dbe97901fa.ctex"
+uid="uid://i7dq6a4bptru"
+path="res://.godot/imported/bombe.png-ed70f4faa133665a977164a44789e9b3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/cards/type-frames/angel-left.png"
-dest_files=["res://.godot/imported/angel-left.png-eb5d0292b1c197fcc494e3dbe97901fa.ctex"]
+source_file="res://shared/card/images/effects/bombe.png"
+dest_files=["res://.godot/imported/bombe.png-ed70f4faa133665a977164a44789e9b3.ctex"]
 
 [params]
 

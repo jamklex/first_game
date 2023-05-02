@@ -62,6 +62,7 @@ func add_possible_effects():
 	possible_effects.append(SoldierEffect.new())
 	possible_effects.append(AngelEffect.new())
 	possible_effects.append(KanonenrohrEffect.new())
+	possible_effects.append(BombEffect.new())
 
 func load_properties(card_prop_dict: Dictionary):
 	face = card_prop_dict["image"]
@@ -158,17 +159,21 @@ func update_label(path, value, base_value):
 	label.add_theme_color_override("font_color", color)
 
 func make_visible(path):
-	if node == null:
-		return
-	var panel = node.get_node(path)
-	if panel == null:
-		return
-	panel.visible = true
+	var panel = get_node(path)
+	if panel != null:
+		panel.visible = true
+
+func make_invisible(path):
+	var panel = get_node(path)
+	if panel != null:
+		panel.visible = false
 
 func flip_image(path):
+	var panel = get_node(path)
+	if panel != null:
+		panel.flip_h = true
+
+func get_node(path):
 	if node == null:
 		return
-	var panel = node.get_node(path)
-	if panel == null:
-		return
-	panel.flip_h = true
+	return node.get_node(path)

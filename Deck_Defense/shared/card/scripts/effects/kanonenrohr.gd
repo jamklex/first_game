@@ -40,10 +40,11 @@ func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 		counter = counter + 1
 
 func reload_data():
-	if active:
-		me.make_visible(PANEL)
-		var label = me.node.get_node(LABEL) as Label
-		if label == null:
-			return
-		if counter > 0:
-			label.set_text(str(counter))
+	if not active:
+		return
+	me.make_visible(PANEL)
+	var label = me.node.get_node(LABEL) as Label
+	if label == null:
+		return
+	if counter > 0:
+		label.set_text(str(counter))

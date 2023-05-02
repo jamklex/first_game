@@ -13,7 +13,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 
 func apply_attack_effect(target: CardProperties):
 	if active and me.attacks_remaining > 1:
-			me.direct_allowed = true
+		me.direct_allowed = true
 
 func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass

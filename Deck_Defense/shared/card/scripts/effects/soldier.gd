@@ -1,7 +1,7 @@
 class_name SoldierEffect
 
 const PANEL = "Soldier"
-const IMAGE = "Soldier/Left"
+const IMAGE = "Soldier/Image"
 
 var me: CardProperties
 var left = false

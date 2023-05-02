@@ -1,5 +1,8 @@
 extends Node
 
+const attack_animation_time = 0.25
+const direct_attack_animation_time = 0.35
+
 var player_deck = []
 var enemy_deck = []
 var rng = GbProps.rng
@@ -63,8 +66,6 @@ func adjust_separation(hand):
 	hand.add_theme_constant_override("separation", separation)
 
 func attack(attacker_cards, target_cards):
-	const attack_animation_time = 0.25
-	const direct_attack_animation_time = 0.35
 	var direct_damage = 0
 	for attacker in attacker_cards:
 		for defender in target_cards:
@@ -88,7 +89,7 @@ func attack(attacker_cards, target_cards):
 
 func remove_from_game(card):
 	if card != null:
-		card.free()
+		card.queue_free()
 
 func get_free_spots(node):
 	var free_spaces = []
@@ -186,3 +187,6 @@ func get_card_from_container(container: HBoxContainer, index: int):
 		if child is Card:
 			return child
 		return null
+
+func wait_some_time(time_ms):
+	await tree.create_timer(time_ms).timeout

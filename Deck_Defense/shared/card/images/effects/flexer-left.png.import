@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://batw3q3a5dcnu"
-path="res://.godot/imported/flexer-left.png-e9a6169652f029713aa78e9334a9f405.ctex"
+path="res://.godot/imported/flexer-left.png-784edf33cabdb481c527d21395098674.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/cards/type-frames/flexer-left.png"
-dest_files=["res://.godot/imported/flexer-left.png-e9a6169652f029713aa78e9334a9f405.ctex"]
+source_file="res://shared/card/images/effects/flexer-left.png"
+dest_files=["res://.godot/imported/flexer-left.png-784edf33cabdb481c527d21395098674.ctex"]
 
 [params]
 

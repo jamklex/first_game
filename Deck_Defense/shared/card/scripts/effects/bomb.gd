@@ -1,9 +1,13 @@
 class_name BombEffect
 
 const PANEL = "Bomb"
+const HP = "LayoutMargin/Layout/Bottom/ATK"
+const ATK = "LayoutMargin/Layout/Bottom/HP"
 
 var me: CardProperties
 var active = false
+var radius = 1
+var attack_own = true
 
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
@@ -32,15 +36,20 @@ func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass
 
 func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
-	var destruction_range = [my_pos-1, my_pos, my_pos+1]
-	for pos in destruction_range:
-		if pos < 0 or pos >= GbProps.max_card_space_spots:
+	if not active:
+		return
+	for pos in range(my_pos-radius, my_pos+radius+1):
+		if pos < 0 or pos >= GbProps.max_card_space_spots or pos == my_pos:
 			continue
-		var my_card = GbUtil.get_card_from_container(lane, pos) as Card
-		var enemy_card = GbUtil.get_card_from_container(enemy_lane, pos) as Card
-		GbUtil.remove_from_game(my_card)
-		GbUtil.remove_from_game(enemy_card)
+		await GbUtil.wait_some_time(0.2)
+		GbUtil.remove_from_game(GbUtil.get_card_from_container(enemy_lane, pos))
+		if attack_own:
+			GbUtil.remove_from_game(GbUtil.get_card_from_container(lane, pos))
+	GbUtil.remove_from_game(GbUtil.get_card_from_container(lane, my_pos))
 
 func reload_data():
-	if active:
-		me.make_visible(PANEL)
+	if not active:
+		return
+	me.make_visible(PANEL)
+	me.make_invisible(HP)
+	me.make_invisible(ATK)

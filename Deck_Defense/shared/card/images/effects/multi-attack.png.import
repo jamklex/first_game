@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dl4kgkwufjdl1"
-path="res://.godot/imported/soldier-left.png-416d692a34b2199e4eb4045fb6002d45.ctex"
+uid="uid://drj5avgxwqd4p"
+path="res://.godot/imported/multi-attack.png-5e725fde3a4bbcd1d8dcb797b0c9c911.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://data/cards/type-frames/soldier-left.png"
-dest_files=["res://.godot/imported/soldier-left.png-416d692a34b2199e4eb4045fb6002d45.ctex"]
+source_file="res://shared/card/images/effects/multi-attack.png"
+dest_files=["res://.godot/imported/multi-attack.png-5e725fde3a4bbcd1d8dcb797b0c9c911.ctex"]
 
 [params]
 
