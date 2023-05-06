@@ -12,6 +12,7 @@ var LABELS = [
 ]
 var relationalScaleSize:Vector2
 var baseSize:int
+signal clicked(card:Card)
 
 func _init():
 	relationalScaleSize = custom_minimum_size
@@ -65,3 +66,7 @@ func _initBaseFontSize():
 	if not label:
 		return
 	baseSize = label.get_theme_font_size("font_size")
+
+func _on_gui_input(event):
+	if GbUtil.is_mouse_click(event):
+		clicked.emit(self)

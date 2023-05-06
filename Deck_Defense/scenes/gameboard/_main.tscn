@@ -260,7 +260,15 @@ top_level = true
 layout_mode = 2
 anchors_preset = 0
 
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+offset_left = 24.0
+offset_top = 15.0
+offset_right = 111.0
+offset_bottom = 46.0
+text = "Surrender"
+
 [connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
 [connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
 [connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
-[connection signal="gui_input" from="Player/Hand" to="." method="_on_Hand_gui_input"]
+[connection signal="pressed" from="Button" to="." method="_on_surrender"]

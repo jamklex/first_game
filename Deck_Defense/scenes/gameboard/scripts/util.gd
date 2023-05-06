@@ -15,8 +15,7 @@ var tree:SceneTree
 func initialize(given_tree):
 	tree = given_tree
 
-func lay_card_on_space(card_spots: HBoxContainer, from, to, hand_node, enemy_spots: HBoxContainer):
-	var initial_card = hand_node.get_child(from)
+func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_node, enemy_spots: HBoxContainer):
 	var contender = card_spots.get_child(to) as Panel
 	if initial_card != null and contender.get_child_count() == 0:
 		var card = create_visible_instance(initial_card.properties, true) as Card
@@ -28,7 +27,7 @@ func lay_card_on_space(card_spots: HBoxContainer, from, to, hand_node, enemy_spo
 		card.position = Vector2(card.position.x + xOffset, card.position.y + yOffset)
 		card.set_size(card.custom_minimum_size)
 		card.apply_card_laydown(card_spots, to, enemy_spots)
-		hand_node.remove_child(hand_node.get_child(from))
+		hand_node.remove_child(initial_card)
 		adjust_separation(hand_node)
 		apply_lane_effects(card_spots, enemy_spots)
 		return true
@@ -129,6 +128,7 @@ func total_card_size(deck, card_space, hand):
 	return deck.size() + cards_ltr_in(card_space).size() + hand.get_child_count()
 
 func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
+	var cardObjs = []
 	for n in amount:
 		if node.get_child_count() == GbProps.max_hand_cards:
 			break
@@ -139,9 +139,12 @@ func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
 		if card == null and deck.size() > 0:
 			card = get_card_from_deck(deck)
 		elif card == null:
-			return
-		add_card_to(node, create_visible_instance(card, visible_card))
+			return cardObjs
+		var cardObj = create_visible_instance(card, visible_card) as Card
+		cardObjs.append(cardObj)
+		add_card_to(node, cardObj)
 		await tree.create_timer(card_draw_time).timeout
+	return cardObjs
 
 func get_card_from_deck(deck):
 	if deck.size() == 0:
@@ -166,7 +169,6 @@ func adjust_size(card:Card, newHeight:int):
 	var newWidth = card.custom_minimum_size.x * sizeMultiplier
 	var newSize = Vector2(newWidth, newHeight)
 	card.custom_minimum_size = newSize
-#	card.set_size(newSize)
 		
 func set_visibility(node, status):
 	node.visible = status

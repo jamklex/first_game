@@ -23,7 +23,7 @@ const CARD_DRAW_TIME = 0.2
 
 var rng:RandomNumberGenerator = GbProps.rng
 
-var selected_action_card = -1
+var selected_card
 var current_cycle
 var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 
@@ -42,27 +42,25 @@ func initialize_game():
 	set_hp(enemy_healt, GbProps.enemyCurrentHp, GbProps.enemyMaxHp)
 	set_hp(player_healt, GbProps.playerCurrentHp, GbProps.playerMaxHp)
 	await place_cards_in_hand(GbProps.enemy_hand_node, GbProps.initial_hand_cards, GbProps.enemy_deck, GbProps.enemy_initial, false)
-	await place_cards_in_hand(GbProps.player_hand_node, GbProps.initial_hand_cards, GbProps.player_deck, GbProps.player_initial, true)
+	var newPlayerCards = await place_cards_in_hand(GbProps.player_hand_node, GbProps.initial_hand_cards, GbProps.player_deck, GbProps.player_initial, true)
+	setPlayerCardOnClickEvent(newPlayerCards)
 	reset_hand_card_focus()
 	switch_to_player()
 
-func _on_Hand_gui_input(event):
-	if GbUtil.is_mouse_click(event) and can_place_cards():
-		var node = GbProps.player_hand_node as HBoxContainer
-		var old_selected = selected_action_card
+func _on_HandCard_clicked(clickedCard:Card):
+	if can_place_cards():
+		var lastClickedCard = selected_card
 		reset_hand_card_focus()
-		var new_selected_card = GbUtil.get_child_index(node, make_input_local(event).position, true, -1)
-		if new_selected_card >= 0 and new_selected_card != old_selected:
-			selected_action_card = new_selected_card
-			var card = GbUtil.get_card_from_container(node, selected_action_card)
-			var cardHeight = card.size.y
-			GbUtil.bump_child_y(card, cardHeight * bump_factor * -1)
+		if lastClickedCard != clickedCard:
+			selected_card = clickedCard
+			var cardHeight = selected_card.size.y
+			GbUtil.bump_child_y(selected_card, cardHeight * bump_factor * -1)
 
 func _on_CardSpace_gui_input(event):
 	if GbUtil.is_mouse_click(event) and can_place_cards():
 		var card_space_spot_selected = GbProps.selected_card_spot
-		if card_space_spot_selected >= 0 and selected_action_card >= 0:
-			if GbUtil.lay_card_on_space(GbProps.player_card_space_node, selected_action_card, card_space_spot_selected, GbProps.player_hand_node, GbProps.enemy_card_space_node):
+		if card_space_spot_selected >= 0 and selected_card:
+			if GbUtil.lay_card_on_space(GbProps.player_card_space_node, selected_card, card_space_spot_selected, GbProps.player_hand_node, GbProps.enemy_card_space_node):
 				GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 				GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 				GbUtil.set_visibility(get_node(BLOCK_PLAYER), true)
@@ -94,7 +92,8 @@ func switch_to_player():
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), true)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
 		GbUtil.apply_lane_effects(GbProps.player_card_space_node, GbProps.enemy_card_space_node)
-		await place_cards_in_hand(GbProps.player_hand_node, GbProps.cards_per_turn, GbProps.player_deck, GbProps.player_initial, true)
+		var newPlayerCards = await place_cards_in_hand(GbProps.player_hand_node, GbProps.cards_per_turn, GbProps.player_deck, GbProps.player_initial, true)
+		setPlayerCardOnClickEvent(newPlayerCards)
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.MY_TURN
 
@@ -130,7 +129,8 @@ func enemy_move():
 		if(cardsToPlay > 0):
 			for i in range(cardsToPlay):
 				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
-				GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, i, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
+				var initial_card = GbProps.enemy_hand_node.get_child(i)
+				GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
 				await get_tree().create_timer(CARD_DRAW_TIME).timeout
 		else:
 			print("enemy can't do anything...")
@@ -160,8 +160,9 @@ func can_place_cards():
 	return current_cycle == TURN_CYCLE.MY_TURN
 
 func place_cards_in_hand(node, amount, deck, prefered_ids, visible_card):
-	await GbUtil.draw_cards(node, amount, deck, prefered_ids, visible_card, CARD_DRAW_TIME)
+	var cardObjs = await GbUtil.draw_cards(node, amount, deck, prefered_ids, visible_card, CARD_DRAW_TIME)
 	update_cards_left()
+	return cardObjs
 
 func update_cards_left():
 	var enemy = get_node(enemy_cards_left + "/Amount") as Label
@@ -178,11 +179,16 @@ func set_hp(path, amount, max_amount):
 	indicator.set_size(new_size)
 
 func reset_hand_card_focus():
-	if(selected_action_card >= 0):
-		var card = GbUtil.get_card_from_container(GbProps.player_hand_node, selected_action_card)
-		if card == null:
-			selected_action_card = -1
-			return
-		var cardHeight = card.size.y
-		GbUtil.bump_child_y(card, cardHeight*bump_factor)
-	selected_action_card = -1
+	if not selected_card:
+		return
+	var cardHeight = selected_card.size.y
+	GbUtil.bump_child_y(selected_card, cardHeight*bump_factor)
+	selected_card = null
+	
+func setPlayerCardOnClickEvent(cards):
+	for c in cards:
+		var card = c as Card
+		card.clicked.connect(_on_HandCard_clicked)
+
+func _on_surrender():
+	get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
