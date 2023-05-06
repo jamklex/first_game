@@ -77,59 +77,30 @@ func load_properties(card_prop_dict: Dictionary):
 func can_attack(target: CardProperties):
 	return attacks_remaining > 0
 
-func prepare_attack(target: CardProperties):
+func initiate_attack(target: CardProperties):
 	attacks_remaining = attacks_remaining - 1
 	direct_allowed = false
 	for effect in effects:
-		effect.apply_attack_effect(target)
+		effect.attack(target)
+
+func initiate_defence(source: CardProperties):
+	for effect in effects:
+		effect.defend(source)
 
 func can_attack_directly():
 	return direct_allowed
 
-func apply_lane_effects(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	for effect in effects:
-		effect.apply_lane_effects(my_container, my_position, enemy_container)
-	if my_position > 0:
-		var neighbour = my_container.get_child(my_position-1)
-		if neighbour.get_child_count() > 0:
-			apply_effects_from_left(neighbour.get_child(0).properties as CardProperties)
-		else:
-			retract_effects_from_left()
-	if my_position < GbProps.max_card_space_spots - 1:
-		var neighbour = my_container.get_child(my_position+1)
-		if neighbour.get_child_count() > 0:
-			apply_effects_from_right(neighbour.get_child(0).properties as CardProperties)
-		else:
-			retract_effects_from_right()
-	reload_data()
-
-func apply_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
+func initiate_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	attacks_remaining = 1
 	direct_allowed = true
 	for effect in effects:
-		effect.apply_next_turn(my_container, my_position, enemy_container)
+		effect.next_turn(my_container, my_position, enemy_container)
 	reload_data()
 
-func apply_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
+func react_on_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	for effect in effects:
-		effect.apply_card_laydown(my_container, my_position, enemy_container)
+		effect.card_laydown(my_container, my_position, enemy_container)
 	reload_data()
-
-func apply_effects_from_left(left_props):
-	for effect in effects:
-		effect.apply_effects_from_left(left_props)
-
-func apply_effects_from_right(right_props):
-	for effect in effects:
-		effect.apply_effects_from_right(right_props)
-
-func retract_effects_from_left():
-	for effect in effects:
-		effect.retract_effects_from_left()
-
-func retract_effects_from_right():
-	for effect in effects:
-		effect.retract_effects_from_right()
 
 func reload_data():
 	if node != null:

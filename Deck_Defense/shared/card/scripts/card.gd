@@ -29,20 +29,20 @@ func initialize_from_id(id):
 	properties.link_node(self)
 	properties.reload_data()
 
-func apply_lane_effects(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	properties.apply_lane_effects(my_container, my_position, enemy_container)
-
 func apply_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	properties.apply_next_turn(my_container, my_position, enemy_container)
+	properties.initiate_next_turn(my_container, my_position, enemy_container)
 
 func apply_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	properties.apply_card_laydown(my_container, my_position, enemy_container)
+	properties.react_on_card_laydown(my_container, my_position, enemy_container)
 
 func can_attack(target: Card):
 	return properties.can_attack(target.properties)
 
-func prepare_attack(target: Card):
-	properties.prepare_attack(target.properties)
+func initiate_attack(target: Card):
+	properties.initiate_attack(target.properties)
+
+func defend_against(source: Card):
+	properties.initiate_defence(source.properties)
 
 func can_attack_directly():
 	return properties.can_attack_directly()
