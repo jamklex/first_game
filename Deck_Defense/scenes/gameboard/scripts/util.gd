@@ -80,7 +80,7 @@ func remove_from_game(card):
 		if card is CardProperties:
 			card = card.node as Card
 		card.execute_destroy_effects()
-		card.queue_free()
+		remove_from_game_without_effect_calls(card)
 
 func remove_from_game_without_effect_calls(card):
 	if card != null:
