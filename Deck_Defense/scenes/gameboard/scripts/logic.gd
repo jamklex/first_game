@@ -91,7 +91,6 @@ func switch_to_player():
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), true)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
-		GbUtil.apply_lane_effects(GbProps.player_card_space_node, GbProps.enemy_card_space_node)
 		var newPlayerCards = await place_cards_in_hand(GbProps.player_hand_node, GbProps.cards_per_turn, GbProps.player_deck, GbProps.player_initial, true)
 		setPlayerCardOnClickEvent(newPlayerCards)
 		reset_hand_card_focus()
