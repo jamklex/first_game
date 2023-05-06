@@ -23,5 +23,8 @@ func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	me.attacks_remaining = TOTAL_ATTACKS
 
+func destroy():
+	pass
+
 func reload_data():
 	me.make_visible(PANEL)

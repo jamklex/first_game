@@ -60,8 +60,8 @@ func attack(attacker_cards, target_cards):
 				continue
 			if not attacker.can_attack(defender):
 				continue
-			defender.defend_against(attacker)
 			attacker.initiate_attack(defender)
+			defender.defend_against(attacker)
 			var dmg = attacker.properties.atk
 			await tree.create_timer(attack_animation_time).timeout
 			var hp = defender.properties.hp
@@ -70,13 +70,23 @@ func attack(attacker_cards, target_cards):
 				remove_from_game(defender)
 			else:
 				defender.properties.set_hp(new_card_hp)
-		if attacker.can_attack_directly():
-			direct_damage += attacker.properties.atk
+		if attacker != null:
+			if attacker.can_attack_directly():
+				direct_damage += attacker.properties.atk
 		await tree.create_timer(attack_animation_time).timeout
 	return direct_damage
 
 func remove_from_game(card):
 	if card != null:
+		if card is CardProperties:
+			card = card.node as Card
+		card.execute_destroy_effects()
+		card.queue_free()
+
+func remove_from_game_without_effect_calls(card):
+	if card != null:
+		if card is CardProperties:
+			card = card.node as Card
 		card.queue_free()
 
 func get_free_spots(node):

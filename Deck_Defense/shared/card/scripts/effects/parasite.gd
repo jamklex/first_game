@@ -1,0 +1,53 @@
+class_name ParasiteEffect
+
+const PANEL = "Parasite"
+const INFESTED_COLOR = Color("#64c67c")
+
+var me: CardProperties
+var infested: CardProperties
+
+func load_properties(card_prop_dict: Dictionary, card: CardProperties):
+	me = card
+	if card_prop_dict.has("parasite"):
+		return card_prop_dict["parasite"]
+
+func attack(target: CardProperties):
+	pass
+
+func defend(source: CardProperties):
+	reload_data()
+
+func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+	reload_data()
+
+func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+	var target = GbUtil.get_card_from_container(enemy_lane, my_pos)
+	if target == null:
+		await GbUtil.wait_some_time(CardProperties.kill_wait_time)
+		GbUtil.remove_from_game(me.node)
+		return
+	infested = target.properties
+	var parasite_effect = overwrite_effects_with_own(infested)
+	me.set_hp(infested.hp)
+	me.set_atk(infested.atk)
+	reload_data()
+	parasite_effect.reload_data()
+
+func destroy():
+	GbUtil.remove_from_game_without_effect_calls(infested.node)
+
+func reload_data():
+	me.make_visible(PANEL)
+	if infested == null:
+		return
+	me.overwrite_color = INFESTED_COLOR
+	infested.set_hp(me.hp)
+	infested.set_atk(me.atk)
+
+func overwrite_effects_with_own(infested: CardProperties):
+	infested.effects.clear()
+	var parasite_effect = ParasiteEffect.new()
+	parasite_effect.load_properties({}, infested)
+	parasite_effect.infested = me
+	infested.effects.append(parasite_effect)
+	return parasite_effect

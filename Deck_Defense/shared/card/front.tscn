@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://llfmaboqxn2d"]
+[gd_scene load_steps=22 format=3 uid="uid://llfmaboqxn2d"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
 [ext_resource type="Texture2D" uid="uid://drj5avgxwqd4p" path="res://shared/card/images/effects/multi-attack.png" id="3_75ajg"]
@@ -85,6 +85,18 @@ corner_radius_bottom_left = 15
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1alif"]
 bg_color = Color(0.905882, 0.435294, 0.419608, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_owqxy"]
+bg_color = Color(0.52549, 0.0313726, 0.490196, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
@@ -215,6 +227,31 @@ texture = ExtResource("7_v38cc")
 expand_mode = 1
 stretch_mode = 6
 
+[node name="Stone" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+
+[node name="Counter" type="Label" parent="Stone"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -31.0
+offset_right = 31.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(1, 0.34902, 0.462745, 1)
+theme_override_constants/outline_size = 10
+theme_override_font_sizes/font_size = 20
+text = "?"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Parasite" parent="." instance=ExtResource("5_0hdso")]
+visible = false
+layout_mode = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_owqxy")
+
 [node name="LayoutMargin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -319,5 +356,6 @@ stretch_mode = 4
 
 [connection signal="minimum_size_changed" from="." to="." method="_resizeLabels"]
 [connection signal="ready" from="Kanonenrohr/Counter" to="." method="_resizeLabels"]
+[connection signal="ready" from="Stone/Counter" to="." method="_resizeLabels"]
 [connection signal="ready" from="LayoutMargin/Layout/Bottom/HP/Value" to="." method="_resizeLabels"]
 [connection signal="ready" from="LayoutMargin/Layout/Bottom/ATK/Value" to="." method="_resizeLabels"]

@@ -68,21 +68,24 @@
 		"image": "res://data/cards/images/9.png",
 		"atk": 8,
 		"hp": 9,
-		"max_owned": 3
+		"max_owned": 3,
+		"stone": true
 	},
 	{
 		"id": 10,
 		"image": "res://data/cards/images/10.png",
 		"atk": 14,
 		"hp": 5,
-		"max_owned": 3
+		"max_owned": 3,
+		"soldier_right": true
 	},
 	{
 		"id": 11,
 		"image": "res://data/cards/images/11.png",
 		"atk": 7,
 		"hp": 9,
-		"max_owned": 3
+		"max_owned": 3,
+		"parasite": true
 	},
 	{
 		"id": 12,

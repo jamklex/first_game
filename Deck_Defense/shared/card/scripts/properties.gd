@@ -7,10 +7,12 @@ const boni_left = "LayoutMargin/Layout/Top/Left/Image"
 const boni_right = "LayoutMargin/Layout/Top/Right/Image"
 const hp_label = "LayoutMargin/Layout/Bottom/HP/Value"
 const atk_label = "LayoutMargin/Layout/Bottom/ATK/Value"
+const kill_wait_time = 0.2
 
 const boosted_color = Color("#1e9a12")
 const damaged_color = Color("#bb0c0e")
 const default_color = Color("#000000")
+var overwrite_color = null
 
 var CardData = "res://data/cards/cards.json"
 var face
@@ -63,6 +65,8 @@ func get_possible_effects():
 	possible_effects.append(AngelEffect.new())
 	possible_effects.append(KanonenrohrEffect.new())
 	possible_effects.append(BombEffect.new())
+	possible_effects.append(StoneEffect.new())
+	possible_effects.append(ParasiteEffect.new())
 	return possible_effects
 
 func load_properties(card_prop_dict: Dictionary):
@@ -102,6 +106,10 @@ func react_on_card_laydown(my_container: HBoxContainer, my_position, enemy_conta
 		effect.card_laydown(my_container, my_position, enemy_container)
 	reload_data()
 
+func execute_destroy_effects():
+	for effect in effects:
+		effect.destroy()
+
 func reload_data():
 	if node != null:
 		update_label(hp_label, hp, base_hp)
@@ -125,10 +133,13 @@ func update_label(path, value, base_value):
 		return
 	label.set_text(str(value))
 	var color = default_color
-	if value > base_value:
-		color = boosted_color
-	if value < base_value:
-		color = damaged_color
+	if overwrite_color != null:
+		color = overwrite_color
+	else:
+		if value > base_value:
+			color = boosted_color
+		if value < base_value:
+			color = damaged_color
 	label.add_theme_color_override("font_color", color)
 
 func make_visible(path):

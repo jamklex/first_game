@@ -5,10 +5,11 @@ class_name Card
 var properties: CardProperties
 
 # For scaling font
-var LABELS = [
-	"LayoutMargin/Layout/Bottom/ATK/Value", # this entry should be always visible, used for getting baseSize
-	"LayoutMargin/Layout/Bottom/HP/Value",
-	"Kanonenrohr/Counter",
+const LABELS = [
+	CardProperties.atk_label, # this entry should be always visible, used for getting baseSize
+	CardProperties.hp_label,
+	KanonenrohrEffect.LABEL,
+	StoneEffect.LABEL,
 ]
 var relationalScaleSize:Vector2
 var baseSize:int
@@ -46,6 +47,9 @@ func defend_against(source: Card):
 
 func can_attack_directly():
 	return properties.can_attack_directly()
+
+func execute_destroy_effects():
+	return properties.execute_destroy_effects()
 
 func _resizeLabels():
 	_initBaseFontSize()

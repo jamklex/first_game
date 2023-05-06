@@ -33,6 +33,9 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if neighbour != null:
 		me.set_atk(me.atk + neighbour.properties.atk)
 
+func destroy():
+	pass
+
 func reload_data():
 	if left:
 		me.make_visible(PANEL)
