@@ -6,7 +6,7 @@ var properties: CardProperties
 
 # For scaling font
 const LABELS = [
-	CardProperties.atk_label, # this entry should be always visible, used for getting baseSize
+	CardProperties.atk_label,
 	CardProperties.hp_label,
 	KanonenrohrEffect.LABEL,
 	StoneEffect.LABEL,
@@ -66,10 +66,11 @@ func _resizeLabels():
 func _initBaseFontSize():
 	if baseSize:
 		return
-	var label = get_node(LABELS[0]) as Label
-	if not label:
-		return
-	baseSize = label.get_theme_font_size("font_size")
+	for curLabel in LABELS:
+		var label = get_node(curLabel) as Label
+		if label:
+			baseSize = label.get_theme_font_size("font_size")
+			return
 
 func _on_gui_input(event):
 	if GbUtil.is_mouse_click(event):
