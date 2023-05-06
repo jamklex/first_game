@@ -5,8 +5,7 @@ var card: Card
 var selected: bool
 var indicator:Control
 
-var funcObj:Control
-var funcName:String
+signal click
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,9 +23,7 @@ func _process(delta):
 func _switchSelect():
 	selected = not selected
 	_changeSelectStyle()
-	##  onclick function trigger
-	if funcObj != null:
-		funcObj.call(funcName)
+	click.emit()
 
 func setSelected(newSelected:bool):
 	selected = newSelected
@@ -34,10 +31,6 @@ func setSelected(newSelected:bool):
 	
 func getCard() -> Card:
 	return card
-
-func setOnClick(newFuncObj, newFuncName):
-	funcObj = newFuncObj
-	funcName = newFuncName
 
 func _changeSelectStyle():
 	indicator.visible = selected

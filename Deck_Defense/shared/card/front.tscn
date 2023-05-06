@@ -125,7 +125,6 @@ offset_right = -0.00012207
 offset_bottom = 0.000244141
 size_flags_horizontal = 4
 size_flags_vertical = 4
-mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_yaee3")
 script = ExtResource("1_3i4m2")
 metadata/_edit_use_anchors_ = true
@@ -354,6 +353,7 @@ texture = ExtResource("8_4uxmh")
 expand_mode = 1
 stretch_mode = 4
 
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="minimum_size_changed" from="." to="." method="_resizeLabels"]
 [connection signal="ready" from="Kanonenrohr/Counter" to="." method="_resizeLabels"]
 [connection signal="ready" from="Stone/Counter" to="." method="_resizeLabels"]
