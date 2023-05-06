@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cdlnfhoq0id5"]
 
 [ext_resource type="Script" path="res://scenes/deckBuilder/scripts/selectableCard.gd" id="1_p3uqk"]
-[ext_resource type="PackedScene" uid="uid://cf1km1wp18aim" path="res://shared/card/front.tscn" id="2_1nyxu"]
+[ext_resource type="PackedScene" uid="uid://llfmaboqxn2d" path="res://shared/card/front.tscn" id="2_1nyxu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayioc"]
 draw_center = false
@@ -45,6 +45,12 @@ script = ExtResource("1_p3uqk")
 
 [node name="Card" parent="." instance=ExtResource("2_1nyxu")]
 layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 160.0
+offset_bottom = 240.0
+mouse_filter = 2
 
 [node name="indicator" type="Panel" parent="."]
 layout_mode = 1

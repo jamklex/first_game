@@ -112,7 +112,7 @@ func loadCards():
 		for i in range(cardData["amount"]):
 			var newCard = cardScene.instantiate() as SelectableCard
 			newCard.get_node("Card").initialize_from_id(cardData["id"])
-			newCard.setOnClick(self, "onCardClicked")
+			newCard.click.connect(onCardClicked)
 			cards.append(newCard)
 	loadCardHolder()
 
