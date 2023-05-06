@@ -34,7 +34,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	parasite_effect.reload_data()
 
 func destroy():
-	GbUtil.remove_from_game_without_effect_calls(infested.node)
+	GbUtil.remove_from_game_without_effect_calls(infested)
 
 func reload_data():
 	me.make_visible(PANEL)
