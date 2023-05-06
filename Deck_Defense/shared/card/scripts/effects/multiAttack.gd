@@ -10,29 +10,17 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	if card_prop_dict.has("multi_attack"):
 		return card_prop_dict["multi_attack"]
 
-func apply_attack_effect(target: CardProperties):
+func attack(target: CardProperties):
 	if me.attacks_remaining > 1:
 		me.direct_allowed = true
 
-func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+func defend(source: CardProperties):
 	pass
 
-func apply_effects_from_left(other: CardProperties):
-	pass
-
-func apply_effects_from_right(other: CardProperties):
-	pass
-
-func retract_effects_from_left():
-	pass
-
-func retract_effects_from_right():
-	pass
-
-func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	me.attacks_remaining = TOTAL_ATTACKS
 
-func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	me.attacks_remaining = TOTAL_ATTACKS
 
 func reload_data():

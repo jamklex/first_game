@@ -29,15 +29,8 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 		card.apply_card_laydown(card_spots, to, enemy_spots)
 		hand_node.remove_child(initial_card)
 		adjust_separation(hand_node)
-		apply_lane_effects(card_spots, enemy_spots)
 		return true
 	return false
-
-func apply_lane_effects(card_spots: HBoxContainer, enemy_spots: HBoxContainer):
-	for spot in card_spots.get_children():
-		if spot.get_child_count() > 0:
-			var card = (spot.get_child(0) as Card)
-			card.apply_lane_effects(card_spots, spot.get_index(), enemy_spots)
 
 func apply_next_turn_effects(card_spots: HBoxContainer, enemy_spots: HBoxContainer):
 	for spot in card_spots.get_children():
@@ -66,7 +59,8 @@ func attack(attacker_cards, target_cards):
 				continue
 			if not attacker.can_attack(defender):
 				continue
-			attacker.prepare_attack(defender)
+			defender.defend_against(attacker)
+			attacker.initiate_attack(defender)
 			var dmg = attacker.properties.atk
 			await tree.create_timer(attack_animation_time).timeout
 			var hp = defender.properties.hp

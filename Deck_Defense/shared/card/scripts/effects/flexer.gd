@@ -3,9 +3,9 @@ class_name FlexerEffect
 const PANEL = "Flexer"
 const IMAGE = "Flexer/Image"
 
+var me: CardProperties
 var left = false
 var right = false
-var me: CardProperties
 
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
@@ -15,33 +15,23 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 		right = card_prop_dict["flexer_right"]
 	return left or right
 
-func apply_attack_effect(target: CardProperties):
+func attack(target: CardProperties):
 	pass
 
-func apply_lane_effects(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+func defend(source: CardProperties):
 	pass
 
-func apply_effects_from_left(left_props):
-	if left:
-		me.set_hp(min(me.hp, me.base_hp) + min(left_props.hp, left_props.base_hp))
-
-func apply_effects_from_right(right_props):
-	if right:
-		me.set_hp(me.base_hp + right_props.base_hp)
-
-func retract_effects_from_left():
-	if left:
-		me.set_hp(min(me.hp, me.base_hp))
-
-func retract_effects_from_right():
-	if right:
-		me.set_hp(min(me.hp, me.base_hp))
-
-func apply_next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	pass
 
-func apply_card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
-	pass
+func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+	var neighbour: Card
+	if left and my_pos >= 1:
+		neighbour = GbUtil.get_card_from_container(lane, my_pos-1);
+	if right and my_pos+1 < GbProps.max_card_space_spots:
+		neighbour = GbUtil.get_card_from_container(lane, my_pos+1);
+	if neighbour != null:
+		me.set_hp(me.hp + neighbour.properties.hp)
 
 func reload_data():
 	if left:

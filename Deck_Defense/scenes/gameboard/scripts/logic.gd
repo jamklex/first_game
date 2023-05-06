@@ -103,7 +103,6 @@ func switch_to_enemy():
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
-		GbUtil.apply_lane_effects(GbProps.enemy_card_space_node, GbProps.player_card_space_node)
 		await place_cards_in_hand(GbProps.enemy_hand_node, GbProps.cards_per_turn, GbProps.enemy_deck, GbProps.enemy_initial, false)
 		reset_hand_card_focus()
 		current_cycle = TURN_CYCLE.OPPONENT_TURN
