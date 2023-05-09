@@ -1,7 +1,7 @@
 extends Node
 
-const attack_animation_time = 0.25
-const direct_attack_animation_time = 0.35
+const attack_animation_time = 1.0
+const direct_attack_animation_time = 1.0
 
 var player_deck = []
 var enemy_deck = []
@@ -50,12 +50,15 @@ func adjust_separation(hand):
 	var card_amount = hand.get_child_count()
 	var separation = 5 if card_amount <= 3 else card_amount * -10
 	hand.add_theme_constant_override("separation", separation)
+	
+func isQueuedForDeletion(obj):
+	return !weakref(obj).get_ref()
 
 func attack(attacker_cards, target_cards):
 	var direct_damage = 0
 	for attacker in attacker_cards:
 		for defender in target_cards:
-			if defender == null:
+			if isQueuedForDeletion(defender):
 				continue
 			if not attacker.can_attack(defender):
 				continue
@@ -85,8 +88,8 @@ func attackDirectAnimation(attackCard:Card):
 		size = abs(size)
 	attackCard.z_index = 2	
 	var targetPos = Vector2(get_window().size.x/2, startPos.y + size)
-	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2)
-	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2)
+	attackTween.tween_property(attackCard, "global_position", targetPos, direct_attack_animation_time/2.0)
+	attackTween.chain().tween_property(attackCard, "global_position", startPos, direct_attack_animation_time/2.0)
 	return attackTween
 	
 func attackAnimation(attackCard:Card, defendCard:Card):
@@ -100,8 +103,8 @@ func attackAnimation(attackCard:Card, defendCard:Card):
 		targetPos.y -= size
 	attackCard.z_index = 2
 	defendCard.z_index = 1
-	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2)
-	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2)
+	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2.0)
+	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2.0)
 	return attackTween
 
 func remove_from_game(card):
@@ -115,7 +118,13 @@ func remove_from_game_without_effect_calls(card):
 	if card != null:
 		if card is CardProperties:
 			card = card.node as Card
+		await destroyAnimation(card).animation_finished
 		card.queue_free()
+
+func destroyAnimation(card: Card):
+	var animationPlayer = card.get_node("AnimationPlayer") as AnimationPlayer
+	animationPlayer.play("Destroy")
+	return animationPlayer
 
 func get_free_spots(node):
 	var free_spaces = []
