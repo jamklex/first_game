@@ -3,12 +3,6 @@ extends Control
 const WAIT_WHILE_FIGHT = "TurnOptions/WaitWhileFight"
 const ATTACK_PLAYER = "TurnOptions/AttackOpponent"
 const BLOCK_PLAYER = "TurnOptions/BlockOpponent"
-enum TURN_CYCLE {
-	MY_TURN,
-	OPPONENT_TURN,
-	FIGHT_ANIMATION,
-	GAME_END
-}
 const player_card_space = "Player/CardSpace/Spots"
 const player_hand = "Player/Hand"
 const player_healt = "Player/Health"
@@ -24,7 +18,6 @@ const CARD_DRAW_TIME = 0.2
 var rng:RandomNumberGenerator = GbProps.rng
 
 var selected_card
-var current_cycle
 var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 
 func _ready():
@@ -74,7 +67,6 @@ func _on_BlockOpponent_gui_input(event):
 func _on_AttackOpponent_gui_input(event):
 	if GbUtil.is_mouse_click(event) and can_place_cards():
 		reset_hand_card_focus()
-		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
@@ -94,7 +86,7 @@ func switch_to_player():
 		var newPlayerCards = await place_cards_in_hand(GbProps.player_hand_node, GbProps.cards_per_turn, GbProps.player_deck, GbProps.player_initial, true)
 		setPlayerCardOnClickEvent(newPlayerCards)
 		reset_hand_card_focus()
-		current_cycle = TURN_CYCLE.MY_TURN
+		GbProps.current_cycle = GbProps.TURN_CYCLE.MY_TURN
 
 func switch_to_enemy():
 	GbUtil.apply_next_turn_effects(GbProps.enemy_card_space_node, GbProps.player_card_space_node)
@@ -104,7 +96,7 @@ func switch_to_enemy():
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
 		await place_cards_in_hand(GbProps.enemy_hand_node, GbProps.cards_per_turn, GbProps.enemy_deck, GbProps.enemy_initial, false)
 		reset_hand_card_focus()
-		current_cycle = TURN_CYCLE.OPPONENT_TURN
+		GbProps.current_cycle = GbProps.TURN_CYCLE.OPPONENT_TURN
 		await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
 		enemy_move()
 
@@ -118,7 +110,6 @@ func enemy_move():
 		var new_hp = max(0, GbProps.playerCurrentHp - await GbUtil.attack(enemy_cards, player_cards))
 		set_hp(player_healt, new_hp, GbProps.playerMaxHp)
 		GbProps.playerCurrentHp = new_hp
-		current_cycle = TURN_CYCLE.FIGHT_ANIMATION
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
@@ -148,14 +139,14 @@ func check_winning_state():
 
 func player_wins():
 	GbUtil.set_visibility(get_node("PlayerWins"), true)
-	current_cycle = TURN_CYCLE.GAME_END
+	GbProps.current_cycle = GbProps.TURN_CYCLE.GAME_END
 
 func player_looses():
 	GbUtil.set_visibility(get_node("PlayerLooses"), true)
-	current_cycle = TURN_CYCLE.GAME_END
+	GbProps.current_cycle = GbProps.TURN_CYCLE.GAME_END
 
 func can_place_cards():
-	return current_cycle == TURN_CYCLE.MY_TURN
+	return GbProps.current_cycle == GbProps.TURN_CYCLE.MY_TURN
 
 func place_cards_in_hand(node, amount, deck, prefered_ids, visible_card):
 	var cardObjs = await GbUtil.draw_cards(node, amount, deck, prefered_ids, visible_card, CARD_DRAW_TIME)

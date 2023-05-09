@@ -62,7 +62,9 @@ func attack(attacker_cards, target_cards):
 			attacker.initiate_attack(defender)
 			defender.defend_against(attacker)
 			var dmg = attacker.properties.atk
-			await tree.create_timer(attack_animation_time).timeout
+			await attackAnimation(attacker, defender).finished
+			if defender == null:
+				continue
 			var hp = defender.properties.hp
 			var new_card_hp = hp - dmg
 			if new_card_hp <= 0:
@@ -71,9 +73,36 @@ func attack(attacker_cards, target_cards):
 				defender.properties.set_hp(new_card_hp)
 		if attacker != null:
 			if attacker.can_attack_directly():
+				await attackDirectAnimation(attacker).finished
 				direct_damage += attacker.properties.atk
-		await tree.create_timer(attack_animation_time).timeout
 	return direct_damage
+	
+func attackDirectAnimation(attackCard:Card):
+	var attackTween = create_tween().set_parallel(true)
+	var startPos = attackCard.global_position
+	var size = -get_window().size.y/3
+	if GbProps.current_cycle == GbProps.TURN_CYCLE.OPPONENT_TURN:
+		size = abs(size)
+	attackCard.z_index = 2	
+	var targetPos = Vector2(get_window().size.x/2, startPos.y + size)
+	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2)
+	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2)
+	return attackTween
+	
+func attackAnimation(attackCard:Card, defendCard:Card):
+	var attackTween = create_tween().set_parallel(true)
+	var startPos = attackCard.global_position
+	var targetPos = defendCard.global_position
+	var size = defendCard.size.y / 2
+	if startPos.y > targetPos.y:
+		targetPos.y += size
+	else:
+		targetPos.y -= size
+	attackCard.z_index = 2
+	defendCard.z_index = 1
+	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2)
+	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2)
+	return attackTween
 
 func remove_from_game(card):
 	if card != null:

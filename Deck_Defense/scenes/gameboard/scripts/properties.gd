@@ -23,6 +23,13 @@ var initial_hand_cards = 3;
 var cards_per_turn = 3;
 var max_card_space_spots = 10;
 
+var current_cycle
+enum TURN_CYCLE {
+	MY_TURN,
+	OPPONENT_TURN,
+	GAME_END
+}
+
 var CardProperties = preload("res://shared/card/scripts/properties.gd")
 
 func _ready():
