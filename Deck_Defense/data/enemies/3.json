@@ -1,53 +1,56 @@
 {
 	"initial": [
-		1,
-		2,
-		3,
-		4,
-		4,
+		11,
+		12,
+		13,
+		14,
+		14,
+		15,
+		16,
+		17,
 	],
 	"deck": [
 		{
-			"id": 1,
+			"id": 11,
 			"amount": 3
 		},
 		{
-			"id": 2,
+			"id": 12,
 			"amount": 3
 		},
 		{
-			"id": 3,
+			"id": 13,
 			"amount": 3
 		},
 		{
-			"id": 4,
+			"id": 14,
 			"amount": 3
 		},
 		{
-			"id": 5,
+			"id": 15,
 			"amount": 3
 		},
 		{
-			"id": 6,
+			"id": 16,
 			"amount": 3
 		},
 		{
-			"id": 7,
+			"id": 17,
 			"amount": 3
 		},
 		{
-			"id": 8,
+			"id": 18,
 			"amount": 3
 		},
 		{
-			"id": 9,
+			"id": 19,
 			"amount": 3
 		},
 		{
-			"id": 10,
+			"id": 20,
 			"amount": 3
 		}
 	],
-	"losePoints": 10,
-	"winPoints": 11,
+	"losePoints": 30,
+	"winPoints": 31,
 }

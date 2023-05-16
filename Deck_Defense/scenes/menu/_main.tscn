@@ -64,6 +64,90 @@ layout_mode = 2
 focus_mode = 2
 text = "Quit"
 
+[node name="Starters" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 455.0
+offset_top = 206.0
+offset_right = -455.0
+offset_bottom = -206.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_m3w05")
+
+[node name="Close" type="Button" parent="Starters"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -50.0
+offset_bottom = 31.0
+grow_horizontal = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_80c66")
+text = "Close"
+
+[node name="Label" type="Label" parent="Starters"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Choose enemy"
+
+[node name="enemyEasy" type="Button" parent="Starters"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -55.0
+offset_right = 38.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_80c66")
+text = "Easy"
+
+[node name="enemyMed" type="Button" parent="Starters"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -15.0
+offset_right = 38.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_80c66")
+text = "Medium"
+
+[node name="enemyHard" type="Button" parent="Starters"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = 25.0
+offset_right = 38.0
+offset_bottom = 56.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_80c66")
+text = "Hard"
+
 [node name="Settings" type="Panel" parent="."]
 visible = false
 layout_mode = 1
@@ -148,6 +232,10 @@ grow_vertical = 2
 [connection signal="pressed" from="VBoxContainer/PackagesButton" to="." method="_on_PackagesButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="Starters/Close" to="." method="_on_close_starter_pressed"]
+[connection signal="pressed" from="Starters/enemyEasy" to="." method="_on_easy_starter_pressed"]
+[connection signal="pressed" from="Starters/enemyMed" to="." method="_on_med_starter_pressed"]
+[connection signal="pressed" from="Starters/enemyHard" to="." method="_on_hard_starter_pressed"]
 [connection signal="pressed" from="Settings/Close" to="." method="_on_close_pressed"]
 [connection signal="item_selected" from="Settings/resizeDropdown" to="." method="resizeWindow"]
 [connection signal="toggled" from="Settings/fullScreen" to="." method="changeFullscreen"]
