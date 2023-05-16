@@ -21,11 +21,10 @@ var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 
 func _ready():
 	get_tree().set_auto_accept_quit(true)
-	initialize_game()	
+	initialize_game()
 
 func initialize_game():
 	GbProps.initialize()
-	#$BG_SND.play()
 	GbUtil.initialize(get_tree())
 	GbProps.player_hand_node = get_node(player_hand)
 	GbProps.player_card_space_node = get_node(player_card_space)
