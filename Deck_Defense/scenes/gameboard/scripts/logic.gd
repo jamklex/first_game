@@ -4,16 +4,15 @@ const WAIT_WHILE_FIGHT = "TurnOptions/WaitWhileFight"
 const ATTACK_PLAYER = "TurnOptions/AttackOpponent"
 const BLOCK_PLAYER = "TurnOptions/BlockOpponent"
 const player_card_space = "Player/CardSpace/Spots"
-const player_hand = "Player/Hand"
 const player_healt = "Player/Health"
-const player_cards_left = "Player/CardsLeft"
-const enemy_card_space = "Enemy/CardSpace/Spots"
+const player_hand = "Player/Hand"
+const player_cards_left_label = "Player/CardsLeft/Amount"
 const enemy_hand = "Enemy/Hand"
 const enemy_healt = "Enemy/Health"
-const enemy_cards_left = "Enemy/CardsLeft"
+const enemy_cards_left_label = "Enemy/CardsLeft/Amount"
+const enemy_card_space = "Enemy/CardSpace/Spots"
 
 const ENEMY_THINKING_TIME = 1.5
-const CARD_DRAW_TIME = 0.2
 
 var rng:RandomNumberGenerator = GbProps.rng
 
@@ -119,7 +118,7 @@ func enemy_move():
 				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
 				var initial_card = GbProps.enemy_hand_node.get_child(i)
 				GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
-				await get_tree().create_timer(CARD_DRAW_TIME).timeout
+				await GbUtil.drawAnimation().finished
 		else:
 			print("enemy can't do anything...")
 			player_wins()
@@ -148,14 +147,14 @@ func can_place_cards():
 	return GbProps.current_cycle == GbProps.TURN_CYCLE.MY_TURN
 
 func place_cards_in_hand(node, amount, deck, prefered_ids, visible_card):
-	var cardObjs = await GbUtil.draw_cards(node, amount, deck, prefered_ids, visible_card, CARD_DRAW_TIME)
+	var cardObjs = await GbUtil.draw_cards(node, amount, deck, prefered_ids, visible_card)
 	update_cards_left()
 	return cardObjs
 
 func update_cards_left():
-	var enemy = get_node(enemy_cards_left + "/Amount") as Label
+	var enemy = get_node(enemy_cards_left_label) as Label
 	enemy.set_text(str(GbProps.enemy_deck.size()))
-	var player = get_node(player_cards_left + "/Amount") as Label
+	var player = get_node(player_cards_left_label) as Label
 	player.set_text(str(GbProps.player_deck.size()))
 
 func set_hp(path, amount, max_amount):

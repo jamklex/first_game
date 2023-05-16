@@ -1,7 +1,8 @@
 extends Node
 
-const attack_animation_time = 1.0
-const direct_attack_animation_time = 1.0
+const attack_animation_time = 0.3
+const direct_attack_animation_time = 0.2
+const card_draw_time = 0.2
 
 var player_deck = []
 var enemy_deck = []
@@ -50,43 +51,44 @@ func adjust_separation(hand):
 	var card_amount = hand.get_child_count()
 	var separation = 5 if card_amount <= 3 else card_amount * -10
 	hand.add_theme_constant_override("separation", separation)
-	
+
 func isQueuedForDeletion(obj):
 	return !weakref(obj).get_ref()
 
 func attack(attacker_cards, target_cards):
 	var direct_damage = 0
-	for attacker in attacker_cards:
-		for defender in target_cards:
-			if isQueuedForDeletion(defender):
-				continue
+	var attack_buffer = []
+	var defend_buffer = []
+	attack_buffer.append_array(attacker_cards)
+	defend_buffer.append_array(target_cards)
+	for attacker in attack_buffer:
+		if not defend_buffer.is_empty():
+			var defender = defend_buffer[0]
 			if not attacker.can_attack(defender):
 				continue
 			attacker.initiate_attack(defender)
 			defender.defend_against(attacker)
 			var dmg = attacker.properties.atk
 			await attackAnimation(attacker, defender).finished
-			if defender == null:
-				continue
 			var hp = defender.properties.hp
 			var new_card_hp = hp - dmg
 			if new_card_hp <= 0:
 				remove_from_game(defender)
+				defend_buffer.erase(defender)
 			else:
 				defender.properties.set_hp(new_card_hp)
-		if attacker != null:
-			if attacker.can_attack_directly():
-				await attackDirectAnimation(attacker).finished
-				direct_damage += attacker.properties.atk
+		if attacker != null and attacker.can_attack_directly():
+			await attackDirectAnimation(attacker).finished
+			direct_damage += attacker.properties.atk
 	return direct_damage
-	
+
 func attackDirectAnimation(attackCard:Card):
 	var attackTween = create_tween().set_parallel(true)
 	var startPos = attackCard.global_position
 	var size = -get_window().size.y/3
 	if GbProps.current_cycle == GbProps.TURN_CYCLE.OPPONENT_TURN:
 		size = abs(size)
-	attackCard.z_index = 2	
+	attackCard.z_index = 2
 	var targetPos = Vector2(get_window().size.x/2, startPos.y + size)
 	attackTween.tween_property(attackCard, "global_position", targetPos, direct_attack_animation_time/2.0)
 	attackTween.chain().tween_property(attackCard, "global_position", startPos, direct_attack_animation_time/2.0)
@@ -106,6 +108,11 @@ func attackAnimation(attackCard:Card, defendCard:Card):
 	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2.0)
 	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2.0)
 	return attackTween
+
+func drawAnimation():
+	var drawTween = create_tween().set_parallel(true)
+	drawTween.tween_interval(card_draw_time)
+	return drawTween
 
 func remove_from_game(card):
 	if card != null:
@@ -169,7 +176,7 @@ func bump_child_y(node, increase):
 func total_card_size(deck, card_space, hand):
 	return deck.size() + cards_ltr_in(card_space).size() + hand.get_child_count()
 
-func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
+func draw_cards(node, amount, deck, prefered_ids, visible_card):
 	var cardObjs = []
 	for n in amount:
 		if node.get_child_count() == GbProps.max_hand_cards:
@@ -185,7 +192,7 @@ func draw_cards(node, amount, deck, prefered_ids, visible_card, card_draw_time):
 		var cardObj = create_visible_instance(card, visible_card) as Card
 		cardObjs.append(cardObj)
 		add_card_to(node, cardObj)
-		await tree.create_timer(card_draw_time).timeout
+		await drawAnimation().finished
 	return cardObjs
 
 func get_card_from_deck(deck):
