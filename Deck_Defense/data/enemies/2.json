@@ -1,0 +1,55 @@
+{
+	"initial": [
+		6,
+		7,
+		8,
+		9,
+		9,
+		10,
+		10,
+	],
+	"deck": [
+		{
+			"id": 6,
+			"amount": 3
+		},
+		{
+			"id": 7,
+			"amount": 3
+		},
+		{
+			"id": 8,
+			"amount": 3
+		},
+		{
+			"id": 9,
+			"amount": 3
+		},
+		{
+			"id": 10,
+			"amount": 3
+		},
+		{
+			"id": 11,
+			"amount": 3
+		},
+		{
+			"id": 12,
+			"amount": 3
+		},
+		{
+			"id": 13,
+			"amount": 3
+		},
+		{
+			"id": 14,
+			"amount": 3
+		},
+		{
+			"id": 15,
+			"amount": 3
+		}
+	],
+	"losePoints": 20,
+	"winPoints": 21,
+}

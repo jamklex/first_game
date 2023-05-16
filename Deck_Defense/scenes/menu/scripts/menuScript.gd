@@ -32,8 +32,8 @@ func _ready():
 	loadSettings()
 
 func _on_StartButton_pressed():
-	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
-	
+	var starters = $Starters as Panel
+	starters.visible = true	
 
 func _on_deck_button_pressed():
 	get_tree().change_scene_to_file("res://scenes/deckBuilder/_main.tscn")
@@ -93,4 +93,18 @@ func getIndexByWidthAndHeigth(width, height):
 			return index
 	return 0
 
+func _on_close_starter_pressed():
+	var starters = $Starters as Panel
+	starters.visible = false
 
+func _on_easy_starter_pressed():
+	GbProps.enemy_level = 1
+	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
+
+func _on_med_starter_pressed():
+	GbProps.enemy_level = 2
+	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
+	
+func _on_hard_starter_pressed():
+	GbProps.enemy_level = 3
+	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")

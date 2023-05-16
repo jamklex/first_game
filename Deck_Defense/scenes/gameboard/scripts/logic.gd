@@ -21,7 +21,7 @@ var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 
 func _ready():
 	get_tree().set_auto_accept_quit(true)
-	initialize_game()
+	initialize_game()	
 
 func initialize_game():
 	GbProps.initialize()
@@ -137,12 +137,29 @@ func check_winning_state():
 	return false
 
 func player_wins():
+	var rewardPoints = GbProps.get_enemy_win_points()
+	var winEndWindow = $PlayerWins as EndWindow
+	winEndWindow.setPoints(rewardPoints)
+	addPlayerPoints(rewardPoints)
 	GbUtil.set_visibility(get_node("PlayerWins"), true)
+	GbUtil.set_visibility(get_node("Surrender"), false)
 	GbProps.current_cycle = GbProps.TURN_CYCLE.GAME_END
 
 func player_looses():
+	var rewardPoints = GbProps.get_enemy_lose_points()
+	var looseEndWindow = $PlayerLooses as EndWindow
+	looseEndWindow.setPoints(rewardPoints)
+	addPlayerPoints(rewardPoints)
 	GbUtil.set_visibility(get_node("PlayerLooses"), true)
+	GbUtil.set_visibility(get_node("Surrender"), false)
 	GbProps.current_cycle = GbProps.TURN_CYCLE.GAME_END
+	
+func addPlayerPoints(rewardPoints):
+	var playerData = JsonReader.read_player_data()
+	var newPoints = playerData["points"]
+	newPoints += rewardPoints
+	playerData["points"] = newPoints
+	JsonReader.save_player_data(playerData)
 
 func can_place_cards():
 	return GbProps.current_cycle == GbProps.TURN_CYCLE.MY_TURN
@@ -179,4 +196,5 @@ func setPlayerCardOnClickEvent(cards):
 		card.clicked.connect(_on_HandCard_clicked)
 
 func _on_surrender():
-	get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
+	if GbProps.current_cycle != GbProps.TURN_CYCLE.GAME_END:
+		get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")

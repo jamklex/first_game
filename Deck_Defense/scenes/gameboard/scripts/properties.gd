@@ -76,6 +76,14 @@ func get_enemy_initial():
 	var content = JsonReader.read_enemy_data(enemy_level)
 	array.append_array(content["initial"])
 	return array
+	
+func get_enemy_lose_points():
+	var content = JsonReader.read_enemy_data(enemy_level)
+	return int(content["losePoints"])
+	
+func get_enemy_win_points():
+	var content = JsonReader.read_enemy_data(enemy_level)
+	return int(content["winPoints"])
 
 func get_cards(id, amount):
 	var array = []
