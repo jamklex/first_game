@@ -93,13 +93,14 @@ func attackDirectAnimation(attackCard:Card):
 		stepPos.y -= round(stepPos.y * 0.25)
 	else:
 		stepPos.y += round(stepPos.y * 0.25)
-	attackCard.z_index = 2
+	attackCard.z_index = 3
 	var targetPos = Vector2(get_window().size.x/2, startPos.y + size)
 	var soundPlayer = attackCard.get_node("AttackSoundPlayer") as AudioStreamPlayer
 	soundPlayer.play()
 	attackTween.chain().tween_property(attackCard, "global_position", stepPos, direct_attack_animation_time*0.4)
 	attackTween.chain().tween_property(attackCard, "global_position", targetPos, direct_attack_animation_time*0.3)
 	attackTween.chain().tween_property(attackCard, "global_position", startPos, direct_attack_animation_time*0.3)
+	attackCard.z_index = 2
 	return attackTween
 	
 func attackAnimation(attackCard:Card, defendCard:Card):
@@ -114,13 +115,14 @@ func attackAnimation(attackCard:Card, defendCard:Card):
 	else:
 		targetPos.y -= size
 		stepPos.y -= round(stepPos.y * 0.1)
-	attackCard.z_index = 2
+	attackCard.z_index = 3
 	defendCard.z_index = 1
 	var soundPlayer = attackCard.get_node("AttackSoundPlayer") as AudioStreamPlayer
 	soundPlayer.play()
 	attackTween.chain().tween_property(attackCard, "global_position", stepPos, attack_animation_time*0.4)
 	attackTween.chain().tween_property(attackCard, "global_position", targetPos, attack_animation_time*0.3)
 	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time*0.3)
+	attackCard.z_index = 2
 	return attackTween
 
 func drawAnimation():
