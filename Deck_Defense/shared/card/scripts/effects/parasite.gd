@@ -43,6 +43,8 @@ func reload_data():
 	me.overwrite_color = INFESTED_COLOR
 	infested.set_hp(me.hp)
 	infested.set_atk(me.atk)
+	me.make_visible(CardProperties.hp_label)
+	me.make_visible(CardProperties.atk_label)
 
 func overwrite_effects_with_own(infested: CardProperties):
 	infested.effects.clear()
