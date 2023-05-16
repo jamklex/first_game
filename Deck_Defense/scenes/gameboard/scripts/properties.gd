@@ -35,8 +35,7 @@ var CardProperties = preload("res://shared/card/scripts/properties.gd")
 func _ready():
 	rng.randomize()
 
-func initialize(level):
-	enemy_level = level
+func initialize():
 	playerMaxHp = 50
 	playerCurrentHp = playerMaxHp
 	enemyMaxHp = 50
