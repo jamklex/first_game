@@ -25,6 +25,7 @@ func _ready():
 
 func initialize_game():
 	GbProps.initialize()
+	#$BG_SND.play()
 	GbUtil.initialize(get_tree())
 	GbProps.player_hand_node = get_node(player_hand)
 	GbProps.player_card_space_node = get_node(player_card_space)

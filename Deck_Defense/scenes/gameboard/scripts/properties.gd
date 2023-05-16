@@ -31,6 +31,8 @@ enum TURN_CYCLE {
 }
 
 var CardProperties = preload("res://shared/card/scripts/properties.gd")
+var attack_sound = preload("res://data/sounds/attack.mp3")
+var kill_sound = preload("res://data/sounds/die.mp3")
 
 func _ready():
 	rng.randomize()

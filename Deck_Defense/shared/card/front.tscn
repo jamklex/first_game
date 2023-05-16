@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://llfmaboqxn2d"]
+[gd_scene load_steps=27 format=3 uid="uid://b3kqenl61d6qh"]
 
 [ext_resource type="Script" path="res://shared/card/scripts/card.gd" id="1_3i4m2"]
 [ext_resource type="Texture2D" uid="uid://drj5avgxwqd4p" path="res://shared/card/images/effects/multi-attack.png" id="3_75ajg"]
@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://l12saielyye1" path="res://shared/card/images/hp.png" id="7_ghvif"]
 [ext_resource type="Texture2D" uid="uid://i7dq6a4bptru" path="res://shared/card/images/effects/bombe.png" id="7_v38cc"]
 [ext_resource type="Texture2D" uid="uid://blus6vquyh7ba" path="res://shared/card/images/atk.png" id="8_4uxmh"]
+[ext_resource type="AudioStream" uid="uid://lfj1bey10tn" path="res://data/sounds/die.mp3" id="11_ub76g"]
+[ext_resource type="AudioStream" uid="uid://irrkpo4ht012" path="res://data/sounds/place.mp3" id="11_vc1mw"]
+[ext_resource type="AudioStream" uid="uid://vtbb604v0c8a" path="res://data/sounds/attack.mp3" id="12_4bjg4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yaee3"]
 bg_color = Color(0.992157, 0.788235, 0.486275, 1)
@@ -391,6 +394,18 @@ stretch_mode = 4
 libraries = {
 "": SubResource("AnimationLibrary_s4io8")
 }
+
+[node name="DestroySoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_ub76g")
+volume_db = -10.0
+
+[node name="AttackSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_4bjg4")
+volume_db = -10.0
+
+[node name="PlaceSoundPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_vc1mw")
+volume_db = -10.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="minimum_size_changed" from="." to="." method="_resizeLabels"]

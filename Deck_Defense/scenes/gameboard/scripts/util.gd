@@ -1,7 +1,7 @@
 extends Node
 
-const attack_animation_time = 0.3
-const direct_attack_animation_time = 0.2
+const attack_animation_time = 0.5
+const direct_attack_animation_time = 0.5
 const card_draw_time = 0.2
 
 var player_deck = []
@@ -23,6 +23,7 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 		var yScaleSub = 20
 		adjust_size(card, contender.size.y-yScaleSub)
 		contender.add_child(card)
+		cardLayDownAnimation(card)
 		var xOffset = (contender.size.x - card.custom_minimum_size.x) / 2
 		var yOffset = yScaleSub / 2
 		card.position = Vector2(card.position.x + xOffset, card.position.y + yOffset)
@@ -64,7 +65,7 @@ func attack(attacker_cards, target_cards):
 	for attacker in attack_buffer:
 		if not defend_buffer.is_empty():
 			var defender = defend_buffer[0]
-			if not attacker.can_attack(defender):
+			if attacker == null or not attacker.can_attack(defender):
 				continue
 			attacker.initiate_attack(defender)
 			defender.defend_against(attacker)
@@ -85,34 +86,51 @@ func attack(attacker_cards, target_cards):
 func attackDirectAnimation(attackCard:Card):
 	var attackTween = create_tween().set_parallel(true)
 	var startPos = attackCard.global_position
+	var stepPos = attackCard.global_position
 	var size = -get_window().size.y/3
 	if GbProps.current_cycle == GbProps.TURN_CYCLE.OPPONENT_TURN:
 		size = abs(size)
+		stepPos.y -= round(stepPos.y * 0.25)
+	else:
+		stepPos.y += round(stepPos.y * 0.25)
 	attackCard.z_index = 2
 	var targetPos = Vector2(get_window().size.x/2, startPos.y + size)
-	attackTween.tween_property(attackCard, "global_position", targetPos, direct_attack_animation_time/2.0)
-	attackTween.chain().tween_property(attackCard, "global_position", startPos, direct_attack_animation_time/2.0)
+	var soundPlayer = attackCard.get_node("AttackSoundPlayer") as AudioStreamPlayer
+	soundPlayer.play()
+	attackTween.chain().tween_property(attackCard, "global_position", stepPos, direct_attack_animation_time*0.4)
+	attackTween.chain().tween_property(attackCard, "global_position", targetPos, direct_attack_animation_time*0.3)
+	attackTween.chain().tween_property(attackCard, "global_position", startPos, direct_attack_animation_time*0.3)
 	return attackTween
 	
 func attackAnimation(attackCard:Card, defendCard:Card):
 	var attackTween = create_tween().set_parallel(true)
 	var startPos = attackCard.global_position
 	var targetPos = defendCard.global_position
+	var stepPos = attackCard.global_position
 	var size = defendCard.size.y / 2
 	if startPos.y > targetPos.y:
 		targetPos.y += size
+		stepPos.y += round(stepPos.y * 0.1)
 	else:
 		targetPos.y -= size
+		stepPos.y -= round(stepPos.y * 0.1)
 	attackCard.z_index = 2
 	defendCard.z_index = 1
-	attackTween.tween_property(attackCard, "global_position", targetPos, attack_animation_time/2.0)
-	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time/2.0)
+	var soundPlayer = attackCard.get_node("AttackSoundPlayer") as AudioStreamPlayer
+	soundPlayer.play()
+	attackTween.chain().tween_property(attackCard, "global_position", stepPos, attack_animation_time*0.4)
+	attackTween.chain().tween_property(attackCard, "global_position", targetPos, attack_animation_time*0.3)
+	attackTween.chain().tween_property(attackCard, "global_position", startPos, attack_animation_time*0.3)
 	return attackTween
 
 func drawAnimation():
 	var drawTween = create_tween().set_parallel(true)
 	drawTween.tween_interval(card_draw_time)
 	return drawTween
+
+func cardLayDownAnimation(card: Card):
+	var soundPlayer = card.get_node("PlaceSoundPlayer") as AudioStreamPlayer
+	soundPlayer.play()
 
 func remove_from_game(card):
 	if card != null:
@@ -129,6 +147,8 @@ func remove_from_game_without_effect_calls(card):
 		card.queue_free()
 
 func destroyAnimation(card: Card):
+	var soundPlayer = card.get_node("DestroySoundPlayer") as AudioStreamPlayer
+	soundPlayer.play()
 	var animationPlayer = card.get_node("AnimationPlayer") as AnimationPlayer
 	animationPlayer.play("Destroy")
 	return animationPlayer
