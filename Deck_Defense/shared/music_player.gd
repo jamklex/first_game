@@ -3,12 +3,12 @@ extends Node
 var _audioStreamPlayer:AudioStreamPlayer
 var _newTrack:AudioStreamMP3
 const MUSIC_FOLDER = "res://data/music/"
+const AUDIO_VOLUME = -12.0
 
 func _ready():
 	_audioStreamPlayer = AudioStreamPlayer.new()
-	_audioStreamPlayer.volume_db = 1.0
+	_audioStreamPlayer.volume_db = AUDIO_VOLUME
 	_audioStreamPlayer.autoplay = true
-	_audioStreamPlayer.volume_db
 #	_fadeTween = create_tween()
 	add_child(_audioStreamPlayer)
 	
@@ -21,9 +21,9 @@ func switchMusic(newMusicPath):
 		
 func switchFade():
 	var fadeTween = create_tween()
-	fadeTween.tween_property(_audioStreamPlayer, "volume_db", -80.0, 2)
+	fadeTween.tween_property(_audioStreamPlayer, "volume_db", -60.0, 0.5)
 	fadeTween.tween_callback(startNewMusic)
-	fadeTween.tween_property(_audioStreamPlayer, "volume_db", 0, 2)	
+	fadeTween.tween_property(_audioStreamPlayer, "volume_db", AUDIO_VOLUME, 0.5)	
 	
 func startNewMusic():
 	_audioStreamPlayer.stream = _newTrack

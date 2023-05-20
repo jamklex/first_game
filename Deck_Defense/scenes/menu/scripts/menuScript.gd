@@ -30,7 +30,7 @@ func _ready():
 	for size in windowSizes:
 		resizeDropdown.add_item(String.num(size.x) + " x " + String.num(size.y))
 	loadSettings()
-	MusicPlayer.switchMusic("menu.mp3")
+	MusicPlayer.switchMusic("menu-loop.mp3")
 
 func _on_StartButton_pressed():
 	var starters = $Starters as Panel
