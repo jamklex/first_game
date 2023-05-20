@@ -63,6 +63,8 @@ func attack(attacker_cards, target_cards):
 			attacker.reduce_attacks_remaining()
 			if not target_cards.is_empty():
 				var defender = target_cards[0]
+				if defender.is_queued_for_deletion():
+					defender = target_cards[1]
 				await attackAnimation(attacker, defender).finished
 				defender.defend_against(attacker)
 				var dmg = attacker.properties.atk
