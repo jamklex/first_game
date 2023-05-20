@@ -78,7 +78,7 @@ func load_properties(card_prop_dict: Dictionary):
 	reload_data()
 
 func can_attack():
-	return attacks_remaining > 0
+	return attacks_remaining > 0 and atk > 0
 
 func reduce_attacks_remaining():
 	attacks_remaining -= 1

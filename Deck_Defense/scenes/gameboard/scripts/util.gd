@@ -59,7 +59,7 @@ func isQueuedForDeletion(obj):
 func attack(attacker_cards, target_cards):
 	var direct_damage = 0
 	for attacker in attacker_cards:
-		while attacker != null and attacker.can_attack() and not attacker.properties.check_self_destroy():
+		while attacker != null and attacker.can_attack() and not attacker.is_queued_for_deletion():
 			attacker.reduce_attacks_remaining()
 			if not target_cards.is_empty():
 				var defender = target_cards[0]
