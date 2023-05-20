@@ -1,6 +1,6 @@
 {
 	"name": "Pet Pack Rarity #2",
-	"price": 10,
+	"price": 20,
 	"image": "res://data/packs/covers/pet_2.png",
 	"cards": [
 		117,118,126,127,133,137,143,144,150

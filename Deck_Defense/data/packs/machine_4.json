@@ -1,6 +1,6 @@
 {
 	"name": "Machine Pack Rarity #4",
-	"price": 10,
+	"price": 40,
 	"image": "res://data/packs/covers/machine_4.png",
 	"cards": [
 		45,46,47,54,55,59,63,71,72,76

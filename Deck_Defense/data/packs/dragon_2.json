@@ -1,6 +1,6 @@
 {
 	"name": "Dragon Pack Rarity #2",
-	"price": 10,
+	"price": 20,
 	"image": "res://data/packs/covers/dragon_2.png",
 	"cards": [
 		79,80,88,89,95,99,105,106,112
