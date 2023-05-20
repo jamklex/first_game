@@ -1,84 +1,76 @@
 {
 	"cards": [
 		{
-			"amount": 3,
-			"id": 1
-		},
-		{
-			"amount": 3,
-			"id": 2
-		},
-		{
-			"amount": 3,
-			"id": 3
-		},
-		{
-			"amount": 3,
-			"id": 4
+			"amount": 2,
+			"id": 39
 		},
 		{
 			"amount": 2,
-			"id": 5
+			"id": 40
 		},
 		{
 			"amount": 2,
-			"id": 6
+			"id": 48
 		},
 		{
 			"amount": 2,
-			"id": 7
+			"id": 49
 		},
 		{
 			"amount": 2,
-			"id": 8
+			"id": 56
 		},
 		{
-			"amount": 3,
-			"id": 9
+			"amount": 2,
+			"id": 60
 		},
 		{
-			"amount": 3,
-			"id": 10
+			"amount": 2,
+			"id": 65
 		},
 		{
-			"amount": 3,
-			"id": 11
+			"amount": 2,
+			"id": 66
 		},
 		{
-			"amount": 3,
-			"id": 12
+			"amount": 2,
+			"id": 73
 		},
 		{
-			"amount": 3,
-			"id": 13
+			"amount": 2,
+			"id": 115
 		},
 		{
-			"amount": 3,
-			"id": 14
+			"amount": 2,
+			"id": 116
 		},
 		{
-			"amount": 3,
-			"id": 15
+			"amount": 2,
+			"id": 124
 		},
 		{
-			"amount": 3,
-			"id": 16
+			"amount": 2,
+			"id": 125
 		},
 		{
-			"amount": 1,
-			"id": 18
+			"amount": 2,
+			"id": 132
 		},
 		{
-			"amount": 1,
-			"id": 19
+			"amount": 2,
+			"id": 136
 		},
 		{
-			"amount": 1,
-			"id": 20
+			"amount": 2,
+			"id": 141
 		},
 		{
-			"amount": 3,
-			"id": 17
+			"amount": 2,
+			"id": 142
+		},
+		{
+			"amount": 2,
+			"id": 149
 		}
 	],
 	"decks": [
@@ -86,135 +78,14 @@
 			"active": true,
 			"cards": [
 				{
-					"amount": 3,
-					"id": 1
-				},
-				{
 					"amount": 2,
-					"id": 6
-				},
-				{
-					"amount": 2,
-					"id": 7
-				},
-				{
-					"amount": 2,
-					"id": 8
-				},
-				{
-					"amount": 2,
-					"id": 9
-				},
-				{
-					"amount": 2,
-					"id": 10
-				},
-				{
-					"amount": 3,
-					"id": 2
-				},
-				{
-					"amount": 3,
-					"id": 3
-				},
-				{
-					"amount": 3,
-					"id": 4
-				},
-				{
-					"amount": 2,
-					"id": 5
-				},
-				{
-					"amount": 3,
-					"id": 11
-				},
-				{
-					"amount": 3,
-					"id": 12
-				},
-				{
-					"amount": 3,
-					"id": 13
-				},
-				{
-					"amount": 3,
-					"id": 14
-				},
-				{
-					"amount": 3,
-					"id": 15
-				},
-				{
-					"amount": 3,
-					"id": 16
-				},
-				{
-					"amount": 1,
-					"id": 18
-				},
-				{
-					"amount": 1,
-					"id": 19
-				},
-				{
-					"amount": 1,
-					"id": 20
-				},
-				{
-					"amount": 3,
-					"id": 17
+					"id": 39
 				}
 			],
-			"name": "Mein geiles Deck"
-		},
-		{
-			"active": false,
-			"cards": [
-				{
-					"amount": 1,
-					"id": 3
-				},
-				{
-					"amount": 1,
-					"id": 4
-				},
-				{
-					"amount": 2,
-					"id": 7
-				},
-				{
-					"amount": 2,
-					"id": 9
-				},
-				{
-					"amount": 1,
-					"id": 11
-				},
-				{
-					"amount": 2,
-					"id": 12
-				},
-				{
-					"amount": 1,
-					"id": 13
-				}
-			],
-			"name": "sadjasdjdsaj"
+			"name": "Machine x Pet Starter Deck"
 		}
 	],
 	"initial": [
-		1,
-		1,
-		1,
-		8,
-		8,
-		5,
-		1,
-		2,
-		3,
-		4,
-		5
 	],
-	"points": 852
+	"points": 150
 }
