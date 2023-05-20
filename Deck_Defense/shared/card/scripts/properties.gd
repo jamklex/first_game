@@ -97,7 +97,7 @@ func can_attack_directly():
 func initiate_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	attacks_remaining = 1
 	direct_allowed = true
-	for effect in effects:
+	for effect in effects: 
 		effect.next_turn(my_container, my_position, enemy_container)
 	reload_data()
 
