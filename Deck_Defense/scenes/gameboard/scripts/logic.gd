@@ -101,7 +101,7 @@ func switch_to_enemy():
 func enemy_move():
 	var enemyHandCards = GbProps.enemy_hand_node.get_child_count()
 	var free_spots = GbUtil.get_free_spots(GbProps.enemy_card_space_node)
-	var will_attack = rng.randi_range(1,GbProps.max_card_space_spots) > free_spots.size()
+	var will_attack = free_spots.size() < GbProps.max_card_space_spots and rng.randi_range(1,GbProps.max_card_space_spots) > free_spots.size() - (GbProps.enemy_level-1)
 	if will_attack or (enemyHandCards == 0 and free_spots.size() < GbProps.max_card_space_spots):
 		var player_cards = GbUtil.cards_ltr_in(GbProps.player_card_space_node)
 		var enemy_cards = GbUtil.cards_ltr_in(GbProps.enemy_card_space_node)
@@ -117,8 +117,8 @@ func enemy_move():
 			for i in range(cardsToPlay):
 				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
 				var initial_card = GbProps.enemy_hand_node.get_child(i)
-				GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
-				await GbUtil.drawAnimation().finished
+				await GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
+				#await GbUtil.drawAnimation().finished
 		else:
 			print("enemy can't do anything...")
 			player_wins()

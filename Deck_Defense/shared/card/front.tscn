@@ -397,15 +397,15 @@ libraries = {
 
 [node name="DestroySoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_ub76g")
-volume_db = -10.0
+volume_db = -5.0
 
 [node name="AttackSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("12_4bjg4")
-volume_db = -10.0
+volume_db = -15.0
 
 [node name="PlaceSoundPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("11_vc1mw")
-volume_db = -10.0
+volume_db = -20.0
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="minimum_size_changed" from="." to="." method="_resizeLabels"]

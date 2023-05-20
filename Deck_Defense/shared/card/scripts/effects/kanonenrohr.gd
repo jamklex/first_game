@@ -29,7 +29,7 @@ func reload_data():
 
 func update_counter(add: int):
 	counter = counter + add
-	me.set_atk(me.base_atk * counter)
+	me.set_atk(me.base_atk * max(1, counter))
 	var label = me.node.get_node(LABEL) as Label
 	if label == null:
 		return

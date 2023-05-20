@@ -12,6 +12,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("stone"):
 		MAX_BLOCKS = card_prop_dict["stone"]
+		blocks_remaining = MAX_BLOCKS
 		return true
 
 func defend(source: CardProperties):

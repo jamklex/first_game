@@ -59,15 +59,15 @@ func isQueuedForDeletion(obj):
 func attack(attacker_cards, target_cards):
 	var direct_damage = 0
 	for attacker in attacker_cards:
-		while attacker != null and attacker.can_attack():
+		while attacker != null and attacker.can_attack() and not attacker.properties.check_self_destroy():
 			attacker.reduce_attacks_remaining()
 			if not target_cards.is_empty():
 				var defender = target_cards[0]
+				await attackAnimation(attacker, defender).finished
 				defender.defend_against(attacker)
 				var dmg = attacker.properties.atk
 				var hp = defender.properties.hp
 				var new_card_hp = hp - dmg
-				await attackAnimation(attacker, defender).finished
 				if new_card_hp <= 0:
 					remove_from_game(defender)
 					target_cards.erase(defender)

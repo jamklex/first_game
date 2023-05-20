@@ -80,11 +80,72 @@
 				{
 					"amount": 2,
 					"id": 39
+				},
+				{
+					"amount": 1,
+					"id": 40
+				},
+				{
+					"amount": 2,
+					"id": 49
+				},
+				{
+					"amount": 2,
+					"id": 56
+				},
+				{
+					"amount": 2,
+					"id": 60
+				},
+				{
+					"amount": 1,
+					"id": 65
+				},
+				{
+					"amount": 1,
+					"id": 66
+				},
+				{
+					"amount": 2,
+					"id": 73
+				},
+				{
+					"amount": 1,
+					"id": 115
+				},
+				{
+					"amount": 1,
+					"id": 116
+				},
+				{
+					"amount": 2,
+					"id": 125
+				},
+				{
+					"amount": 2,
+					"id": 132
+				},
+				{
+					"amount": 2,
+					"id": 136
+				},
+				{
+					"amount": 1,
+					"id": 141
+				},
+				{
+					"amount": 1,
+					"id": 142
+				},
+				{
+					"amount": 2,
+					"id": 149
 				}
 			],
 			"name": "Machine x Pet Starter Deck"
 		}
 	],
+	"hp": 100,
 	"initial": [],
-	"points": 150
+	"points": 160
 }

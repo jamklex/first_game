@@ -116,6 +116,8 @@ func reload_data():
 func check_self_destroy():
 	if hp <= 0:
 		GbUtil.remove_from_game(node)
+		return true
+	return false
 
 func update_label(path, value, base_value):
 	if node == null:

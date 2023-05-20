@@ -38,9 +38,9 @@ func _ready():
 	rng.randomize()
 
 func initialize():
-	playerMaxHp = 50
+	playerMaxHp = JsonReader.read_player_data()["hp"]
 	playerCurrentHp = playerMaxHp
-	enemyMaxHp = 50
+	enemyMaxHp = JsonReader.read_enemy_data(enemy_level)["hp"]
 	enemyCurrentHp = enemyMaxHp
 	player_deck = get_player_deck()
 	player_initial = get_player_initial()
