@@ -1,8 +1,8 @@
 {
-	"name": "Naaame",
+	"name": "Pet 4",
 	"price": 10,
-	"image": "res://data/packs/covers/coverNaaame.png",
+	"image": "res://data/packs/covers/pet_4.png",
 	"cards": [
-		0,
+		121,122,123,130,131,135,139,147,148,152
 	]
 }

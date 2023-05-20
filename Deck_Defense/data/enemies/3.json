@@ -51,6 +51,6 @@
 			"amount": 3
 		}
 	],
-	"losePoints": 30,
-	"winPoints": 31,
+	"losePoints": 15,
+	"winPoints": 30,
 }
