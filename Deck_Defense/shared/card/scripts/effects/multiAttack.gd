@@ -1,14 +1,15 @@
 class_name MultiAttackEffect
 
 const PANEL = "MultiAttack"
-const TOTAL_ATTACKS = 2
+var TOTAL_ATTACKS = 2
 
 var me: CardProperties
 
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("multi_attack"):
-		return card_prop_dict["multi_attack"]
+		TOTAL_ATTACKS = card_prop_dict["multi_attack"]
+		return true
 
 func defend(source: CardProperties):
 	pass

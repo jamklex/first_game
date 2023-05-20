@@ -3,7 +3,7 @@ class_name StoneEffect
 const PANEL = "Stone"
 const LABEL = "Stone/Counter"
 const MAX_HP = 99999
-const MAX_BLOCKS = 3
+var MAX_BLOCKS = 3
 
 var me: CardProperties
 var blocks_remaining = 0
@@ -11,7 +11,8 @@ var blocks_remaining = 0
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("stone"):
-		return card_prop_dict["stone"]
+		MAX_BLOCKS = card_prop_dict["stone"]
+		return true
 
 func defend(source: CardProperties):
 	me.set_hp(me.hp + source.atk)
