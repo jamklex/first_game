@@ -1,7 +1,7 @@
 {
-	"name": "Naaame",
+	"name": "Dragon Pack Rarity #4",
 	"price": 10,
-	"image": "res://data/packs/covers/coverNaaame.png",
+	"image": "res://data/packs/covers/dragon_4.png",
 	"cards": [
 		83,84,85,92,93,97,101,109,110,114
 	]

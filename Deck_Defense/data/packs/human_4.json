@@ -1,7 +1,7 @@
 {
-	"name": "Naaame",
+	"name": "Human Pack Rarity #4",
 	"price": 10,
-	"image": "res://data/packs/covers/coverNaaame.png",
+	"image": "res://data/packs/covers/human_4.png",
 	"cards": [
 		7,8,9,16,17,21,25,33,34,38
 	]
