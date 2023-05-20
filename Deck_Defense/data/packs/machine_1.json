@@ -3,6 +3,6 @@
 	"price": 10,
 	"image": "res://data/packs/covers/coverNaaame.png",
 	"cards": [
-		0,
+		39,40,48,49,56,60,65,66,73
 	]
 }
