@@ -1,33 +1,17 @@
 {
 	"initial": [
-		11,
-		12,
-		13,
-		14,
-		14,
-		15,
-		16,
-		17,
 	],
 	"deck": [
 		{
-			"id": 11,
+			"id": 7,
 			"amount": 3
 		},
 		{
-			"id": 12,
+			"id": 8,
 			"amount": 3
 		},
 		{
-			"id": 13,
-			"amount": 3
-		},
-		{
-			"id": 14,
-			"amount": 3
-		},
-		{
-			"id": 15,
+			"id": 9,
 			"amount": 3
 		},
 		{
@@ -35,22 +19,95 @@
 			"amount": 3
 		},
 		{
+			"id": 26,
+			"amount": 3
+		},
+		{
+			"id": 45,
+			"amount": 3
+		},
+		{
+			"id": 46,
+			"amount": 3
+		},
+		{
+			"id": 63,
+			"amount": 3
+		},
+		{
+			"id": 64,
+			"amount": 3
+		},
+		{
+			"id": 71,
+			"amount": 3
+		},
+		{
+			"id": 72,
+			"amount": 3
+		},
+		{
+			"id": 76,
+			"amount": 3
+		},
+		{
 			"id": 17,
-			"amount": 3
+			"amount": 1
 		},
 		{
-			"id": 18,
-			"amount": 3
+			"id": 21,
+			"amount": 1
 		},
 		{
-			"id": 19,
-			"amount": 3
+			"id": 25,
+			"amount": 1
 		},
 		{
-			"id": 20,
-			"amount": 3
+			"id": 33,
+			"amount": 1
+		},
+		{
+			"id": 34,
+			"amount": 1
+		},
+		{
+			"id": 38,
+			"amount": 1
+		},
+		{
+			"id": 85,
+			"amount": 1
+		},
+		{
+			"id": 92,
+			"amount": 1
+		},
+		{
+			"id": 93,
+			"amount": 1
+		},
+		{
+			"id": 97,
+			"amount": 1
+		},
+		{
+			"id": 101,
+			"amount": 1
+		},
+		{
+			"id": 114,
+			"amount": 1
+		},
+		{
+			"id": 122,
+			"amount": 1
+		},
+		{
+			"id": 123,
+			"amount": 1
 		}
 	],
+	"hp": 250,
 	"losePoints": 15,
 	"winPoints": 30,
 }
