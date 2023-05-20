@@ -15,9 +15,6 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 		right = card_prop_dict["angel_right"]
 	return left or right
 
-func attack(target: CardProperties):
-	pass
-
 func defend(source: CardProperties):
 	pass
 

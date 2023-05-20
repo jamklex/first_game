@@ -13,10 +13,6 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	if card_prop_dict.has("stone"):
 		return card_prop_dict["stone"]
 
-func attack(target: CardProperties):
-	me.attacks_remaining = 0
-	me.direct_allowed = 0
-
 func defend(source: CardProperties):
 	me.set_hp(me.hp + source.atk)
 	update_blocks(-1)
@@ -28,6 +24,7 @@ func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	update_blocks(1)
 
 func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
+	me.attacks_remaining = 0
 	me.set_hp(1)
 	me.set_atk(0)
 	update_blocks(MAX_BLOCKS)

@@ -11,9 +11,6 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	if card_prop_dict.has("bomb"):
 		return card_prop_dict["bomb"]
 
-func attack(target: CardProperties):
-	pass
-
 func defend(source: CardProperties):
 	pass
 

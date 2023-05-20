@@ -24,7 +24,6 @@ var node: Card
 var type_id
 var max_owned = 3
 var attacks_remaining = 1
-var direct_allowed = true
 var effects = []
 
 static func of(id):
@@ -78,25 +77,18 @@ func load_properties(card_prop_dict: Dictionary):
 			effects.append(effect)
 	reload_data()
 
-func can_attack(target: CardProperties):
+func can_attack():
 	return attacks_remaining > 0
 
-func initiate_attack(target: CardProperties):
-	attacks_remaining = attacks_remaining - 1
-	direct_allowed = false
-	for effect in effects:
-		effect.attack(target)
+func reduce_attacks_remaining():
+	attacks_remaining -= 1
 
 func initiate_defence(source: CardProperties):
 	for effect in effects:
 		effect.defend(source)
 
-func can_attack_directly():
-	return direct_allowed
-
 func initiate_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	attacks_remaining = 1
-	direct_allowed = true
 	for effect in effects: 
 		effect.next_turn(my_container, my_position, enemy_container)
 	reload_data()

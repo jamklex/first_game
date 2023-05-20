@@ -10,10 +10,6 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	if card_prop_dict.has("multi_attack"):
 		return card_prop_dict["multi_attack"]
 
-func attack(target: CardProperties):
-	if me.attacks_remaining > 1:
-		me.direct_allowed = true
-
 func defend(source: CardProperties):
 	pass
 
