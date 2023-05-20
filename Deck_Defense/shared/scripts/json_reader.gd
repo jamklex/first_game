@@ -1,6 +1,7 @@
 extends Node
 
-const PlayerData = "res://data/player.json"
+const StartPlayerData = "res://data/player.json"
+const PlayerData = "player.json"
 const EnemyData = "res://data/enemies/%s.json"
 const PackagePath = "res://data/packs/%s"
 
@@ -15,10 +16,15 @@ func save_json(path, json):
 	file.close()
 
 func read_player_data():
+	if not FileAccess.file_exists(PlayerData):
+		initStartPlayerData()
 	return read_json(PlayerData)
 	
 func save_player_data(playerDataJson):
 	return save_json(PlayerData, playerDataJson)
+
+func initStartPlayerData():
+	save_json(PlayerData, read_json(StartPlayerData))
 
 func read_enemy_data(level):
 	return read_json(EnemyData % level)
