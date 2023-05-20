@@ -30,6 +30,7 @@ func _ready():
 	for size in windowSizes:
 		resizeDropdown.add_item(String.num(size.x) + " x " + String.num(size.y))
 	loadSettings()
+	MusicPlayer.switchMusic("menu.mp3")
 
 func _on_StartButton_pressed():
 	var starters = $Starters as Panel
@@ -99,12 +100,15 @@ func _on_close_starter_pressed():
 
 func _on_easy_starter_pressed():
 	GbProps.enemy_level = 1
+	MusicPlayer.switchMusic("boss_1-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
 
 func _on_med_starter_pressed():
 	GbProps.enemy_level = 2
+	MusicPlayer.switchMusic("boss_2-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
 	
 func _on_hard_starter_pressed():
 	GbProps.enemy_level = 3
+	MusicPlayer.switchMusic("boss_3-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")

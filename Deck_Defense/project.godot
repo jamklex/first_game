@@ -20,6 +20,7 @@ config/icon="res://icon.png"
 GbProps="*res://scenes/gameboard/scripts/properties.gd"
 GbUtil="*res://scenes/gameboard/scripts/util.gd"
 JsonReader="*res://shared/scripts/json_reader.gd"
+MusicPlayer="*res://shared/music_player.gd"
 
 [gui]
 
