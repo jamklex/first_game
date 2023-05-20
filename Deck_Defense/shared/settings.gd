@@ -2,7 +2,7 @@ extends Node
 class_name Settings
 
 var _settingsData:Dictionary
-var _settingsSavePath = "res://data/settings.json"
+var _settingsSavePath = "settings.json" #"res://data/settings.json"
 
 func _init():
 	_loadData()

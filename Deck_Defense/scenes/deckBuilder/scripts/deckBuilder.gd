@@ -1,6 +1,5 @@
 extends Control
 
-var playerDataJsonPath = "res://data/player.json"
 var jsonReader = preload("res://shared/scripts/json_reader.gd").new()
 var deckScene:PackedScene = preload("res://scenes/deckBuilder/prefabs/deck.tscn")
 var cardScene:PackedScene = preload("res://scenes/deckBuilder/prefabs/selectableCard.tscn")
@@ -42,7 +41,7 @@ func _ready():
 func _loadDecks():
 	cleanDeckHolder()
 	decks.clear()
-	var decksData = jsonReader.read_json(playerDataJsonPath)
+	var decksData = jsonReader.read_player_data()
 	for deckData in decksData["decks"]:
 		var newDeck = deckScene.instantiate() as Deck
 		newDeck.setDeckName(deckData["name"])
@@ -107,7 +106,7 @@ func onDeckActiveCheckClicked(activeDeck:Deck):
 	_saveDecks()
 
 func loadCards():
-	var playerData = jsonReader.read_json(playerDataJsonPath)
+	var playerData = jsonReader.read_player_data()
 	for cardData in playerData["cards"]:
 		for i in range(cardData["amount"]):
 			var newCard = cardScene.instantiate() as SelectableCard
@@ -229,9 +228,7 @@ func checkRequirements():
 	return true
 
 func _saveDecks():
-	var file = FileAccess.open(playerDataJsonPath, FileAccess.READ)
-	var currentData = JSON.parse_string(file.get_as_text())
-	file.close()
+	var currentData = jsonReader.read_player_data()
 	var newDecks = []
 	for d in decks:
 		var newDeck = {}
@@ -241,10 +238,7 @@ func _saveDecks():
 		newDeck["cards"] = deck.cards
 		newDecks.append(newDeck)
 	currentData["decks"] = newDecks
-	file = FileAccess.open(playerDataJsonPath, FileAccess.WRITE)
-	file.store_line(JSON.stringify(currentData, "\t"))
-	file.flush()
-	file.close()
+	jsonReader.save_player_data(currentData)
 
 func _saveSelectedCardsToDeck():
 	var newCards = []
