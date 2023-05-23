@@ -1,5 +1,6 @@
 {
 	"fullscreen": true,
-	"windowSizeHeight": 1080,
-	"windowSizeWidth": 1920
+	"musicPlayerVol": 50,
+	"windowSizeHeight": 720,
+	"windowSizeWidth": 1280
 }

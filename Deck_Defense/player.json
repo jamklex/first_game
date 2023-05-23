@@ -1,0 +1,303 @@
+{
+	"cards": [
+		{
+			"amount": 2,
+			"id": 39
+		},
+		{
+			"amount": 2,
+			"id": 40
+		},
+		{
+			"amount": 2,
+			"id": 48
+		},
+		{
+			"amount": 2,
+			"id": 49
+		},
+		{
+			"amount": 2,
+			"id": 56
+		},
+		{
+			"amount": 2,
+			"id": 60
+		},
+		{
+			"amount": 2,
+			"id": 65
+		},
+		{
+			"amount": 2,
+			"id": 66
+		},
+		{
+			"amount": 3,
+			"id": 73
+		},
+		{
+			"amount": 2,
+			"id": 115
+		},
+		{
+			"amount": 2,
+			"id": 116
+		},
+		{
+			"amount": 2,
+			"id": 124
+		},
+		{
+			"amount": 2,
+			"id": 125
+		},
+		{
+			"amount": 2,
+			"id": 132
+		},
+		{
+			"amount": 3,
+			"id": 136
+		},
+		{
+			"amount": 2,
+			"id": 141
+		},
+		{
+			"amount": 3,
+			"id": 142
+		},
+		{
+			"amount": 2,
+			"id": 149
+		},
+		{
+			"amount": 3,
+			"id": 38
+		},
+		{
+			"amount": 3,
+			"id": 26
+		},
+		{
+			"amount": 3,
+			"id": 46
+		},
+		{
+			"amount": 3,
+			"id": 114
+		},
+		{
+			"amount": 3,
+			"id": 33
+		},
+		{
+			"amount": 3,
+			"id": 64
+		},
+		{
+			"amount": 3,
+			"id": 101
+		},
+		{
+			"amount": 3,
+			"id": 8
+		},
+		{
+			"amount": 3,
+			"id": 34
+		},
+		{
+			"amount": 3,
+			"id": 45
+		},
+		{
+			"amount": 3,
+			"id": 72
+		},
+		{
+			"amount": 2,
+			"id": 77
+		},
+		{
+			"amount": 3,
+			"id": 104
+		},
+		{
+			"amount": 2,
+			"id": 98
+		},
+		{
+			"amount": 1,
+			"id": 94
+		},
+		{
+			"amount": 2,
+			"id": 87
+		},
+		{
+			"amount": 3,
+			"id": 93
+		},
+		{
+			"amount": 3,
+			"id": 123
+		},
+		{
+			"amount": 3,
+			"id": 9
+		},
+		{
+			"amount": 3,
+			"id": 7
+		},
+		{
+			"amount": 3,
+			"id": 17
+		},
+		{
+			"amount": 3,
+			"id": 21
+		},
+		{
+			"amount": 3,
+			"id": 86
+		},
+		{
+			"amount": 2,
+			"id": 78
+		},
+		{
+			"amount": 3,
+			"id": 92
+		},
+		{
+			"amount": 3,
+			"id": 71
+		},
+		{
+			"amount": 3,
+			"id": 97
+		},
+		{
+			"amount": 2,
+			"id": 103
+		},
+		{
+			"amount": 2,
+			"id": 1
+		},
+		{
+			"amount": 1,
+			"id": 28
+		},
+		{
+			"amount": 1,
+			"id": 35
+		},
+		{
+			"amount": 3,
+			"id": 63
+		},
+		{
+			"amount": 3,
+			"id": 76
+		},
+		{
+			"amount": 3,
+			"id": 16
+		},
+		{
+			"amount": 3,
+			"id": 25
+		},
+		{
+			"amount": 3,
+			"id": 122
+		},
+		{
+			"amount": 3,
+			"id": 85
+		},
+		{
+			"amount": 1,
+			"id": 111
+		}
+	],
+	"decks": [
+		{
+			"active": true,
+			"cards": [
+				{
+					"amount": 2,
+					"id": 39
+				},
+				{
+					"amount": 1,
+					"id": 40
+				},
+				{
+					"amount": 2,
+					"id": 49
+				},
+				{
+					"amount": 2,
+					"id": 56
+				},
+				{
+					"amount": 2,
+					"id": 60
+				},
+				{
+					"amount": 1,
+					"id": 65
+				},
+				{
+					"amount": 1,
+					"id": 66
+				},
+				{
+					"amount": 2,
+					"id": 73
+				},
+				{
+					"amount": 1,
+					"id": 115
+				},
+				{
+					"amount": 1,
+					"id": 116
+				},
+				{
+					"amount": 2,
+					"id": 125
+				},
+				{
+					"amount": 2,
+					"id": 132
+				},
+				{
+					"amount": 2,
+					"id": 136
+				},
+				{
+					"amount": 1,
+					"id": 141
+				},
+				{
+					"amount": 1,
+					"id": 142
+				},
+				{
+					"amount": 2,
+					"id": 149
+				}
+			],
+			"name": "Machine x Pet Starter Deck"
+		}
+	],
+	"hp": 100,
+	"initial": [],
+	"points": 870
+}
