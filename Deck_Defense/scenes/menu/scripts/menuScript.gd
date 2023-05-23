@@ -7,6 +7,7 @@ var settings = preload("res://shared/settings.gd").new()
 var KEY_FULLSCREEN = "fullscreen"
 var KEY_WINDOWSIZE_WIDTH = "windowSizeWidth"
 var KEY_WINDOWSIZE_HEIGHT = "windowSizeHeight"
+var KEY_MUSICPLAYER_VOLUME = "musicPlayerVol"
 ###
 
 
@@ -21,12 +22,14 @@ var fullscreen = false
 
 var resizeDropdown:OptionButton
 var fullScreenToggle:CheckButton
+var musicVolume:HSlider
 
 func _ready():
 	settingsPanel = $Settings as Panel
 	get_window().unresizable = true
 	resizeDropdown = $Settings/resizeDropdown as OptionButton
 	fullScreenToggle = $Settings/fullScreen as CheckButton
+	musicVolume = $Settings/musicVolume as HSlider
 	for size in windowSizes:
 		resizeDropdown.add_item(String.num(size.x) + " x " + String.num(size.y))
 	loadSettings()
@@ -66,26 +69,43 @@ func changeFullscreen(checked):
 		get_window().mode = Window.MODE_WINDOWED
 	fullscreen = checked
 	onSettingsChanged()
+	
+func setVolume(volume):
+	musicVolume.value = volume
+	MusicPlayer.setVolume(volume)
+	onSettingsChanged()
+
+func onVolumeSliderDragged(volumeChanged):
+	if volumeChanged:
+		setVolume(musicVolume.value)
 		
 func onSettingsChanged():
 	settings.setData(KEY_FULLSCREEN, fullscreen)
 	var windowSize = windowSizes[selectedWindowSize]
 	settings.setData(KEY_WINDOWSIZE_WIDTH, windowSize.x)
 	settings.setData(KEY_WINDOWSIZE_HEIGHT, windowSize.y)
+	settings.setData(KEY_WINDOWSIZE_HEIGHT, windowSize.y)
+	settings.setData(KEY_MUSICPLAYER_VOLUME, MusicPlayer.volume)
 	settings.saveData()
 
 func loadSettings():
 	var width = settings.getData(KEY_WINDOWSIZE_WIDTH)
 	var height = settings.getData(KEY_WINDOWSIZE_HEIGHT)
 	var fullscreenData = settings.getData(KEY_FULLSCREEN)
+	var musicVolume = settings.getData(KEY_MUSICPLAYER_VOLUME)
 	# LOAD IF EXISTS
 	if width and height:
 		selectedWindowSize = getIndexByWidthAndHeigth(width, height)
 	if fullscreenData:
 		fullscreen = fullscreenData
+	if musicVolume != null:
+		MusicPlayer.setVolume(musicVolume)
+	else: 
+		musicVolume = MusicPlayer.volume
 	# APPLY SETTINGS
 	resizeWindow(selectedWindowSize)
 	changeFullscreen(fullscreen)
+	setVolume(musicVolume)
 	
 func getIndexByWidthAndHeigth(width, height):
 	for index in windowSizes.size():

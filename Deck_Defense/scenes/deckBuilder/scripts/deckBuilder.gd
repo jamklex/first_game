@@ -11,6 +11,7 @@ var editDeck:Control
 var deckHolder:GridContainer
 var cardHolder:GridContainer
 var selectedDeck: Deck = null
+var selectedCardsLabel: Label
 
 var requirements = [
 	["Min number of cards (10)", "minNumberOfCards"]
@@ -23,6 +24,7 @@ func minNumberOfCards(deck: Deck):
 		var selectedableCard = c as SelectableCard
 		if selectedableCard.selected:
 			numberOfSelectedCards += 1
+	selectedCardsLabel.text = "Selected Cards: " + str(numberOfSelectedCards)
 	if numberOfSelectedCards >= 10:
 		return true
 	return false
@@ -33,6 +35,7 @@ func _ready():
 	editDeck = $editDeck
 	deckHolder = $bg/deckBg/margin/deckWrapper/center/deckHolder
 	cardHolder = $editDeck/marginVertAlign/vertAlign/cardWrapper/center/cardHolder
+	selectedCardsLabel = $editDeck/selectedCards
 	rng.randomize()
 	_loadDecks()
 	_loadRequirements()
@@ -116,6 +119,7 @@ func loadCards():
 	loadCardHolder()
 
 func onCardClicked():
+	
 	checkRequirements()
 
 func _on_deck_wrapper_resized():

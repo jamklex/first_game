@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=10 format=3 uid="uid://s4mwdo7urkt8"]
 
 [ext_resource type="Script" path="res://scenes/packages/scripts/package.gd" id="2"]
 
@@ -31,16 +31,18 @@ border_width_bottom = 1
 border_color = Color(1, 0, 0, 1)
 
 [node name="package" type="Panel"]
-custom_minimum_size = Vector2(150, 350)
-offset_right = 150.0
-offset_bottom = 350.0
+custom_minimum_size = Vector2(300, 400)
+offset_right = 100.0
+offset_bottom = 200.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_icy1u")
 script = ExtResource("2")
 
 [node name="main" type="VBoxContainer" parent="."]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -14.0
 size_flags_horizontal = 3
 
 [node name="name" type="Label" parent="main"]
@@ -50,51 +52,67 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="packs" type="Control" parent="main"]
-custom_minimum_size = Vector2(0, 270)
+custom_minimum_size = Vector2(0, 230)
 layout_mode = 2
 size_flags_vertical = 3
 
 [node name="cover1" type="Panel" parent="main/packs"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 7.0
-offset_right = -18.0
-offset_bottom = -31.0
+offset_left = 65.0
+offset_top = 7.0
+offset_right = -85.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_4133c")
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover1"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
 
 [node name="cover2" type="Panel" parent="main/packs"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 14.0
-offset_top = 10.0
-offset_right = -11.0
-offset_bottom = -21.0
+offset_left = 72.0
+offset_top = 17.0
+offset_right = -78.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4133c")
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover2"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 expand_mode = 1
 
 [node name="cover3" type="Panel" parent="main/packs"]
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = -5.0
-offset_bottom = -11.0
+offset_left = 78.0
+offset_top = 27.0
+offset_right = -72.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_4133c")
 
 [node name="coverImg" type="TextureRect" parent="main/packs/cover3"]
