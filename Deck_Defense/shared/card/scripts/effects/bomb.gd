@@ -21,11 +21,11 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	for pos in range(my_pos-radius, my_pos+radius+1):
 		if pos < 0 or pos >= GbProps.max_card_space_spots:
 			continue
-		await GbUtil.wait_some_time(CardProperties.kill_wait_time)
+		await GbUtil.wait_some_time(CardProperties.kill_wait_time).timeout
 		GbUtil.remove_from_game(GbUtil.get_card_from_container(enemy_lane, pos))
 		if attack_own and pos != my_pos:
 			GbUtil.remove_from_game(GbUtil.get_card_from_container(lane, pos))
-	await GbUtil.wait_some_time(CardProperties.kill_wait_time)
+	await GbUtil.wait_some_time(CardProperties.kill_wait_time).timeout
 	GbUtil.remove_from_game(me.node)
 
 func destroy():

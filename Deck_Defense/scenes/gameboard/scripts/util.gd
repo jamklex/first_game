@@ -35,7 +35,10 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 	return false
 
 func enemyPlayCardTimer():
-	return tree.create_timer(card_draw_time * 2.0)
+	return wait_some_time(card_draw_time * 2.0)
+
+func wait_some_time(millis):
+	return tree.create_timer(millis)
 
 func apply_next_turn_effects(card_spots: HBoxContainer, enemy_spots: HBoxContainer):
 	for spot in card_spots.get_children():
@@ -128,7 +131,7 @@ func attackAnimation(attackCard:Card, defendCard:Card):
 	else:
 		targetPos.y -= size
 		stepPos.y -= round(stepPos.y * 0.1)
-	attackCard.z_index = 3
+	attackCard.z_index = 5
 	defendCard.z_index = 1
 	var soundPlayer = attackCard.get_node("AttackSoundPlayer") as AudioStreamPlayer
 	soundPlayer.play()

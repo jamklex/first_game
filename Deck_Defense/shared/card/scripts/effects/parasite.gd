@@ -20,7 +20,7 @@ func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	var target = GbUtil.get_card_from_container(enemy_lane, my_pos)
 	if target == null:
-		await GbUtil.wait_some_time(CardProperties.kill_wait_time)
+		await GbUtil.wait_some_time(CardProperties.kill_wait_time).timeout
 		GbUtil.remove_from_game(me.node)
 		return
 	infested = target.properties
