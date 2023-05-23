@@ -34,4 +34,4 @@ func update_counter(add: int):
 	if label == null:
 		return
 	if counter > 0:
-		label.set_text(str(counter))
+		label.set_text(str(counter) + "x")

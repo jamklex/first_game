@@ -34,6 +34,9 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 		return true
 	return false
 
+func enemyPlayCardTimer():
+	return tree.create_timer(card_draw_time * 2.0)
+
 func apply_next_turn_effects(card_spots: HBoxContainer, enemy_spots: HBoxContainer):
 	for spot in card_spots.get_children():
 		if spot.get_child_count() > 0:
@@ -56,31 +59,42 @@ func adjust_separation(hand):
 func isQueuedForDeletion(obj):
 	return !weakref(obj).get_ref()
 
-func attack(attacker_cards, target_cards):
+func attack(attacker_cards, target_cards, health_node: Node, use_player_hp: bool):
 	var direct_damage = 0
 	for attacker in attacker_cards:
 		while attacker != null and attacker.can_attack() and not attacker.is_queued_for_deletion():
 			attacker.reduce_attacks_remaining()
+			var attacker_props = attacker.properties as CardProperties
 			if not target_cards.is_empty():
 				var defender = null
 				for target in target_cards:
 					if not target.is_queued_for_deletion():
 						defender = target
 						break
+				var defender_props = defender.properties as CardProperties
 				await attackAnimation(attacker, defender).finished
 				defender.defend_against(attacker)
-				var dmg = attacker.properties.atk
-				var hp = defender.properties.hp
+				var dmg = attacker_props.atk
+				var hp = defender_props.hp
 				var new_card_hp = hp - dmg
 				if new_card_hp <= 0:
 					remove_from_game(defender)
 					target_cards.erase(defender)
 				else:
-					defender.properties.set_hp(new_card_hp)
+					defender_props.set_hp(new_card_hp)
+					defender_props.reload_data()
 			else:
-				direct_damage += attacker.properties.atk
 				await attackDirectAnimation(attacker).finished
-	return direct_damage
+				if(use_player_hp):
+					GbProps.playerCurrentHp -= attacker_props.atk
+					set_hp(health_node, GbProps.playerCurrentHp, GbProps.playerMaxHp)
+				else:
+					GbProps.enemyCurrentHp -= attacker_props.atk
+					set_hp(health_node, GbProps.enemyCurrentHp, GbProps.enemyMaxHp)
+				if GbProps.enemyCurrentHp <= 0 or GbProps.playerCurrentHp <= 0:
+					return true
+			attacker_props.reload_data()
+	return true
 
 func attackDirectAnimation(attackCard:Card):
 	var attackTween = create_tween().set_parallel(true)
@@ -254,5 +268,10 @@ func get_card_from_container(container: HBoxContainer, index: int):
 			return child
 		return null
 
-func wait_some_time(time_ms):
-	await tree.create_timer(time_ms).timeout
+func set_hp(health_node: Node, amount, max_amount):
+	var indicator = health_node.find_child("Indicator") as Panel
+	var label = health_node.find_child("Label") as Label
+	label.set_text(str(amount, " / ", max_amount))
+	var max_size = (health_node as Panel).size[0]
+	var new_size = Vector2(max_size / max_amount * amount, indicator.size[1])
+	indicator.set_size(new_size)
