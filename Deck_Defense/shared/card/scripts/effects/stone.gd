@@ -46,4 +46,4 @@ func update_blocks(add: int):
 	if label == null:
 		return
 	if blocks_remaining > 0:
-		label.set_text(str(blocks_remaining))
+		label.set_text(str(blocks_remaining) + "/" + str(MAX_BLOCKS))

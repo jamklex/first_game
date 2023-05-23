@@ -1,6 +1,7 @@
 class_name MultiAttackEffect
 
 const PANEL = "MultiAttack"
+const LABEL = "MultiAttack/Counter"
 var TOTAL_ATTACKS = 2
 
 var me: CardProperties
@@ -9,6 +10,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("multi_attack"):
 		TOTAL_ATTACKS = card_prop_dict["multi_attack"]
+		me.attacks_remaining = TOTAL_ATTACKS
 		return true
 
 func defend(source: CardProperties):
@@ -25,3 +27,10 @@ func destroy():
 
 func reload_data():
 	me.make_visible(PANEL)
+	update_counter()
+
+func update_counter():
+	var label = me.node.get_node(LABEL) as Label
+	if label == null:
+		return
+	label.set_text(str(me.attacks_remaining) + "/" + str(TOTAL_ATTACKS))

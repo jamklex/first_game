@@ -6,10 +6,11 @@ var properties: CardProperties
 
 # For scaling font
 const LABELS = [
-	CardProperties.atk_label, # this entry should be always visible, used for getting baseSize
+	CardProperties.atk_label,
 	CardProperties.hp_label,
 	KanonenrohrEffect.LABEL,
 	StoneEffect.LABEL,
+	MultiAttackEffect.LABEL
 ]
 var relationalScaleSize:Vector2
 var baseSize:int

@@ -13,10 +13,11 @@ var KEY_WINDOWSIZE_HEIGHT = "windowSizeHeight"
 var windowSizes = [
 	Vector2(1280,720),
 	Vector2(1366,768),
-	Vector2(1600,900)
+	Vector2(1600,900),
+	Vector2(1920,1080)
 ]
-var selectedWindowSize = 0
-var fullscreen = false
+var selectedWindowSize = 3
+var fullscreen = true
 
 
 var resizeDropdown:OptionButton
