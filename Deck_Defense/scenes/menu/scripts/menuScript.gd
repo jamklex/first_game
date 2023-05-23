@@ -24,6 +24,22 @@ var fullscreen = true
 var resizeDropdown:OptionButton
 var fullScreenToggle:CheckButton
 var musicVolume:HSlider
+var cardInfoPrefab = preload("res://scenes/menu/prefabs/cardInfo.tscn")
+
+
+var cardInfos = {
+	22: "This Card can attack multiple times per round.\nAt the beginning of each Round the attacks fill up again to their max.\nYou can see how often this Card is allowed to attack on the bottom right corner",
+	35: "This Card can block incomming attacks, not matter how much damage they deal.\nAt the beginning of each Round this Counter is increased by 1 up too it's maximum.\nYou can see how many attacks this Card can block in the middle bottom.",
+	18: "This Cards ATK will be multiplied by 1 each turn it stayed on the field.\nThis effect has no limit.",
+	1: "This Card will spread their HP across every ally to their left, reducing it to 1 HP for itself.\nIf there is no Card to their left, their HP stays the same.\nBe careful, even Cards with no HP will be used in the Calculation.\nOnce placed this Card looses their effect.",
+	2: "This Card will spread their HP across every ally to their right, reducing it to 1 HP for itself.\nIf there is no Card to their right, their HP stays the same.\nBe careful, even Cards with no HP will be used in the Calculation.\nOnce placed this Card looses their effect.",
+	10: "This Cards HP will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
+	11: "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
+	27: "This Cards ATK will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
+	28: "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
+	9: "This Card destroys every Card within a Radius of 1, including allies.",
+	26: "This Card mirrors the enemy Card right in front of it.\nThis will strip every effect off of the enemy Card.\nIf either this or the enemy Card is destroyed, the other will immediatly be destroyed aswell.\nIf no enemy Card exists in front of it, this Card destroys itself."
+}
 
 func _ready():
 	settingsPanel = $Settings as Panel
@@ -34,7 +50,16 @@ func _ready():
 	for size in windowSizes:
 		resizeDropdown.add_item(String.num(size.x) + " x " + String.num(size.y))
 	loadSettings()
+	loadCardInfos()
 	MusicPlayer.switchMusic("menu-loop.mp3")
+	
+func loadCardInfos():
+	var cardInfosHolder = $CardInfos/ScrollContainer/CenterContainer/cardInfos as VBoxContainer
+	for cardId in cardInfos.keys():
+		var cardDesc = cardInfos[cardId]
+		var cardInfo = cardInfoPrefab.instantiate()
+		cardInfosHolder.add_child(cardInfo)
+		cardInfo.setCardInfo(cardId, cardDesc)
 
 func _on_StartButton_pressed():
 	var starters = $Starters as Panel
@@ -133,3 +158,13 @@ func _on_hard_starter_pressed():
 	GbProps.enemy_level = 3
 	MusicPlayer.switchMusic("boss_3-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
+
+
+func _on_cardInfo_close_pressed():
+	var cardInfos = $CardInfos as Panel
+	cardInfos.visible = false
+
+
+func _on_CardInfosButton_pressed():
+	var cardInfos = $CardInfos as Panel
+	cardInfos.visible = true
