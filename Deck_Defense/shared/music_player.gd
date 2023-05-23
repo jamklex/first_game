@@ -24,7 +24,7 @@ func _restartMusic():
 	_audioStreamPlayer.play()
 
 func switchMusic(newMusicPath):
-	_newTrack = _loadMp3(newMusicPath)
+	_newTrack = load(MUSIC_FOLDER + newMusicPath)
 	if not _newTrack:
 		return
 	switchFade()
@@ -38,13 +38,3 @@ func switchFade():
 func startNewMusic():
 	_audioStreamPlayer.stream = _newTrack
 	_audioStreamPlayer.play()
-	
-func _loadMp3(musicFileName):
-	var musicPath = MUSIC_FOLDER + musicFileName
-	if not FileAccess.file_exists(musicPath):
-		return null
-	var file = FileAccess.open(musicPath, FileAccess.READ)
-	var sound = AudioStreamMP3.new()
-	sound.data = file.get_buffer(file.get_length())
-	print(sound.get_length())
-	return sound
