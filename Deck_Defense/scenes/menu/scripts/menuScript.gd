@@ -122,7 +122,7 @@ func loadSettings():
 	# LOAD IF EXISTS
 	if width and height:
 		selectedWindowSize = getIndexByWidthAndHeigth(width, height)
-	if fullscreenData:
+	if fullscreenData != null:
 		fullscreen = fullscreenData
 	if musicVolume != null:
 		MusicPlayer.setVolume(musicVolume)
