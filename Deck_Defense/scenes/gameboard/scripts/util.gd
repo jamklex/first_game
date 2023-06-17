@@ -28,9 +28,9 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 		var yOffset = yScaleSub / 2
 		card.position = Vector2(card.position.x + xOffset, card.position.y + yOffset)
 		card.set_size(card.custom_minimum_size)
-		card.apply_card_laydown(card_spots, to, enemy_spots)
 		hand_node.remove_child(initial_card)
 		adjust_separation(hand_node)
+		await card.apply_card_laydown(card_spots, to, enemy_spots)
 		return true
 	return false
 

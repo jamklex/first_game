@@ -51,7 +51,7 @@ func _on_CardSpace_gui_input(event):
 	if GbUtil.is_mouse_click(event) and can_place_cards():
 		var card_space_spot_selected = GbProps.selected_card_spot
 		if card_space_spot_selected >= 0 and selected_card:
-			if GbUtil.lay_card_on_space(GbProps.player_card_space_node, selected_card, card_space_spot_selected, GbProps.player_hand_node, GbProps.enemy_card_space_node):
+			if await GbUtil.lay_card_on_space(GbProps.player_card_space_node, selected_card, card_space_spot_selected, GbProps.player_hand_node, GbProps.enemy_card_space_node):
 				GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 				GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 				GbUtil.set_visibility(get_node(BLOCK_PLAYER), true)
@@ -114,7 +114,7 @@ func enemy_move():
 			for i in range(cardsToPlay):
 				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
 				var initial_card = GbProps.enemy_hand_node.get_child(i)
-				GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
+				await GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
 				await GbUtil.enemyPlayCardTimer().timeout
 		else:
 			print("enemy can't do anything...")

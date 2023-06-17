@@ -95,8 +95,9 @@ func initiate_next_turn(my_container: HBoxContainer, my_position, enemy_containe
 
 func react_on_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	for effect in effects:
-		effect.card_laydown(my_container, my_position, enemy_container)
+		await effect.card_laydown(my_container, my_position, enemy_container)
 	reload_data()
+	return true
 
 func execute_destroy_effects():
 	for effect in effects:

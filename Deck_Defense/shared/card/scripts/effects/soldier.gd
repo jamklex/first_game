@@ -29,6 +29,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 		neighbour = GbUtil.get_card_from_container(lane, my_pos+1);
 	if neighbour != null:
 		me.set_atk(me.atk + neighbour.properties.atk)
+	return true
 
 func destroy():
 	pass

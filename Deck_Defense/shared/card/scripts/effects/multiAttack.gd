@@ -21,6 +21,7 @@ func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 
 func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	me.attacks_remaining = TOTAL_ATTACKS
+	return true
 
 func destroy():
 	pass
