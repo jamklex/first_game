@@ -56,7 +56,7 @@ func _loadDecks():
 		deckHolder.add_child(newDeck)
 		decks.append(newDeck)
 	setDeckHolderColumns()
-	
+
 func onDeckDeleteBtnClicked(deck: Deck):
 	print("delete pack with name: " + deck.name)
 	decks.remove_at(decks.find(deck))
@@ -76,8 +76,8 @@ func onDeckEditBtnClicked(deck: Deck):
 	
 func activateDeckCards(deck: Deck):
 	for cardData in deck.cards:
-		var cardAmount = cardData["amount"]
 		var cardId = cardData["id"]
+		var cardAmount = min(cardData["amount"], CardProperties.of(cardId).max_owned)
 		for i in cardAmount:
 			for c in cards:
 				var selectedableCard = c as SelectableCard
@@ -111,7 +111,7 @@ func onDeckActiveCheckClicked(activeDeck:Deck):
 func loadCards():
 	var playerData = jsonReader.read_player_data()
 	for cardData in playerData["cards"]:
-		for i in range(cardData["amount"]):
+		for i in range(min(cardData["amount"], CardProperties.of(cardData["id"]).max_owned)):
 			var newCard = cardScene.instantiate() as SelectableCard
 			newCard.get_node("Card").initialize_from_id(cardData["id"])
 			newCard.click.connect(onCardClicked)
