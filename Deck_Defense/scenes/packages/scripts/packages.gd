@@ -95,6 +95,8 @@ func card_difference(player_cards, pack_cards):
 	return remaining_cards
 
 func onBuyButton(selectedPackage):
+	if resultWindow.visible:
+		return
 	points -= selectedPackage.price
 	selectedPackage.numberOfPacks -= 1
 	var cards_for_player = []

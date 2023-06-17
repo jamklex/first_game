@@ -1,16 +1,25 @@
 extends Node
 
 const StartPlayerData = "res://data/player.json"
-const PlayerData = "player.json"
+const PlayerData = "user://player"
 const EnemyData = "res://data/enemies/%s.json"
 const PackagePath = "res://data/packs/%s"
+const Pass = "asd2d54JUH"
 
-func read_json(path):
-	var file = FileAccess.open(path, FileAccess.READ)
+func read_json(path, encrypted = false):
+	var file = null 
+	if encrypted:
+		file = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, Pass)
+	else:
+		file = FileAccess.open(path, FileAccess.READ)
 	return JSON.parse_string(file.get_as_text())
 	
-func save_json(path, json):
-	var file = FileAccess.open(path, FileAccess.WRITE)
+func save_json(path, json, encrypted = false):
+	var file = null
+	if encrypted:
+		file = FileAccess.open_encrypted_with_pass(path, FileAccess.WRITE, Pass)
+	else:
+		file = FileAccess.open(path, FileAccess.WRITE)
 	file.store_line(JSON.stringify(json, '\t'))
 	file.flush()
 	file.close()
@@ -18,13 +27,13 @@ func save_json(path, json):
 func read_player_data():
 	if not FileAccess.file_exists(PlayerData):
 		initStartPlayerData()
-	return read_json(PlayerData)
+	return read_json(PlayerData, true)
 	
 func save_player_data(playerDataJson):
-	return save_json(PlayerData, playerDataJson)
+	return save_json(PlayerData, playerDataJson, true)
 
 func initStartPlayerData():
-	save_json(PlayerData, read_json(StartPlayerData))
+	save_json(PlayerData, read_json(StartPlayerData), true)
 
 func read_enemy_data(level):
 	return read_json(EnemyData % level)
