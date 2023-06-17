@@ -5,10 +5,12 @@ const LABEL = "Kanonenrohr/Counter"
 
 var me: CardProperties
 var counter = 0
+var max_counter = 0
 
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("kanonenrohr"):
+		max_counter = 10
 		return card_prop_dict["kanonenrohr"]
 
 func defend(source: CardProperties):
@@ -19,6 +21,7 @@ func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 
 func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	update_counter(1)
+	return true
 
 func destroy():
 	pass
@@ -28,7 +31,7 @@ func reload_data():
 	update_counter(0)
 
 func update_counter(add: int):
-	counter = counter + add
+	counter = min(counter + add, max_counter)
 	me.set_atk(me.base_atk * max(1, counter))
 	var label = me.node.get_node(LABEL) as Label
 	if label == null:

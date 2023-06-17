@@ -47,6 +47,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 			additional = 1
 		props.set_hp(props.hp + full_hp + additional)
 		props.reload_data()
+	return true
 
 func destroy():
 	pass

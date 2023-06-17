@@ -36,7 +36,7 @@ func apply_next_turn(my_container: HBoxContainer, my_position, enemy_container: 
 	properties.initiate_next_turn(my_container, my_position, enemy_container)
 
 func apply_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	properties.react_on_card_laydown(my_container, my_position, enemy_container)
+	await properties.react_on_card_laydown(my_container, my_position, enemy_container)
 
 func can_attack():
 	return properties.can_attack()

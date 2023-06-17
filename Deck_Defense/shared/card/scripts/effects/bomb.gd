@@ -27,6 +27,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 			GbUtil.remove_from_game(GbUtil.get_card_from_container(lane, pos))
 	await GbUtil.wait_some_time(CardProperties.kill_wait_time).timeout
 	GbUtil.remove_from_game(me.node)
+	return true
 
 func destroy():
 	pass

@@ -30,6 +30,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	me.set_hp(1)
 	me.set_atk(0)
 	update_blocks(MAX_BLOCKS)
+	return true
 
 func destroy():
 	pass
