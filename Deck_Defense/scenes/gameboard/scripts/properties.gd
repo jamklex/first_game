@@ -54,7 +54,8 @@ func get_player_deck():
 	for deck in content["decks"]:
 		if deck["active"] == true:
 			for card in deck["cards"]:
-				array.append_array(get_cards(card["id"], card["amount"]))
+				var card_amount = min(card["amount"], CardProperties.of(card["id"]).max_owned)
+				array.append_array(get_cards(card["id"], card_amount))
 	return array
 
 func get_player_initial():
@@ -68,7 +69,8 @@ func get_enemy_deck():
 	var content = JsonReader.read_enemy_data(enemy_level)
 	var deck = content["deck"]
 	for card in deck:
-		array.append_array(get_cards(card["id"], card["amount"]))
+		var card_amount = min(card["amount"], CardProperties.of(card["id"]).max_owned)
+		array.append_array(get_cards(card["id"], card_amount))
 	return array
 
 func get_enemy_initial():

@@ -86,8 +86,7 @@ func flat_map(card_info_array):
 func card_difference(player_cards, pack_cards):
 	var remaining_cards = []
 	for id in pack_cards:
-		var properties = CardProperties.of(id) as CardProperties
-		var max = properties.max_owned
+		var max = CardProperties.of(id).max_owned
 		if player_cards.has(id):
 			max = max(0, max - player_cards[id])
 		for x in max:
@@ -203,18 +202,18 @@ func playOpeningAnimation(selectedPackage: Package):
 	animationPackage.position = Vector2(resultWindow.size.x, packVertMid)
 	var openingTween = create_tween().set_parallel(true)
 	# PACK FLY FROM RIGHT TO LEFT
-	openingTween.chain().tween_property(animationPackage, "position", Vector2(packHorMid, packVertMid), 0.5)
+	openingTween.chain().tween_property(animationPackage, "position", Vector2(packHorMid, packVertMid), 0.2)
 	# WINDOW OPENS
 	cardWindow.size = Vector2(0,5)
 	cardWindow.position = Vector2(resultWindow.size.x / 2, resultWindow.size.y / 2 - cardWindow.size.y / 2)
 	var widthMarginPixels = resultWindow.size.x * 0.1
 	var heightMarginPixels = resultWindow.size.y * 0.1	
 	# HORIZONTAL OPENING
-	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, resultWindow.size.y / 2 - cardWindow.size.y / 2), 0.5)
-	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), 5), 0.5)
+	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, resultWindow.size.y / 2 - cardWindow.size.y / 2), 0.2)
+	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), 5), 0.2)
 	# VERTICAL OPENING
-	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, heightMarginPixels), 0.5)
-	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), resultWindow.size.y-(heightMarginPixels*2)), 0.5)
+	openingTween.chain().tween_property(cardWindow, "position", Vector2(widthMarginPixels, heightMarginPixels), 0.2)
+	openingTween.tween_property(cardWindow, "size", Vector2(resultWindow.size.x-(widthMarginPixels*2), resultWindow.size.y-(heightMarginPixels*2)), 0.2)
 	# AFTER DOINGS
 	openingTween.chain().tween_callback(onResultWindowOpen)
 

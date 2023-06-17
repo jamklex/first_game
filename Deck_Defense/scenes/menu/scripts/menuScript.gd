@@ -146,24 +146,22 @@ func _on_close_starter_pressed():
 
 func _on_easy_starter_pressed():
 	GbProps.enemy_level = 1
-	MusicPlayer.switchMusic("boss_1-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
+	MusicPlayer.stopMusic()
 
 func _on_med_starter_pressed():
 	GbProps.enemy_level = 2
-	MusicPlayer.switchMusic("boss_2-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
+	MusicPlayer.stopMusic()
 	
 func _on_hard_starter_pressed():
 	GbProps.enemy_level = 3
-	MusicPlayer.switchMusic("boss_3-loop.mp3")
 	get_tree().change_scene_to_file("res://scenes/gameboard/_main.tscn")
-
+	MusicPlayer.stopMusic()
 
 func _on_cardInfo_close_pressed():
 	var cardInfos = $CardInfos as Panel
 	cardInfos.visible = false
-
 
 func _on_CardInfosButton_pressed():
 	var cardInfos = $CardInfos as Panel
