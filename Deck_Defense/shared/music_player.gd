@@ -23,6 +23,9 @@ func setVolume(newVolumeInPercent):
 func _restartMusic():
 	_audioStreamPlayer.play()
 
+func stopMusic():
+	_audioStreamPlayer.stop()
+
 func switchMusic(newMusicPath):
 	_newTrack = load(MUSIC_FOLDER + newMusicPath)
 	if not _newTrack:
