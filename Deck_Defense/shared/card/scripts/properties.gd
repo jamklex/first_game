@@ -24,7 +24,7 @@ var node: Card
 var type_id
 var max_owned = 3
 var attacks_remaining = 1
-var effects = []
+var effect
 
 static func of(id):
 	var properties = CardProperties.new()
@@ -72,9 +72,10 @@ func load_properties(card_prop_dict: Dictionary):
 	face = card_prop_dict["image"]
 	max_owned = card_prop_dict["max_owned"]
 	initialize(card_prop_dict["hp"], card_prop_dict["atk"])
-	for effect in get_possible_effects():
-		if effect.load_properties(card_prop_dict, self):
-			effects.append(effect)
+	for ps_effect in get_possible_effects():
+		if ps_effect.load_properties(card_prop_dict, self):
+			effect = ps_effect
+			return
 	reload_data()
 
 func can_attack():
@@ -84,31 +85,29 @@ func reduce_attacks_remaining():
 	attacks_remaining -= 1
 
 func initiate_defence(source: CardProperties):
-	for effect in effects:
-		effect.defend(source)
+	effect.defend(source)
 
 func initiate_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	attacks_remaining = 1
-	for effect in effects: 
-		effect.next_turn(my_container, my_position, enemy_container)
+	effect.next_turn(my_container, my_position, enemy_container)
 	reload_data()
 
 func react_on_card_laydown(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
-	for effect in effects:
-		await effect.card_laydown(my_container, my_position, enemy_container)
+	await effect.card_laydown(my_container, my_position, enemy_container)
 	reload_data()
 	return true
 
 func execute_destroy_effects():
-	for effect in effects:
-		effect.destroy()
+	effect.destroy()
+
+func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
+	return effect.calc_placement_points(pos, my_field, opponent_field)
 
 func reload_data():
 	if node != null:
 		update_label(hp_label, hp, base_hp)
 		update_label(atk_label, atk, base_atk)
-		for effect in effects:
-			effect.reload_data()
+		effect.reload_data()
 		var sprite = node.get_node(image)
 		if sprite != null and face != null:
 			sprite.texture = load(face)

@@ -34,6 +34,11 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 func destroy():
 	GbUtil.remove_from_game_without_effect_calls(infested)
 
+func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
+	if opponent_field[pos] == null:
+		return 0
+	return 3
+
 func reload_data():
 	me.make_visible(PANEL)
 	if infested == null:
@@ -45,9 +50,8 @@ func reload_data():
 	me.make_visible(CardProperties.atk_label)
 
 func overwrite_effects_with_own(infested: CardProperties):
-	infested.effects.clear()
 	var parasite_effect = ParasiteEffect.new()
-	parasite_effect.load_properties({}, infested)
+	parasite_effect.load_properties({"parasite": true}, infested)
 	parasite_effect.infested = me
-	infested.effects.append(parasite_effect)
+	infested.effect = parasite_effect
 	return parasite_effect

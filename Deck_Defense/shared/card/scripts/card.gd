@@ -53,6 +53,9 @@ func can_attack_directly():
 func execute_destroy_effects():
 	return properties.execute_destroy_effects()
 
+func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
+	return properties.calc_placement_points(pos, my_field, opponent_field)
+
 func _resizeLabels():
 	_initBaseFontSize()
 	if not baseSize:

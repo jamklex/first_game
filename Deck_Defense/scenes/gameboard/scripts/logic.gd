@@ -14,8 +14,7 @@ const enemy_card_space = "Enemy/CardSpace/Spots"
 
 const ENEMY_THINKING_TIME = 1.5
 
-var rng:RandomNumberGenerator = GbProps.rng
-
+var enemy
 var selected_card
 var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 
@@ -26,6 +25,7 @@ func _ready():
 func initialize_game():
 	GbProps.initialize()
 	GbUtil.initialize(get_tree())
+	enemy = PlayBot.of(GbProps.enemy_level)
 	GbProps.player_hand_node = get_node(player_hand)
 	GbProps.player_card_space_node = get_node(player_card_space)
 	GbProps.enemy_hand_node = get_node(enemy_hand)
@@ -94,31 +94,17 @@ func switch_to_enemy():
 		await place_cards_in_hand(GbProps.enemy_hand_node, GbProps.cards_per_turn, GbProps.enemy_deck, GbProps.enemy_initial, false)
 		reset_hand_card_focus()
 		GbProps.current_cycle = GbProps.TURN_CYCLE.OPPONENT_TURN
-		await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
 		enemy_move()
 
 func enemy_move():
-	var enemyHandCards = GbProps.enemy_hand_node.get_child_count()
-	var free_spots = GbUtil.get_free_spots(GbProps.enemy_card_space_node)
-	var will_attack = free_spots.size() < GbProps.max_card_space_spots and rng.randi_range(1,GbProps.max_card_space_spots) > free_spots.size() - (GbProps.enemy_level-1)
-	if will_attack or (enemyHandCards == 0 and free_spots.size() < GbProps.max_card_space_spots):
-		var player_cards = GbUtil.cards_ltr_in(GbProps.player_card_space_node)
-		var enemy_cards = GbUtil.cards_ltr_in(GbProps.enemy_card_space_node)
-		await GbUtil.attack(enemy_cards, player_cards, get_node(player_healt), true)
-		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
-		GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
-		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
-	else:
-		var cardsToPlay = 0 if enemyHandCards <= 0 else rng.randi_range(1, min(free_spots.size(), enemyHandCards))
-		if(cardsToPlay > 0):
-			for i in range(cardsToPlay):
-				var spot_to_place = rng.randi_range(0, free_spots.size()-1)
-				var initial_card = GbProps.enemy_hand_node.get_child(i)
-				await GbUtil.lay_card_on_space(GbProps.enemy_card_space_node, initial_card, free_spots[spot_to_place], GbProps.enemy_hand_node, GbProps.player_card_space_node)
-				await GbUtil.enemyPlayCardTimer().timeout
-		else:
-			print("enemy can't do anything...")
-			player_wins()
+	var hand_cards = GbProps.enemy_hand_node
+	var enemy_field_cards = GbProps.enemy_card_space_node
+	var player_field_cards = GbProps.player_card_space_node
+	await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
+	var made_move = await enemy.play_move(hand_cards, enemy_field_cards, player_field_cards, get_node(player_healt))
+	if not made_move:
+		print("enemy can't do anything...")
+		player_wins()
 	switch_to_player()
 
 func check_winning_state():

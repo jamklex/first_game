@@ -34,6 +34,18 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 func destroy():
 	pass
 
+func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
+	var points = 1
+	if left and my_field.has(pos-1):
+		var left_friend = my_field[pos-1] as Card
+		if left_friend != null:
+			points += left_friend.properties.hp / 5
+	if right and my_field.has(pos+1):
+		var right_friend = my_field[pos-1] as Card
+		if right_friend != null:
+			points += right_friend.properties.hp / 5
+	return points
+
 func reload_data():
 	if left:
 		me.make_visible(PANEL)

@@ -31,11 +31,12 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 		hand_node.remove_child(initial_card)
 		adjust_separation(hand_node)
 		await card.apply_card_laydown(card_spots, to, enemy_spots)
+		await GbUtil.playCardTimer().timeout
 		return true
 	return false
 
-func enemyPlayCardTimer():
-	return wait_some_time(card_draw_time * 2.0)
+func playCardTimer():
+	return wait_some_time(0.2)
 
 func wait_some_time(millis):
 	return tree.create_timer(millis)
@@ -155,7 +156,8 @@ func remove_from_game(card):
 		if card is CardProperties:
 			card = card.node as Card
 		card.execute_destroy_effects()
-		remove_from_game_without_effect_calls(card)
+		await destroyAnimation(card).animation_finished
+		card.queue_free()
 
 func remove_from_game_without_effect_calls(card):
 	if card != null:
@@ -179,9 +181,9 @@ func get_free_spots(node):
 			free_spaces.append(i)
 	return free_spaces
 
-func cards_ltr_in(node):
+func cards_ltr_in(node: Node):
 	var cards = []
-	for i in range(GbProps.max_card_space_spots):
+	for i in range(node.get_child_count()):
 		var card = get_card_from_container(node, i)
 		if card != null:
 			cards.append(card)
