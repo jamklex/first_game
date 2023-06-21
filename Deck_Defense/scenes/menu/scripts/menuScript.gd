@@ -128,6 +128,8 @@ func loadSettings():
 		MusicPlayer.setVolume(musicVolume)
 	else: 
 		musicVolume = MusicPlayer.volume
+	if settings.getData(KEY_TUT_DONE):
+		enableStartButton()
 	# APPLY SETTINGS
 	resizeWindow(selectedWindowSize)
 	changeFullscreen(fullscreen)
@@ -166,3 +168,79 @@ func _on_cardInfo_close_pressed():
 func _on_CardInfosButton_pressed():
 	var cardInfos = $CardInfos as Panel
 	cardInfos.visible = true
+	
+func enableStartButton():
+	var startButton = $VBoxContainer/StartButton as LinkButton
+	startButton.disabled = false
+
+#### TUTORIAL
+var tutorialPages = [
+	{
+		"title": "Placing cards",
+		"videoPath": "res://data/videos/tutorial/1_placingCards.ogv",
+		"desc": "You can place cards by selecting them from Your hand card via the left mouse button.\nAfterwards You can select a free spot on Your side of the field to place them."
+	},
+	{
+		"title": "Placing cards",
+		"videoPath": "res://data/videos/tutorial/2_switchByBlockOpponent.ogv",
+		"desc": "After placing Your cards, end Your turn by clicking on the shield icon, so Your opponent can react."
+	},
+	{
+		"title": "Attacking",
+		"videoPath": "res://data/videos/tutorial/3_switchByAttackOpponent.ogv",
+		"desc": "You can attack Your opponent after his turn ends by clicking on the swords icon.\nAfter attacking Your turn will end automatically."
+	}
+]
+var KEY_TUT_DONE = "tutorialDone"
+
+var currentPage = 0
+func loadTutorialPage(index):
+	if index < 0:
+		index = 0
+	elif index > tutorialPages.size():
+		index = tutorialPages.size() - 1
+	var tutorialPage = tutorialPages[index]
+	var title = $Tutorial/Title as Label
+	var vidPlayer = $Tutorial/VideoPlayer as VideoStreamPlayer
+	var desc = $Tutorial/desc as RichTextLabel
+	title.text = "Tutorial - " + tutorialPage["title"]
+	var videoStream = load(tutorialPage["videoPath"]) as VideoStream
+	vidPlayer.stream = videoStream
+	desc.text = tutorialPage["desc"]
+	vidPlayer.play()
+	var backBtn = $Tutorial/Back as Button
+	var nextBtn = $Tutorial/Next as Button
+	backBtn.visible = true
+	nextBtn.text = "Next"
+	if index == 0:
+		backBtn.visible = false
+	if index == tutorialPages.size() - 1:
+		nextBtn.text = "End"
+		settings.setData(KEY_TUT_DONE, true)
+		enableStartButton()
+		onSettingsChanged()
+
+func _on_tutorial_pressed():
+	var tutPanel = $Tutorial as Panel
+	tutPanel.visible = true
+	currentPage = 0
+	loadTutorialPage(currentPage)
+	
+func closeTutorialWindow():
+	var tutPanel = $Tutorial as Panel
+	tutPanel.visible = false
+	
+func _on_nextButton_pressed():
+	currentPage += 1
+	if currentPage >= tutorialPages.size():
+		closeTutorialWindow()
+	else:
+		loadTutorialPage(currentPage)
+	
+func _on_backButton_pressed():
+	currentPage -= 1
+	loadTutorialPage(currentPage)
+
+func _on_video_player_finished():
+	var vidPlayer = $Tutorial/VideoPlayer as VideoStreamPlayer
+	vidPlayer.play()
