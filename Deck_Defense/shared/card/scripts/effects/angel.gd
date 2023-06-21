@@ -52,6 +52,11 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 func destroy():
 	pass
 
+func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
+	if left:
+		return pos + 1
+	return GbProps.max_card_space_spots - pos
+
 func reload_data():
 	if left:
 		me.make_visible(PANEL)

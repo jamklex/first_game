@@ -32,6 +32,15 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 func destroy():
 	pass
 
+func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
+	var points = 0
+	for i in range(radius):
+		if (my_field.has(pos-i) and my_field[pos-i] != null) or (my_field.has(pos+i) and my_field[pos+i] != null):
+			points -= 1
+		if (opponent_field.has(pos-i) and opponent_field[pos-i] != null) or (opponent_field.has(pos+i) and opponent_field[pos+i] != null):
+			points += 1
+	return points
+
 func reload_data():
 	me.make_visible(PANEL)
 	me.make_invisible(CardProperties.hp_label)

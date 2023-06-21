@@ -156,7 +156,8 @@ func remove_from_game(card):
 		if card is CardProperties:
 			card = card.node as Card
 		card.execute_destroy_effects()
-		remove_from_game_without_effect_calls(card)
+		await destroyAnimation(card).animation_finished
+		card.queue_free()
 
 func remove_from_game_without_effect_calls(card):
 	if card != null:
@@ -180,9 +181,9 @@ func get_free_spots(node):
 			free_spaces.append(i)
 	return free_spaces
 
-func cards_ltr_in(node):
+func cards_ltr_in(node: Node):
 	var cards = []
-	for i in range(GbProps.max_card_space_spots):
+	for i in range(node.get_child_count()):
 		var card = get_card_from_container(node, i)
 		if card != null:
 			cards.append(card)
