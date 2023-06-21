@@ -31,11 +31,12 @@ func lay_card_on_space(card_spots: HBoxContainer, initial_card:Card, to, hand_no
 		hand_node.remove_child(initial_card)
 		adjust_separation(hand_node)
 		await card.apply_card_laydown(card_spots, to, enemy_spots)
+		await GbUtil.playCardTimer().timeout
 		return true
 	return false
 
-func enemyPlayCardTimer():
-	return wait_some_time(card_draw_time * 2.0)
+func playCardTimer():
+	return wait_some_time(0.2)
 
 func wait_some_time(millis):
 	return tree.create_timer(millis)
