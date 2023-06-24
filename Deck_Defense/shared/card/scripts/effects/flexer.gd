@@ -44,7 +44,7 @@ func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dicti
 		if left_friend != null:
 			points += left_friend.properties.hp / 5
 	if right and my_field.has(pos+1):
-		var right_friend = my_field[pos-1] as Card
+		var right_friend = my_field[pos+1] as Card
 		if right_friend != null:
 			points += right_friend.properties.hp / 5
 	return points

@@ -76,4 +76,6 @@ func reload_data():
 func add_card(set, container, index):
 	var card = GbUtil.get_card_from_container(container, index)
 	if card != null:
+		if card.type() == StoneEffect.PANEL:
+			return
 		set.append(card.properties)
