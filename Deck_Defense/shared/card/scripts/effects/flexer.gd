@@ -7,6 +7,9 @@ var me: CardProperties
 var left = false
 var right = false
 
+func name():
+	return PANEL
+
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("flexer_left"):

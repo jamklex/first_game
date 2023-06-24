@@ -32,6 +32,9 @@ func initialize_from_id(id):
 	properties.link_node(self)
 	properties.reload_data()
 
+func type():
+	return properties.effect.name()
+
 func apply_next_turn(my_container: HBoxContainer, my_position, enemy_container: HBoxContainer):
 	properties.initiate_next_turn(my_container, my_position, enemy_container)
 

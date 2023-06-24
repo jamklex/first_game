@@ -7,6 +7,9 @@ var me: CardProperties
 var left = false
 var right = false
 
+func name():
+	return PANEL
+
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("angel_left"):
@@ -53,9 +56,15 @@ func destroy():
 	pass
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
-	if left:
-		return pos + 1
-	return GbProps.max_card_space_spots - pos
+	var points = 1
+	var start = 0 if left else pos
+	var end = pos if left else GbProps.max_card_space_spots
+	for i in range(start, end):
+		if my_field[i] != null:
+			points += 1
+		else:
+			points -= 0.5
+	return points
 
 func reload_data():
 	if left:
