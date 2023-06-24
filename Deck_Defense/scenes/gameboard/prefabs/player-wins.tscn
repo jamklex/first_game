@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://vjthyer42ikq"]
+[gd_scene load_steps=4 format=3 uid="uid://vjthyer42ikq"]
 
 [ext_resource type="Script" path="res://scenes/gameboard/scripts/endWindow.gd" id="1_5potd"]
+[ext_resource type="StyleBox" uid="uid://btkbuk73rd6y" path="res://shared/styles/buttons.tres" id="2_71jwr"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ny4g"]
 bg_color = Color(0, 0, 0, 0.588235)
@@ -70,6 +71,7 @@ offset_right = 79.0
 offset_bottom = 181.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/normal = ExtResource("2_71jwr")
 text = "Back to main menu"
 
 [connection signal="pressed" from="backButton" to="." method="_on_back_button_pressed"]

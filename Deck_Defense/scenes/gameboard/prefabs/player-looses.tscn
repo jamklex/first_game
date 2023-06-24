@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://ccc2tywi8eumf"]
+[gd_scene load_steps=4 format=3 uid="uid://ccc2tywi8eumf"]
 
 [ext_resource type="Script" path="res://scenes/gameboard/scripts/endWindow.gd" id="1_cb63o"]
+[ext_resource type="StyleBox" uid="uid://btkbuk73rd6y" path="res://shared/styles/buttons.tres" id="2_jg8qi"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ueeoc"]
 bg_color = Color(0, 0, 0, 0.588235)
@@ -14,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_ueeoc")
 script = ExtResource("1_cb63o")
 
@@ -66,6 +68,7 @@ offset_right = -43.0
 offset_bottom = 182.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/normal = ExtResource("2_jg8qi")
 text = "Retry"
 
 [node name="backButton" type="Button" parent="."]
@@ -81,6 +84,7 @@ offset_right = 167.0
 offset_bottom = 181.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/normal = ExtResource("2_jg8qi")
 text = "Back to main menu"
 
 [connection signal="pressed" from="retryButton" to="." method="_on_retry_button_pressed"]

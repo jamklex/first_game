@@ -25,7 +25,7 @@ func _ready():
 	rng.randomize()
 	var basePanel = $bg as Panel
 	packageHolder = basePanel.get_node("scrollWrapper/packageHolder")
-	pointsLabel = basePanel.get_node("points")
+	pointsLabel = basePanel.get_node("points/text")
 	resultWindow = get_node("resultWindow")
 	resultCardHolder = resultWindow.get_node("cardWindow/scrollWrapper/CenterContainer/cardHolder")
 	animationPackage = resultWindow.get_node("package")
@@ -127,6 +127,7 @@ func _savePlayerData():
 	JsonReader.save_player_data(playerData)
 
 func _on_close_pressed():
+	print("pressed")
 	for child in resultCardHolder.get_children():
 		resultCardHolder.remove_child(child)
 	resultWindow.visible = false

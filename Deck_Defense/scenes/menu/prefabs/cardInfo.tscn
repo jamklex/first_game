@@ -4,7 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://b3kqenl61d6qh" path="res://shared/card/front.tscn" id="2_psq61"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mtkc"]
-bg_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+bg_color = Color(0.0941176, 0.0941176, 0.0941176, 0.278431)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="cardInfo" type="Panel"]
 custom_minimum_size = Vector2(700, 250)

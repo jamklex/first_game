@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://dd4e3wv6xahty"]
+[gd_scene load_steps=17 format=3 uid="uid://dd4e3wv6xahty"]
 
 [ext_resource type="Script" path="res://scenes/gameboard/scripts/logic.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://ddnfpi8nnt6o0" path="res://scenes/gameboard/prefabs/card-space.tscn" id="2"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://ccc2tywi8eumf" path="res://scenes/gameboard/prefabs/player-looses.tscn" id="8_vb3l3"]
 [ext_resource type="PackedScene" uid="uid://c3s7600f7wysf" path="res://scenes/gameboard/prefabs/attackOpponent.tscn" id="9"]
 [ext_resource type="PackedScene" uid="uid://vjthyer42ikq" path="res://scenes/gameboard/prefabs/player-wins.tscn" id="9_aphqi"]
+[ext_resource type="StyleBox" uid="uid://btkbuk73rd6y" path="res://shared/styles/buttons.tres" id="10_ao1xb"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e8sp8"]
 bg_color = Color(0.576471, 0, 0.117647, 1)
@@ -255,7 +256,6 @@ offset_right = 0.0
 offset_bottom = 0.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
-mouse_filter = 2
 
 [node name="PlayerLooses" parent="." instance=ExtResource("8_vb3l3")]
 visible = false
@@ -264,15 +264,16 @@ z_index = 3
 custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
 anchors_preset = 0
-mouse_filter = 2
+mouse_filter = 0
 
 [node name="Surrender" type="Button" parent="."]
 z_index = 4
 layout_mode = 1
-offset_left = 24.0
-offset_top = 15.0
-offset_right = 111.0
-offset_bottom = 46.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 97.0
+offset_bottom = 40.0
+theme_override_styles/normal = ExtResource("10_ao1xb")
 text = "Surrender"
 
 [connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
