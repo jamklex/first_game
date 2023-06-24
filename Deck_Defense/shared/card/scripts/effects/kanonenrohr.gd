@@ -7,6 +7,9 @@ var me: CardProperties
 var counter = 0
 var max_counter = 0
 
+func name():
+	return PANEL
+
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("kanonenrohr"):
@@ -27,10 +30,17 @@ func destroy():
 	pass
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
-	var top_enemy_bonus =  2 if opponent_field[pos] != null else 0
-	var left_enemy_bonus = 1 if opponent_field.has(pos-1) and opponent_field[pos-1] != null else 0
-	var right_enemy_bonus = 1 if opponent_field.has(pos+1) and opponent_field[pos+1] != null else 0
-	return pos * 1.5 + top_enemy_bonus + left_enemy_bonus + right_enemy_bonus
+	var points = pos / 2
+	for i in range(0, pos):
+		if my_field[i] != null:
+			points += 1
+	if opponent_field[pos] != null:
+		points += 1
+	if opponent_field.has(pos-1) and opponent_field[pos-1]:
+		points += 0.5
+	if opponent_field.has(pos+1) and opponent_field[pos+1]:
+		points += 0.5
+	return points
 
 func reload_data():
 	me.make_visible(PANEL)

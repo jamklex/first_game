@@ -6,6 +6,9 @@ const INFESTED_COLOR = Color("#64c67c")
 var me: CardProperties
 var infested: CardProperties
 
+func name():
+	return PANEL
+
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("parasite"):
@@ -35,9 +38,15 @@ func destroy():
 	GbUtil.remove_from_game_without_effect_calls(infested)
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
-	if opponent_field[pos] == null:
+	var points = 3
+	var opponent = opponent_field[pos]
+	if opponent == null:
 		return 0
-	return 3
+	elif opponent.type() == KanonenrohrEffect.PANEL:
+		points += 1
+	elif opponent.type() == StoneEffect.PANEL:
+		points += 2
+	return points
 
 func reload_data():
 	me.make_visible(PANEL)

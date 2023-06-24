@@ -6,6 +6,9 @@ var me: CardProperties
 var radius = 1
 var attack_own = true
 
+func name():
+	return PANEL
+
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("bomb"):

@@ -8,6 +8,9 @@ var MAX_BLOCKS = 3
 var me: CardProperties
 var blocks_remaining = 0
 
+func name():
+	return PANEL
+
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
 	if card_prop_dict.has("stone"):
@@ -36,7 +39,11 @@ func destroy():
 	pass
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
-	return GbProps.max_card_space_spots - pos
+	var points = (GbProps.max_card_space_spots - pos) / 3
+	for i in range(pos, GbProps.max_card_space_spots):
+		if my_field[i] != null:
+			points += 1
+	return points
 
 func reload_data():
 	me.make_visible(PANEL)
