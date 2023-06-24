@@ -172,6 +172,9 @@ func _on_CardInfosButton_pressed():
 func enableStartButton():
 	var startButton = $VBoxContainer/StartButton as LinkButton
 	startButton.disabled = false
+	var tutorialButton = $VBoxContainer/Tutorial as LinkButton
+	tutorialButton.remove_theme_color_override("font_color")
+	tutorialButton.text = "Tutorial"
 
 #### TUTORIAL
 var tutorialPages = [
@@ -189,6 +192,11 @@ var tutorialPages = [
 		"title": "Attacking",
 		"videoPath": "res://data/videos/tutorial/3_switchByAttackOpponent.ogv",
 		"desc": "You can attack Your opponent after his turn ends by clicking on the swords icon.\nAfter attacking Your turn will end automatically."
+	},
+	{
+		"title": "Card infos",
+		"videoPath": "res://data/videos/tutorial/4_cardInfos.ogv",
+		"desc": "You can find information about the different types of cards in the main menu under the section 'Card infos'."
 	}
 ]
 var KEY_TUT_DONE = "tutorialDone"
