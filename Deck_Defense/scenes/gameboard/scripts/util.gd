@@ -230,6 +230,8 @@ func draw_cards(node, amount, deck, prefered_ids, visible_card):
 		elif card == null:
 			return cardObjs
 		var cardObj = create_visible_instance(card, visible_card) as Card
+		if visible_card:
+			cardObj.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		cardObjs.append(cardObj)
 		add_card_to(node, cardObj)
 		await drawAnimation().finished

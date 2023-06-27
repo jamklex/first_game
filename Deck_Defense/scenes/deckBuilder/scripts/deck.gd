@@ -81,7 +81,7 @@ func _on_delete_btn_pressed():
 func _on_name_gui_input(event):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
-		if event.double_click:
+		if event.pressed:
 			onEveryAction.emit()
 			_showNameEdit(true)
 

@@ -24,6 +24,7 @@ script = ExtResource("1_ryg6k")
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 30.0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_colors/font_disabled_color = Color(0.396078, 0.396078, 0.396078, 1)
 theme_override_font_sizes/font_size = 15
@@ -39,6 +40,7 @@ anchor_right = 1.0
 offset_left = -40.0
 offset_bottom = 30.0
 grow_horizontal = 0
+mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_1q01o")
 text = "edit"
@@ -57,6 +59,7 @@ offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
+mouse_default_cursor_shape = 1
 theme_override_font_sizes/font_size = 15
 text = "Deck name"
 
@@ -88,6 +91,7 @@ offset_right = -5.0
 offset_bottom = -5.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_default_cursor_shape = 2
 
 [node name="activeText" type="Label" parent="."]
 layout_mode = 1
