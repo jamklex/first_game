@@ -266,7 +266,63 @@ layout_mode = 2
 anchors_preset = 0
 mouse_filter = 0
 
-[node name="Surrender" type="Button" parent="."]
+[node name="surrenderOverlay" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="surrender" type="Button" parent="surrenderOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = 6.0
+offset_right = 81.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = ExtResource("10_ao1xb")
+text = "yes"
+
+[node name="cancel" type="Button" parent="surrenderOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -110.0
+offset_top = 6.0
+offset_right = -20.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = ExtResource("10_ao1xb")
+text = "no"
+
+[node name="surrenderText" type="Label" parent="surrenderOverlay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.5
+offset_top = -30.0
+offset_right = 123.5
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Do you really wanna surrender?"
+
+[node name="ShowSurrender" type="Button" parent="."]
 z_index = 4
 layout_mode = 1
 offset_left = 10.0
@@ -279,4 +335,6 @@ text = "Surrender"
 [connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
 [connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
 [connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
-[connection signal="pressed" from="Surrender" to="." method="_on_surrender"]
+[connection signal="pressed" from="surrenderOverlay/surrender" to="." method="_on_surrender"]
+[connection signal="pressed" from="surrenderOverlay/cancel" to="." method="_on_cancel_pressed"]
+[connection signal="pressed" from="ShowSurrender" to="." method="_on_show_surrender_pressed"]
