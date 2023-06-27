@@ -160,6 +160,7 @@ anchor_right = 0.915799
 anchor_bottom = 0.57716
 offset_right = 0.0
 offset_bottom = 0.0
+mouse_default_cursor_shape = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="BlockOpponent" parent="TurnOptions" instance=ExtResource("7_luclj")]
@@ -172,6 +173,7 @@ anchor_right = 0.915799
 anchor_bottom = 0.57716
 offset_right = 0.0
 offset_bottom = 0.0
+mouse_default_cursor_shape = 2
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" type="Control" parent="."]
@@ -239,6 +241,17 @@ offset_bottom = 0.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_fhtdn")
 metadata/_edit_use_anchors_ = true
 
+[node name="ShowSurrender" type="Button" parent="."]
+z_index = 4
+layout_mode = 1
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 97.0
+offset_bottom = 40.0
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("10_ao1xb")
+text = "Surrender"
+
 [node name="PlayerWins" parent="." instance=ExtResource("9_aphqi")]
 visible = false
 top_level = true
@@ -288,6 +301,7 @@ offset_right = 81.0
 offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = ExtResource("10_ao1xb")
 text = "yes"
 
@@ -304,6 +318,7 @@ offset_right = -20.0
 offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = ExtResource("10_ao1xb")
 text = "no"
 
@@ -322,19 +337,9 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Do you really wanna surrender?"
 
-[node name="ShowSurrender" type="Button" parent="."]
-z_index = 4
-layout_mode = 1
-offset_left = 10.0
-offset_top = 10.0
-offset_right = 97.0
-offset_bottom = 40.0
-theme_override_styles/normal = ExtResource("10_ao1xb")
-text = "Surrender"
-
 [connection signal="gui_input" from="TurnOptions/AttackOpponent" to="." method="_on_AttackOpponent_gui_input"]
 [connection signal="gui_input" from="TurnOptions/BlockOpponent" to="." method="_on_BlockOpponent_gui_input"]
 [connection signal="gui_input" from="Player/CardSpace" to="." method="_on_CardSpace_gui_input"]
+[connection signal="pressed" from="ShowSurrender" to="." method="_on_show_surrender_pressed"]
 [connection signal="pressed" from="surrenderOverlay/surrender" to="." method="_on_surrender"]
 [connection signal="pressed" from="surrenderOverlay/cancel" to="." method="_on_cancel_pressed"]
-[connection signal="pressed" from="ShowSurrender" to="." method="_on_show_surrender_pressed"]

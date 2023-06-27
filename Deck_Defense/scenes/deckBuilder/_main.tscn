@@ -1,17 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://dot06br0k3e7s"]
+[gd_scene load_steps=8 format=3 uid="uid://dot06br0k3e7s"]
 
 [ext_resource type="Script" path="res://scenes/deckBuilder/scripts/deckBuilder.gd" id="1_ssxq1"]
 [ext_resource type="StyleBox" uid="uid://btkbuk73rd6y" path="res://shared/styles/buttons.tres" id="2_xxups"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0aopp"]
 bg_color = Color(0.301961, 0.301961, 0.301961, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0iu15"]
-bg_color = Color(0.333333, 0.333333, 0.333333, 1)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tb8ml"]
 bg_color = Color(0.333333, 0.333333, 0.333333, 1)
@@ -66,6 +59,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 70.0
 offset_bottom = 40.0
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = ExtResource("2_xxups")
 text = "Back
 "
@@ -80,7 +74,8 @@ offset_top = 28.0
 offset_right = -69.0
 offset_bottom = 59.0
 grow_horizontal = 0
-theme_override_styles/normal = SubResource("StyleBoxFlat_0iu15")
+mouse_default_cursor_shape = 2
+theme_override_styles/normal = ExtResource("2_xxups")
 text = "New Deck"
 
 [node name="deckBg" type="Panel" parent="bg"]
@@ -139,6 +134,7 @@ offset_left = 10.0
 offset_top = 10.0
 offset_right = 70.0
 offset_bottom = 41.0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_nvwtu")
 text = "Done"
@@ -149,6 +145,7 @@ offset_left = 79.0
 offset_top = 10.0
 offset_right = 139.0
 offset_bottom = 41.0
+mouse_default_cursor_shape = 2
 theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_px33g")
 text = "Cancel"

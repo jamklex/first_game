@@ -56,6 +56,7 @@ func setStyle(newStyle):
 	if style == Style.Available:
 		buyBtn.text = "Buy"
 		buyBtn.disabled = false
+		buyBtn.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		buyBtn.add_theme_color_override("font_color", availableColor)
 		soldLayer.visible = false
 	else:

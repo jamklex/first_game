@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://cdlnfhoq0id5"]
 
 [ext_resource type="Script" path="res://scenes/deckBuilder/scripts/selectableCard.gd" id="1_p3uqk"]
-[ext_resource type="PackedScene" uid="uid://llfmaboqxn2d" path="res://shared/card/front.tscn" id="2_1nyxu"]
+[ext_resource type="PackedScene" uid="uid://b3kqenl61d6qh" path="res://shared/card/front.tscn" id="2_1nyxu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ayioc"]
 draw_center = false
@@ -36,6 +36,7 @@ offset_right = -992.0
 offset_bottom = -408.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_ayioc")
 theme_override_styles/hover = SubResource("StyleBoxFlat_xb7mk")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_pmnl1")
