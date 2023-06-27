@@ -52,6 +52,7 @@ func _loadDecks():
 		newDeck.setOnActiveCheckClicked(self, "onDeckActiveCheckClicked")
 		newDeck.setOnDeleteButtonClicked(self, "onDeckDeleteBtnClicked")
 		newDeck.setActive(deckData["active"])
+		newDeck.onEveryAction.connect(_closeEdits)
 		newDeck.cards = deckData["cards"]
 		deckHolder.add_child(newDeck)
 		decks.append(newDeck)
@@ -119,7 +120,6 @@ func loadCards():
 	loadCardHolder()
 
 func onCardClicked():
-	
 	checkRequirements()
 
 func _on_deck_wrapper_resized():
@@ -209,6 +209,7 @@ func _on_new_deck_pressed():
 	newDeck.setOnDeleteButtonClicked(self, "onDeckDeleteBtnClicked")
 	deckHolder.add_child(newDeck)
 	decks.append(newDeck)
+	_closeEdits()
 
 func _loadRequirements():
 	var reqHolder = $editDeck/marginVertAlign/vertAlign/requirements
@@ -269,3 +270,15 @@ func _saveSelectedCardsToDeck():
 		newCards.append(newCard)
 		doneIds.append(id)
 	selectedDeck.cards = newCards
+
+func _closeEdits():
+	print("close edits")
+	for deck in decks:
+		deck = deck as Deck
+		deck.closeEditName()
+
+func _on_gui_input(event):
+	if event is InputEventMouseButton:
+		event = event as InputEventMouseButton
+		if event.pressed and not event.double_click:
+			_closeEdits()

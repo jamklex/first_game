@@ -44,12 +44,10 @@ func setCover(imagePath):
 		var coverHolder = child as Panel
 		var cover = coverHolder.get_child(0) as TextureRect
 		cover.texture = texture
-		
 
 func setOnClick(target, funcName):
 	funcObj = target
-	functionName = funcName
-	
+	functionName = funcName	
 	
 func setStyle(newStyle):
 	style = newStyle
@@ -67,7 +65,6 @@ func setStyle(newStyle):
 			soldLayer.visible = true
 		buyBtn.add_theme_color_override("font_color", notAvailableColor)
 		buyBtn.disabled = true
-	
 
 func _on_buyButton_pressed():
 	if style == Style.Available:

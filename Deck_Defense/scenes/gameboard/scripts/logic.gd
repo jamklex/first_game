@@ -172,3 +172,11 @@ func setPlayerCardOnClickEvent(cards):
 func _on_surrender():
 	if GbProps.current_cycle != GbProps.TURN_CYCLE.GAME_END:
 		get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
+
+func _on_cancel_pressed():
+	var surrenderOverlay = $surrenderOverlay as Panel
+	surrenderOverlay.visible = false
+
+func _on_show_surrender_pressed():
+	var surrenderOverlay = $surrenderOverlay as Panel
+	surrenderOverlay.visible = true
