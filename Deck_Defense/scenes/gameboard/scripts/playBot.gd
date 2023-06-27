@@ -1,10 +1,13 @@
 class_name PlayBot
 
+const UNLOCK_PATTERN = "enemy_%s_cleared"
 var rng:RandomNumberGenerator
 var level
+var unlock_name
 
 static func of(level):
 	var enemy = PlayBot.new()
+	enemy.unlock_name = UNLOCK_PATTERN % str(level)
 	enemy.level = level
 	enemy.rng = GbProps.rng
 	return enemy

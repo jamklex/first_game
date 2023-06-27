@@ -4,5 +4,8 @@
 	"image": "res://data/packs/covers/human_1.png",
 	"cards": [
 		1,2,10,11,18,22,27,28,35
+	],
+	"unlock_needed": [
+		"enemy_1_cleared"
 	]
 }

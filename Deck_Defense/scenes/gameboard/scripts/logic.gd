@@ -119,6 +119,7 @@ func check_winning_state():
 	return false
 
 func player_wins():
+	GbProps.unlock(enemy.unlock_name)
 	var rewardPoints = GbProps.get_enemy_win_points()
 	var winEndWindow = $PlayerWins as EndWindow
 	winEndWindow.setPoints(rewardPoints)

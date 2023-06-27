@@ -4,5 +4,8 @@
 	"image": "res://data/packs/covers/machine_2.png",
 	"cards": [
 		41,42,50,51,57,61,67,68,74
+	],
+	"unlock_needed": [
+		"enemy_1_cleared"
 	]
 }
