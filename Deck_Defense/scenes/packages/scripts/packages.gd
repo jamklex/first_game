@@ -63,7 +63,6 @@ func _loadPackages():
 	var player_card_amounts = flat_map(playerData["cards"])
 	var player_unlocks = playerData["unlocks"]
 	for pack in packs:
-		var before = Time.get_ticks_msec()
 		var pack_data = JsonReader.read_json_cached(pack)
 		var card_difference = card_difference(player_card_amounts, pack_data["cards"])
 		var newPackage = packageScene.instantiate() as Package
@@ -79,7 +78,6 @@ func _loadPackages():
 			var rect = newPackage.custom_minimum_size
 			minPackageWidth = rect[0]
 			minPackageHeight = rect[1]
-		print(Time.get_ticks_msec() - before)
 
 func flat_map(card_info_array):
 	var card_dict = {} as Dictionary
