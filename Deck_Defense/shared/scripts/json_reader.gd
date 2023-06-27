@@ -6,7 +6,15 @@ const EnemyData = "res://data/enemies/%s.json"
 const PackagePath = "res://data/packs/%s"
 const Pass = "asd2d54JUH"
 
+var cache = {}
+
+func read_json_cached(path):
+	if not cache.has(path):
+		cache[path] =  read_json(path)
+	return cache[path]
+
 func read_json(path, encrypted = false):
+	print(path)
 	var file = null 
 	if encrypted:
 		file = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, Pass)

@@ -15,7 +15,6 @@ const default_color = Color("#000000")
 var overwrite_color = null
 
 var CardData = "res://data/cards/cards.json"
-var card_data_content = JsonReader.read_json(CardData)
 var face
 var base_hp = 0
 var hp = 0
@@ -51,7 +50,7 @@ func link_node(link):
 
 func load_data(id):
 	type_id = id
-	for card in card_data_content:
+	for card in JsonReader.read_json_cached(CardData):
 		if card["id"] == id:
 			load_properties(card)
 			return

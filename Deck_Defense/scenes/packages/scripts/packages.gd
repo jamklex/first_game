@@ -61,14 +61,16 @@ func _refreshPackages():
 func _loadPackages():
 	var packs = JsonReader.package_paths()
 	var player_card_amounts = flat_map(playerData["cards"])
+	var player_unlocks = playerData["unlocks"]
 	for pack in packs:
-		var pack_data = JsonReader.read_json(pack)
+		var before = Time.get_ticks_msec()
+		var pack_data = JsonReader.read_json_cached(pack)
 		var card_difference = card_difference(player_card_amounts, pack_data["cards"])
 		var newPackage = packageScene.instantiate() as Package
 		newPackage.setCover(pack_data["image"])
 		newPackage.setName(pack_data["name"])
 		newPackage.setPrice(pack_data["price"])
-		newPackage.setLocked(!check_unlock(pack_data["unlock_needed"]))
+		newPackage.setLocked(!check_unlock(pack_data["unlock_needed"], player_unlocks))
 		newPackage.setCards(card_difference)
 		newPackage.setOnClick(self, "onBuyButton")
 		packageHolder.add_child(newPackage)
@@ -77,6 +79,7 @@ func _loadPackages():
 			var rect = newPackage.custom_minimum_size
 			minPackageWidth = rect[0]
 			minPackageHeight = rect[1]
+		print(Time.get_ticks_msec() - before)
 
 func flat_map(card_info_array):
 	var card_dict = {} as Dictionary
@@ -268,8 +271,7 @@ func _notification(what):
 		_savePlayerData()
 		get_tree().quit()
 
-func check_unlock(unlocks_required: Array):
-	var unlocks_performed = JsonReader.read_player_data()["unlocks"] as Array
+func check_unlock(unlocks_required, unlocks_performed):
 	for unlock in unlocks_required:
 		if not unlocks_performed.has(unlock):
 			return false
