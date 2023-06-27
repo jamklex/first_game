@@ -94,3 +94,11 @@ func get_cards(id, amount):
 		card.load_data(id)
 		array.append(card)
 	return array
+
+func unlock(unlock_name):
+	var player_data = JsonReader.read_player_data()
+	var unlocks = player_data["unlocks"] as Array
+	if not unlocks.has(unlock_name):
+		unlocks.append(unlock_name)
+	player_data["unlocks"] = unlocks
+	JsonReader.save_player_data(player_data)

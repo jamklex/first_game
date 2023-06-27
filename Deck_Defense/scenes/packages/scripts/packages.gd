@@ -1,6 +1,5 @@
 extends Control
 
-
 var pointsLabel:Label
 var packageHolder: GridContainer
 var packageScene:PackedScene = preload("res://scenes/packages/prefabs/package.tscn")
@@ -20,7 +19,6 @@ var animationPackage:TextureRect
 
 var playerData = JsonReader.read_player_data()
 
-
 func _ready():
 	rng.randomize()
 	var basePanel = $bg as Panel
@@ -39,7 +37,7 @@ func _ready():
 
 func _refreshPoints():
 	pointsLabel.text = String.num_int64(points) + " Pt"
-	
+
 func _refreshPackageCards(cards_to_remove, except_pack):
 	for pack in packages:
 		if pack == except_pack:
@@ -51,7 +49,9 @@ func _refreshPackageCards(cards_to_remove, except_pack):
 func _refreshPackages():
 	for pack in packages:
 		pack = pack as Package
-		if pack.numberOfPacks == 0 or pack.cards.is_empty():
+		if pack.locked:
+			pack.setStyle(Package.Style.NotUnlocked)
+		elif pack.numberOfPacks == 0 or pack.cards.is_empty():
 			pack.setStyle(Package.Style.Sold)
 		elif points < pack.price:
 			pack.setStyle(Package.Style.NotEnoughMoney)
@@ -68,6 +68,7 @@ func _loadPackages():
 		newPackage.setCover(pack_data["image"])
 		newPackage.setName(pack_data["name"])
 		newPackage.setPrice(pack_data["price"])
+		newPackage.setLocked(!check_unlock(pack_data["unlock_needed"]))
 		newPackage.setCards(card_difference)
 		newPackage.setOnClick(self, "onBuyButton")
 		packageHolder.add_child(newPackage)
@@ -117,7 +118,6 @@ func onBuyButton(selectedPackage):
 	_refreshPackages()
 	playOpeningAnimation(selectedPackage)
 
-
 func _on_back_pressed():
 	_savePlayerData()
 	get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
@@ -136,7 +136,6 @@ func _on_scrollWrapper_resized():
 	_afterResize()
 
 func _afterResize():
-#	setPackageHolderSeparation()
 	setPackageSize()
 	setCardHolderColumns()
 
@@ -152,11 +151,6 @@ func setCardHolderColumns():
 	currentWidth -= 20
 	var columns = int(currentWidth / cardWidth)
 	resultCardHolder.columns = columns
-	# debug outputs
-#	print(columns)
-#	print("width cardholder: " + String.num_int64(resultCardHolder.get_rect().size.x))
-#	print("width parent of cardholder: " + String.num_int64(resultCardHolder.get_parent_control().get_rect().size.x))
-
 
 func setPackageSize():
 	if minPackageHeight == -1:
@@ -176,7 +170,6 @@ func setPackageSize():
 		package.custom_minimum_size[0] = newPackageWidth
 		package.custom_minimum_size[1] = newPackageHeight
 
-
 func setPackageHolderSeparation():
 	if minPackageHeight == -1:
 		return
@@ -186,7 +179,6 @@ func setPackageHolderSeparation():
 	var freeWidth = width - usedWidth
 	var neededSeparation = freeWidth / (columns-1)
 	packageHolder.add_theme_constant_override("h_separation", neededSeparation)
-
 
 ###### ANIMATION STUFF
 func playOpeningAnimation(selectedPackage: Package):
@@ -218,7 +210,6 @@ func playOpeningAnimation(selectedPackage: Package):
 	# AFTER DOINGS
 	openingTween.chain().tween_callback(onResultWindowOpen)
 
-
 var currentAnimationCardIndex = 0
 func onResultWindowOpen():
 	setCardHolderColumns()
@@ -226,8 +217,7 @@ func onResultWindowOpen():
 	cardWindow.clip_contents = false
 	currentAnimationCardIndex = 0
 	showCard()
-	
-	
+
 func showCard():
 	var cards = resultCardHolder.get_children()
 	if currentAnimationCardIndex >= cards.size():
@@ -240,8 +230,7 @@ func showCard():
 		packageCard.scaleCardToZero()
 		packageCard.playShowAnimation()
 		currentAnimationCardIndex += 1
-	
-	
+
 func revealCard():
 	var cards = resultCardHolder.get_children()
 	if currentAnimationCardIndex >= cards.size():
@@ -252,7 +241,6 @@ func revealCard():
 		packageCard.playRevealAnimation()
 		currentAnimationCardIndex += 1
 
-	
 func onAllCardsRevealed():
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
 	var closeBtn = $resultWindow/cardWindow/close as Button
@@ -279,3 +267,10 @@ func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_savePlayerData()
 		get_tree().quit()
+
+func check_unlock(unlocks_required: Array):
+	var unlocks_performed = JsonReader.read_player_data()["unlocks"] as Array
+	for unlock in unlocks_required:
+		if not unlocks_performed.has(unlock):
+			return false
+	return true

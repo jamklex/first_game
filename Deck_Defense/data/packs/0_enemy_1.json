@@ -4,5 +4,8 @@
 	"image": "res://data/packs/covers/enemy_1.png",
 	"cards": [
 		1,2,18,22,28,35,48,49,56,60,66,73,86,87,94,98,103,115,132,136,142,149
+	],
+	"unlock_needed": [
+		"enemy_1_cleared"
 	]
 }

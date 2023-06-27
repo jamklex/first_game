@@ -4,5 +4,9 @@
 	"image": "res://data/packs/covers/dragon_3.png",
 	"cards": [
 		81,82,90,91,96,100,102,107,108,113
+	],
+	"unlock_needed": [
+		"enemy_1_cleared",
+		"enemy_2_cleared"
 	]
 }
