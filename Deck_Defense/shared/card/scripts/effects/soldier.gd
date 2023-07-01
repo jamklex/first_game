@@ -8,7 +8,7 @@ var left = false
 var right = false
 
 func name():
-	"Soldier"
+	return PANEL
 
 func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 	me = card
