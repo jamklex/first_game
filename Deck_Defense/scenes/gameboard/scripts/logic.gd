@@ -108,14 +108,12 @@ func enemy_move():
 	await get_tree().create_timer(ENEMY_THINKING_TIME).timeout
 	var made_move = await enemy.play_move(hand_cards, enemy_field_cards, player_field_cards, get_node(player_healt))
 	if not made_move:
-		print("enemy can't do anything...")
 		player_wins()
 	switch_to_player()
 
 func check_winning_state():
 	var enemy_cards = GbUtil.total_card_size(GbProps.enemy_deck, GbProps.enemy_card_space_node, GbProps.enemy_hand_node)
 	var player_cards = GbUtil.total_card_size(GbProps.player_deck, GbProps.player_card_space_node, GbProps.player_hand_node)
-	print(player_cards)
 	if GbProps.enemyCurrentHp <= 0 or enemy_cards <= 0:
 		player_wins()
 		return true
