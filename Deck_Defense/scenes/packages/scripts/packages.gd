@@ -62,7 +62,6 @@ func _refreshPackages():
 func _loadPackages():
 	var packs = JsonReader.package_paths()
 	var player_card_amounts = flat_map(playerData["cards"])
-	var player_unlocks = playerData["unlocks"]
 	for pack in packs:
 		var pack_data = JsonReader.read_json_cached(pack)
 		var card_difference = card_difference(player_card_amounts, pack_data["cards"])
@@ -70,7 +69,7 @@ func _loadPackages():
 		newPackage.setCover(pack_data["image"])
 		newPackage.setName(pack_data["name"])
 		newPackage.setPrice(pack_data["price"])
-		newPackage.setLocked(!check_unlock(pack_data["unlock_needed"], player_unlocks))
+		newPackage.setLocked(!check_unlock(pack_data["unlock_needed"], playerData["unlocks"]))
 		newPackage.setCards(card_difference)
 		newPackage.setOnClick(self, "onBuyButton")
 		packageHolder.add_child(newPackage)

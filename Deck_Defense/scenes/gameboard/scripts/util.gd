@@ -214,7 +214,7 @@ func bump_child_y(node, increase):
 		node.z_index = 0 if increase > 0 else increase * -1
 
 func total_card_size(deck, card_space, hand):
-	return deck.size() + cards_ltr_in(card_space).size() + hand.get_child_count()
+	return deck.size() + GbUtil.count_attacking_cards(card_space) + hand.get_child_count()
 
 func draw_cards(node, amount, deck, prefered_ids, visible_card):
 	var cardObjs = []
@@ -262,7 +262,8 @@ func adjust_size(card:Card, newHeight:int):
 	card.custom_minimum_size = newSize
 		
 func set_visibility(node, status):
-	node.visible = status
+	if node != null:
+		node.visible = status
 
 func get_card_from_container(container: HBoxContainer, index: int):
 	var holder = container.get_child(index)
@@ -282,3 +283,10 @@ func set_hp(health_node: Node, amount, max_amount):
 	var max_size = (health_node as Panel).size[0]
 	var new_size = Vector2(max_size / max_amount * amount, indicator.size[1])
 	indicator.set_size(new_size)
+
+func count_attacking_cards(node: Node):
+	var count = 0
+	for card in GbUtil.cards_ltr_in(node):
+		if card.properties.attacks_remaining > 0:
+			count += 1
+	return count

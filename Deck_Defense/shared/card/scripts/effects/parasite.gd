@@ -38,14 +38,14 @@ func destroy():
 	GbUtil.remove_from_game_without_effect_calls(infested)
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
-	var points = 3
-	var opponent = opponent_field[pos]
+	var opponent = opponent_field[pos] as Card
 	if opponent == null:
 		return 0
-	elif opponent.type() == KanonenrohrEffect.PANEL:
-		points += 1
+	var points = opponent.properties.atk / 10
+	if opponent.type() == KanonenrohrEffect.PANEL:
+		points += (opponent.properties.effect.max_counter - opponent.properties.effect.counter) / 4
 	elif opponent.type() == StoneEffect.PANEL:
-		points += 2
+		points += opponent.properties.effect.blocks_remaining * 2
 	return points
 
 func reload_data():
