@@ -12,7 +12,7 @@ const cardInfos = {
 	FlexerEffect.PANEL + "_l": "This Cards HP will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
 	FlexerEffect.PANEL + "_r": "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
 	SoldierEffect.PANEL + "_l": "This Cards ATK will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
-	SoldierEffect.PANEL + "_r": "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
+	SoldierEffect.PANEL + "_r": "This Cards ATK will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
 	BombEffect.PANEL: "This Card destroys every Card within a Radius of 1, including allies.",
 	ParasiteEffect.PANEL: "This Card mirrors the enemy Card right in front of it.\nThis will strip every effect off of the enemy Card.\nIf either this or the enemy Card is destroyed, the other will immediatly be destroyed aswell.\nIf no enemy Card exists in front of it, this Card destroys itself."
 }
