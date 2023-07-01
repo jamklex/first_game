@@ -28,17 +28,17 @@ var cardInfoPrefab = preload("res://scenes/menu/prefabs/cardInfo.tscn")
 
 
 var cardInfos = {
-	22: "This Card can attack multiple times per round.\nAt the beginning of each Round the attacks fill up again to their max.\nYou can see how often this Card is allowed to attack on the bottom right corner",
-	35: "This Card can block incomming attacks, not matter how much damage they deal.\nAt the beginning of each Round this Counter is increased by 1 up too it's maximum.\nYou can see how many attacks this Card can block in the middle bottom.",
-	18: "This Cards ATK will be multiplied by 1 each turn it stayed on the field.\nThis effect has no limit.",
-	1: "This Card will spread their HP across every ally to their left, reducing it to 1 HP for itself.\nIf there is no Card to their left, their HP stays the same.\nOnce placed this Card looses their effect.",
-	2: "This Card will spread their HP across every ally to their right, reducing it to 1 HP for itself.\nIf there is no Card to their right, their HP stays the same.\nOnce placed this Card looses their effect.",
-	10: "This Cards HP will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
-	11: "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
-	27: "This Cards ATK will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
-	28: "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
-	9: "This Card destroys every Card within a Radius of 1, including allies.",
-	26: "This Card mirrors the enemy Card right in front of it.\nThis will strip every effect off of the enemy Card.\nIf either this or the enemy Card is destroyed, the other will immediatly be destroyed aswell.\nIf no enemy Card exists in front of it, this Card destroys itself."
+	22: GbUtil.cardInfos[MultiAttackEffect.PANEL],
+	35: GbUtil.cardInfos[StoneEffect.PANEL],
+	18: GbUtil.cardInfos[KanonenrohrEffect.PANEL],
+	1: GbUtil.cardInfos[AngelEffect.PANEL + "_l"],
+	2: GbUtil.cardInfos[AngelEffect.PANEL + "_r"],
+	10: GbUtil.cardInfos[FlexerEffect.PANEL + "_l"],
+	11: GbUtil.cardInfos[FlexerEffect.PANEL + "_r"],
+	27: GbUtil.cardInfos[SoldierEffect.PANEL + "_l"],
+	28: GbUtil.cardInfos[SoldierEffect.PANEL + "_r"],
+	9: GbUtil.cardInfos[BombEffect.PANEL],
+	26: GbUtil.cardInfos[ParasiteEffect.PANEL]
 }
 
 func _ready():

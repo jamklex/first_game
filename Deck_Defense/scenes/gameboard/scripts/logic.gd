@@ -15,12 +15,15 @@ const enemy_card_space = "Enemy/CardSpace/Spots"
 const ENEMY_THINKING_TIME = 1.5
 
 var enemy: PlayBot
-var selected_card
+var selected_card: Card
 var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
+
+var cardInfo: Panel
 
 func _ready():
 	get_tree().set_auto_accept_quit(true)
 	initialize_game()
+	cardInfo = $CardInfo
 
 func initialize_game():
 	GbProps.initialize()
@@ -46,6 +49,8 @@ func _on_HandCard_clicked(clickedCard:Card):
 			selected_card = clickedCard
 			var cardHeight = selected_card.size.y
 			GbUtil.bump_child_y(selected_card, cardHeight * bump_factor * -1)
+			cardInfo.get_node("Face").texture = load(selected_card.properties.face)
+			cardInfo.get_node("Desc").text = GbUtil.get_desc_of_effect(selected_card)
 
 func _on_CardSpace_gui_input(event):
 	if GbUtil.is_mouse_click(event) and can_place_cards():
@@ -183,3 +188,15 @@ func _on_show_surrender_pressed():
 	reset_hand_card_focus()
 	var surrenderOverlay = $surrenderOverlay as Panel
 	surrenderOverlay.visible = true
+
+func _on_cardInfo_toggle():
+	if cardInfo.size.x == 0:
+		cardInfo.size.x = 191
+		cardInfo.get_node("Face").visible = true
+		cardInfo.get_node("Desc").visible = true
+		cardInfo.get_node("Toggle").text = "<"
+	else: 
+		cardInfo.size.x = 0
+		cardInfo.get_node("Face").visible = false
+		cardInfo.get_node("Desc").visible = false
+		cardInfo.get_node("Toggle").text = ">"

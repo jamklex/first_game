@@ -3,6 +3,19 @@ extends Node
 const attack_animation_time = 0.5
 const direct_attack_animation_time = 0.5
 const card_draw_time = 0.2
+const cardInfos = {
+	MultiAttackEffect.PANEL: "This Card can attack multiple times per round.\nAt the beginning of each Round the attacks fill up again to their max.\nYou can see how often this Card is allowed to attack on the bottom right corner",
+	StoneEffect.PANEL: "This Card can block incomming attacks, not matter how much damage they deal.\nAt the beginning of each Round this Counter is increased by 1 up too it's maximum.\nYou can see how many attacks this Card can block in the middle bottom.",
+	KanonenrohrEffect.PANEL: "This Cards ATK will be multiplied by 1 each turn it stayed on the field.\nThis effect has a limit of 10 times.",
+	AngelEffect.PANEL + "_l": "This Card will spread their HP across every ally to their left, reducing it to 1 HP for itself.\nIf there is no Card to their left, their HP stays the same.\nOnce placed this Card looses their effect.",
+	AngelEffect.PANEL + "_r": "This Card will spread their HP across every ally to their right, reducing it to 1 HP for itself.\nIf there is no Card to their right, their HP stays the same.\nOnce placed this Card looses their effect.",
+	FlexerEffect.PANEL + "_l": "This Cards HP will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
+	FlexerEffect.PANEL + "_r": "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
+	SoldierEffect.PANEL + "_l": "This Cards ATK will increase by the amount of their left ally.\nOnly direct left hand allies will count.\nOnce placed this Card looses their effect.",
+	SoldierEffect.PANEL + "_r": "This Cards HP will increase by the amount of their right ally.\nOnly direct right hand allies will count.\nOnce placed this Card looses their effect.",
+	BombEffect.PANEL: "This Card destroys every Card within a Radius of 1, including allies.",
+	ParasiteEffect.PANEL: "This Card mirrors the enemy Card right in front of it.\nThis will strip every effect off of the enemy Card.\nIf either this or the enemy Card is destroyed, the other will immediatly be destroyed aswell.\nIf no enemy Card exists in front of it, this Card destroys itself."
+}
 
 var player_deck = []
 var enemy_deck = []
@@ -290,3 +303,12 @@ func count_attacking_cards(node: Node):
 		if card.properties.attacks_remaining > 0:
 			count += 1
 	return count
+
+func get_desc_of_effect(card: Card):
+	var card_type = card.type()
+	var effect = card.properties.effect
+	if "left" in effect and effect.left:
+		card_type += "_l"
+	elif "right" in effect and effect.right:
+		card_type += "_r"
+	return cardInfos[card_type]
