@@ -63,7 +63,7 @@ func _on_BlockOpponent_gui_input(event):
 		switch_to_enemy()
 
 func _on_AttackOpponent_gui_input(event):
-	if GbUtil.is_mouse_click(event) and can_place_cards():
+	if GbUtil.is_mouse_click(event) and can_place_cards() and GbUtil.count_attacking_cards(GbProps.player_card_space_node) > 0:
 		reset_hand_card_focus()
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
@@ -110,10 +110,11 @@ func enemy_move():
 func check_winning_state():
 	var enemy_cards = GbUtil.total_card_size(GbProps.enemy_deck, GbProps.enemy_card_space_node, GbProps.enemy_hand_node)
 	var player_cards = GbUtil.total_card_size(GbProps.player_deck, GbProps.player_card_space_node, GbProps.player_hand_node)
-	if GbProps.enemyCurrentHp <= 0 or enemy_cards == 0:
+	print(player_cards)
+	if GbProps.enemyCurrentHp <= 0 or enemy_cards <= 0:
 		player_wins()
 		return true
-	if GbProps.playerCurrentHp <= 0 or player_cards == 0:
+	if GbProps.playerCurrentHp <= 0 or player_cards <= 0:
 		player_looses()
 		return true
 	return false

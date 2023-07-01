@@ -15,7 +15,7 @@ static func of(level):
 func play_move(hand_container: HBoxContainer, my_cards_container: HBoxContainer, opponent_cards_container: HBoxContainer, opponent_health_node: Node):
 	print("\nnext turn")
 	var hand_cards_amount = hand_container.get_child_count()
-	var cards_that_can_attack_count = how_many_can_attack(my_cards_container)
+	var cards_that_can_attack_count = GbUtil.count_attacking_cards(my_cards_container)
 	var attack_when_at_least = rng.randi_range(2, GbProps.max_card_space_spots - level)
 	var attack_instead = false
 	print("will only attack when " + str(attack_when_at_least) + " cards can attack")
@@ -40,13 +40,6 @@ func play_move(hand_container: HBoxContainer, my_cards_container: HBoxContainer,
 			return true
 	print("attacking")
 	return await GbUtil.attack(GbUtil.cards_ltr_in(my_cards_container), GbUtil.cards_ltr_in(opponent_cards_container), opponent_health_node, true)
-
-func how_many_can_attack(hand_container: HBoxContainer):
-	var count = 0
-	for card in GbUtil.cards_ltr_in(hand_container):
-		if card.properties.attacks_remaining > 0:
-			count += 1
-	return count
 
 func placements(cards: Array, my_field: Dictionary, opponent_field: Dictionary):
 	var placements_scored = {}
