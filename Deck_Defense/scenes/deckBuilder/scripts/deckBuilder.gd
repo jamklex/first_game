@@ -71,13 +71,11 @@ func _loadDecks():
 	setDeckHolderColumns()
 
 func onDeckDeleteBtnClicked(deck: Deck):
-	print("delete pack with name: " + deck.name)
 	decks.remove_at(decks.find(deck))
 	deckHolder.remove_child(deck)
 	setDeckHolderColumns()
 		
 func onDeckEditBtnClicked(deck: Deck):
-	print("opening pack with name: " + deck.name)
 	loadCards()
 	activateDeckCards(deck)
 	sortCards_activeFirst()
@@ -142,7 +140,6 @@ func _on_back_pressed():
 	get_tree().change_scene_to_file("res://scenes/menu/_main.tscn")
 	
 func _beforeLeave():
-	print("_beforeLeave")
 	_saveDecks()
 
 # handle close request
@@ -167,10 +164,6 @@ func setDeckHolderColumns():
 	currentWidth -= 30
 	var columns = int(currentWidth / deckWidth)
 	deckHolder.columns = columns
-	# debug outputs
-#	print(columns)
-#	print("width cardholder: " + String.num_int64(resultCardHolder.get_rect().size.x))
-#	print("width parent of cardholder: " + String.num_int64(resultCardHolder.get_parent_control().get_rect().size.x))
 
 func setCardHolderColumns():
 	if not cardHolder:
@@ -185,9 +178,6 @@ func setCardHolderColumns():
 	var columns = int(currentWidth / cardWidth)
 	cardHolder.columns = columns
 	# debug outputs
-#	print(columns)
-#	print("width cardholder: " + String.num_int64(resultCardHolder.get_rect().size.x))
-#	print("width parent of cardholder: " + String.num_int64(resultCardHolder.get_parent_control().get_rect().size.x)
 
 func onEditDeckCanceled():
 	editDeck.visible = false
@@ -284,7 +274,6 @@ func _saveSelectedCardsToDeck():
 	selectedDeck.cards = newCards
 
 func _closeEdits():
-	print("close edits")
 	for deck in decks:
 		deck = deck as Deck
 		deck.closeEditName()

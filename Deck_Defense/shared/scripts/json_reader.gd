@@ -14,7 +14,6 @@ func read_json_cached(path):
 	return cache[path]
 
 func read_json(path, encrypted = false):
-	print(path)
 	var file = null 
 	if encrypted:
 		file = FileAccess.open_encrypted_with_pass(path, FileAccess.READ, Pass)
