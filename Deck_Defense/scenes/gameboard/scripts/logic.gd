@@ -180,5 +180,6 @@ func _on_cancel_pressed():
 	surrenderOverlay.visible = false
 
 func _on_show_surrender_pressed():
+	reset_hand_card_focus()
 	var surrenderOverlay = $surrenderOverlay as Panel
 	surrenderOverlay.visible = true
