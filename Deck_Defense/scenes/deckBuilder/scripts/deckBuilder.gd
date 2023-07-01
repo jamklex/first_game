@@ -14,7 +14,8 @@ var selectedDeck: Deck = null
 var selectedCardsLabel: Label
 
 var requirements = [
-	["Min number of cards (10)", "minNumberOfCards"]
+	["Min number of cards (10)", "minNumberOfCards"],
+	["Max number of cards (40)", "maxNumberOfCards"]
 ]
 var requirementObjs = []
 
@@ -26,6 +27,17 @@ func minNumberOfCards(deck: Deck):
 			numberOfSelectedCards += 1
 	selectedCardsLabel.text = "Selected Cards: " + str(numberOfSelectedCards)
 	if numberOfSelectedCards >= 10:
+		return true
+	return false
+	
+func maxNumberOfCards(deck: Deck):
+	var numberOfSelectedCards = 0
+	for c in cards:
+		var selectedableCard = c as SelectableCard
+		if selectedableCard.selected:
+			numberOfSelectedCards += 1
+	selectedCardsLabel.text = "Selected Cards: " + str(numberOfSelectedCards)
+	if numberOfSelectedCards <= 40:
 		return true
 	return false
 

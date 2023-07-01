@@ -16,6 +16,7 @@ var rng = RandomNumberGenerator.new()
 
 #Open package animation stuff
 var animationPackage:TextureRect
+var openingTween:Tween = null
 
 var playerData = JsonReader.read_player_data()
 
@@ -49,9 +50,9 @@ func _refreshPackageCards(cards_to_remove, except_pack):
 func _refreshPackages():
 	for pack in packages:
 		pack = pack as Package
-		if pack.locked:
-			pack.setStyle(Package.Style.NotUnlocked)
-		elif pack.numberOfPacks == 0 or pack.cards.is_empty():
+		#if pack.locked:
+		#	pack.setStyle(Package.Style.NotUnlocked)
+		if pack.numberOfPacks == 0 or pack.cards.is_empty():
 			pack.setStyle(Package.Style.Sold)
 		elif points < pack.price:
 			pack.setStyle(Package.Style.NotEnoughMoney)
@@ -127,8 +128,7 @@ func _savePlayerData():
 	playerData["points"] = points
 	JsonReader.save_player_data(playerData)
 
-func _on_close_pressed():
-	print("pressed")
+func closeResultWindow():
 	for child in resultCardHolder.get_children():
 		resultCardHolder.remove_child(child)
 	resultWindow.visible = false
@@ -194,7 +194,7 @@ func playOpeningAnimation(selectedPackage: Package):
 	var packVertMid = resultWindow.size.y / 2 - animationPackage.size.y / 2
 	cardWindow.size = Vector2(0,0)
 	animationPackage.position = Vector2(resultWindow.size.x, packVertMid)
-	var openingTween = create_tween().set_parallel(true)
+	openingTween = create_tween().set_parallel(true)
 	# PACK FLY FROM RIGHT TO LEFT
 	openingTween.chain().tween_property(animationPackage, "position", Vector2(packHorMid, packVertMid), 0.2)
 	# WINDOW OPENS
@@ -243,6 +243,7 @@ func revealCard():
 		currentAnimationCardIndex += 1
 
 func onAllCardsRevealed():
+	openingTween = null
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
 	var closeBtn = $resultWindow/cardWindow/close as Button
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
@@ -274,3 +275,39 @@ func check_unlock(unlocks_required, unlocks_performed):
 		if not unlocks_performed.has(unlock):
 			return false
 	return true
+
+func _input(ev):
+	if ev is InputEventKey:
+		ev = ev as InputEventKey
+		# Be sure thats only react on key up
+		if ev.echo or ev.pressed:   # for react on key down -> not ev.pressed:
+			return
+		if OS.get_keycode_string(ev.key_label) == "Escape":
+			escapePressed()
+
+func escapePressed():
+	var closeBtn = $resultWindow/cardWindow/close as Button
+	# close shortcut
+	if closeBtn.visible:
+		closeResultWindow()
+	elif openingTween:
+		skipBuyAnimation()
+		
+func skipBuyAnimation():
+	openingTween.kill()
+	skipCardWindowAnimation()
+	showAllCards()
+	onAllCardsRevealed()
+	
+func skipCardWindowAnimation():
+	var cardWindow = $resultWindow/cardWindow as Panel
+	var widthMarginPixels = resultWindow.size.x * 0.1
+	var heightMarginPixels = resultWindow.size.y * 0.1
+	cardWindow.position = Vector2(widthMarginPixels, heightMarginPixels)
+	cardWindow.size = Vector2(resultWindow.size.x-(widthMarginPixels*2), resultWindow.size.y-(heightMarginPixels*2))
+	
+func showAllCards():
+	var cards = resultCardHolder.get_children()
+	for c in cards:
+		var packageCard = c as PackageCard
+		packageCard.toFinalStatus()

@@ -21,6 +21,14 @@ func _ready():
 func setVisibility(newVisibility:bool):
 	card.visible = newVisibility	
 	
+func toFinalStatus():
+	animationPlayer.stop()
+	setVisibility(true)
+	card.scale = Vector2(0,0)
+	var front = get_node("front") as Control
+	front.scale = Vector2(1,1)
+	front.position = Vector2(0,0)
+	
 func setOnRevealDoneFinished(objectWithFunction, functionName):
 	afterRevealDoneFunctionHolder = objectWithFunction
 	afterRevealDoneFunction = functionName	
