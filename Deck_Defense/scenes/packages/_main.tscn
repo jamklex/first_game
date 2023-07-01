@@ -155,6 +155,7 @@ layout_mode = 2
 columns = 5
 
 [node name="close" type="Button" parent="resultWindow/cardWindow"]
+visible = false
 layout_direction = 2
 layout_mode = 1
 anchors_preset = 7

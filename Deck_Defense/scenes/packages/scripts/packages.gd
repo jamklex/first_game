@@ -16,7 +16,8 @@ var rng = RandomNumberGenerator.new()
 
 #Open package animation stuff
 var animationPackage:TextureRect
-var openingTween:Tween = null
+var openingTween:Tween
+var onBuyAnimationPlaying = false
 
 var playerData = JsonReader.read_player_data()
 
@@ -50,9 +51,9 @@ func _refreshPackageCards(cards_to_remove, except_pack):
 func _refreshPackages():
 	for pack in packages:
 		pack = pack as Package
-		#if pack.locked:
-		#	pack.setStyle(Package.Style.NotUnlocked)
-		if pack.numberOfPacks == 0 or pack.cards.is_empty():
+		if pack.locked:
+			pack.setStyle(Package.Style.NotUnlocked)
+		elif pack.numberOfPacks == 0 or pack.cards.is_empty():
 			pack.setStyle(Package.Style.Sold)
 		elif points < pack.price:
 			pack.setStyle(Package.Style.NotEnoughMoney)
@@ -131,6 +132,7 @@ func closeResultWindow():
 	for child in resultCardHolder.get_children():
 		resultCardHolder.remove_child(child)
 	resultWindow.visible = false
+	resultWindow.get_node("cardWindow/close").visible = false
 
 func _on_scrollWrapper_resized():
 	_afterResize()
@@ -182,6 +184,7 @@ func setPackageHolderSeparation():
 
 ###### ANIMATION STUFF
 func playOpeningAnimation(selectedPackage: Package):
+	onBuyAnimationPlaying = true
 	var animationPackage = $resultWindow/package as TextureRect
 	var cardWindow = $resultWindow/cardWindow as Panel
 	cardWindow.clip_contents = true
@@ -242,7 +245,7 @@ func revealCard():
 		currentAnimationCardIndex += 1
 
 func onAllCardsRevealed():
-	openingTween = null
+	onBuyAnimationPlaying = false
 	var scrollWrapper = resultCardHolder.get_parent().get_parent() as ScrollContainer
 	var closeBtn = $resultWindow/cardWindow/close as Button
 	scrollWrapper.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
@@ -289,8 +292,10 @@ func escapePressed():
 	# close shortcut
 	if closeBtn.visible:
 		closeResultWindow()
-	elif openingTween:
+	elif onBuyAnimationPlaying:
 		skipBuyAnimation()
+	else:
+		_on_back_pressed()
 		
 func skipBuyAnimation():
 	openingTween.kill()
