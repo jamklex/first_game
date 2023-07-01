@@ -14,7 +14,7 @@ const enemy_card_space = "Enemy/CardSpace/Spots"
 
 const ENEMY_THINKING_TIME = 1.5
 
-var enemy
+var enemy: PlayBot
 var selected_card
 var bump_factor = 0.5 # 1 = full card size, 0.5 half card size
 

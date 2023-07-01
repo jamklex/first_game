@@ -7,6 +7,7 @@
 	],
 	"unlock_needed": [
 		"enemy_1_cleared",
-		"enemy_2_cleared"
+		"enemy_2_cleared",
+		"enemy_3_cleared"
 	]
 }

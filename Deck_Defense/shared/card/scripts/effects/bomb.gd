@@ -38,11 +38,22 @@ func destroy():
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
 	var points = 0
 	for i in range(radius):
-		if (my_field.has(pos-i) and my_field[pos-i] != null) or (my_field.has(pos+i) and my_field[pos+i] != null):
-			points -= 1
-		if (opponent_field.has(pos-i) and opponent_field[pos-i] != null) or (opponent_field.has(pos+i) and opponent_field[pos+i] != null):
-			points += 1
+		if (my_field.has(pos-i) and my_field[pos-i] != null):
+			points -= points_for_card_type(my_field[pos-i])
+		if (my_field.has(pos+i) and my_field[pos+i] != null):
+			points -= points_for_card_type(my_field[pos+i])
+		if (opponent_field.has(pos-i) and opponent_field[pos-i] != null):
+			points += points_for_card_type(opponent_field[pos-i])
+		if (opponent_field.has(pos+i) and opponent_field[pos+i] != null):
+			points += points_for_card_type(opponent_field[pos+i])
 	return points
+
+func points_for_card_type(card: Card):
+	if card.type() == KanonenrohrEffect.PANEL:
+		return card.properties.effect.counter / 2
+	if card.type() == StoneEffect.PANEL:
+		return card.properties.effect.blocks_remaining
+	return 1
 
 func reload_data():
 	me.make_visible(PANEL)

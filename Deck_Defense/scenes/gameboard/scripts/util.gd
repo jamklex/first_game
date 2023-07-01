@@ -262,7 +262,8 @@ func adjust_size(card:Card, newHeight:int):
 	card.custom_minimum_size = newSize
 		
 func set_visibility(node, status):
-	node.visible = status
+	if node != null:
+		node.visible = status
 
 func get_card_from_container(container: HBoxContainer, index: int):
 	var holder = container.get_child(index)
