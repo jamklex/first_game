@@ -130,7 +130,7 @@ func attackDirectAnimation(attackCard:Card):
 	attackTween.chain().tween_property(attackCard, "global_position", stepPos, direct_attack_animation_time*0.4)
 	attackTween.chain().tween_property(attackCard, "global_position", targetPos, direct_attack_animation_time*0.3)
 	attackTween.chain().tween_property(attackCard, "global_position", startPos, direct_attack_animation_time*0.3)
-	attackCard.z_index = 2
+	attackTween.chain().tween_property(attackCard, "z_index", 2, 0)
 	return attackTween
 	
 func attackAnimation(attackCard:Card, defendCard:Card):
