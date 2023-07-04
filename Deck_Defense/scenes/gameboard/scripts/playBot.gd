@@ -20,7 +20,7 @@ func play_move(hand_container: HBoxContainer, my_cards_container: HBoxContainer,
 	if hand_cards_amount > 0 and attack_when_at_least >= cards_that_can_attack_count:
 		var playable_cards = GbUtil.cards_ltr_in(hand_container) as Array
 		var field_cards_size = GbUtil.cards_ltr_in(my_cards_container).size()
-		var cards_to_play = min(attack_when_at_least - field_cards_size, playable_cards.size())
+		var cards_to_play = min((attack_when_at_least - field_cards_size) * level / 2, playable_cards.size())
 		for i in range(cards_to_play):
 			var placement_scored = placements(playable_cards, card_space_dict(my_cards_container), card_space_dict(opponent_cards_container))
 			if placement_scored.values().max() < 1:
