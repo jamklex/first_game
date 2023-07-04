@@ -76,12 +76,12 @@ func _on_AttackOpponent_gui_input(event):
 		var player_cards = GbUtil.cards_ltr_in(GbProps.player_card_space_node)
 		var enemy_cards = GbUtil.cards_ltr_in(GbProps.enemy_card_space_node)
 		await GbUtil.attack(player_cards, enemy_cards, get_node(enemy_healt), false)
-		check_winning_state()
+		check_winning_state(GbProps.player_card_space_node)
 		switch_to_enemy()
 
 func switch_to_player():
 	GbUtil.apply_next_turn_effects(GbProps.player_card_space_node, GbProps.enemy_card_space_node)
-	if not check_winning_state():
+	if not check_winning_state(GbProps.player_card_space_node):
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), false)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), true)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
@@ -92,7 +92,7 @@ func switch_to_player():
 
 func switch_to_enemy():
 	GbUtil.apply_next_turn_effects(GbProps.enemy_card_space_node, GbProps.player_card_space_node)
-	if not check_winning_state():
+	if not check_winning_state(GbProps.enemy_card_space_node):
 		GbUtil.set_visibility(get_node(WAIT_WHILE_FIGHT), true)
 		GbUtil.set_visibility(get_node(ATTACK_PLAYER), false)
 		GbUtil.set_visibility(get_node(BLOCK_PLAYER), false)
@@ -111,9 +111,12 @@ func enemy_move():
 		player_wins()
 	switch_to_player()
 
-func check_winning_state():
+func check_winning_state(my_card_space: HBoxContainer):
 	var enemy_cards = GbUtil.total_card_size(GbProps.enemy_deck, GbProps.enemy_card_space_node, GbProps.enemy_hand_node)
 	var player_cards = GbUtil.total_card_size(GbProps.player_deck, GbProps.player_card_space_node, GbProps.player_hand_node)
+	if GbUtil.count_attacking_cards(my_card_space) < 0:
+		current_looses()
+		return true
 	if GbProps.enemyCurrentHp <= 0 or enemy_cards <= 0:
 		player_wins()
 		return true
@@ -140,7 +143,13 @@ func player_looses():
 	GbUtil.set_visibility(get_node("PlayerLooses"), true)
 	GbUtil.set_visibility(get_node("Surrender"), false)
 	GbProps.current_cycle = GbProps.TURN_CYCLE.GAME_END
-	
+
+func current_looses():
+	if GbProps.current_cycle.equals(GbProps.TURN_CYCLE.MY_TURN):
+		player_looses()
+	else:
+		player_wins()
+
 func addPlayerPoints(rewardPoints):
 	var playerData = JsonReader.read_player_data()
 	var newPoints = playerData["points"]

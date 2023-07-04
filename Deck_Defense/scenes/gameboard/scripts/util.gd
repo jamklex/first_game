@@ -227,7 +227,7 @@ func bump_child_y(node, increase):
 		node.z_index = 0 if increase > 0 else increase * -1
 
 func total_card_size(deck, card_space, hand):
-	return deck.size() + GbUtil.count_attacking_cards(card_space) + hand.get_child_count()
+	return deck.size() + GbUtil.cards_ltr_in(card_space).size() + hand.get_child_count()
 
 func draw_cards(node, amount, deck, prefered_ids, visible_card):
 	var cardObjs = []
