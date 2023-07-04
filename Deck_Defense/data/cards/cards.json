@@ -67,7 +67,7 @@
 	"id": 9,
 	"image": "res://data/cards/images/3/human/bomb_1.jpg",
 	"atk": 0,
-	"hp": 0,
+	"hp": 1,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -371,7 +371,7 @@
 	"id": 47,
 	"image": "res://data/cards/images/3/machine/bomb_1.jpg",
 	"atk": 0,
-	"hp": 0,
+	"hp": 1,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -675,7 +675,7 @@
 	"id": 85,
 	"image": "res://data/cards/images/3/dragon/bomb_1.jpg",
 	"atk": 0,
-	"hp": 0,
+	"hp": 1,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -979,7 +979,7 @@
 	"id": 123,
 	"image": "res://data/cards/images/3/pet/bomb_1.jpg",
 	"atk": 0,
-	"hp": 0,
+	"hp": 1,
 	"max_owned": 3,
 	"bomb": true
 },
