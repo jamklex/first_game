@@ -66,8 +66,8 @@
 {
 	"id": 9,
 	"image": "res://data/cards/images/3/human/bomb_1.jpg",
-	"atk": 5,
-	"hp": 6,
+	"atk": 0,
+	"hp": 0,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -274,8 +274,8 @@
 {
 	"id": 35,
 	"image": "res://data/cards/images/1/human/stone_1.jpg",
-	"atk": 2,
-	"hp": 2,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 1
 },
@@ -283,23 +283,23 @@
 	"id": 36,
 	"image": "res://data/cards/images/2/human/stone_1.jpg",
 	"atk": 1,
-	"hp": 3,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 2
 },
 {
 	"id": 37,
 	"image": "res://data/cards/images/3/human/stone_1.jpg",
-	"atk": 5,
-	"hp": 2,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 3
 },
 {
 	"id": 38,
 	"image": "res://data/cards/images/4/human/stone_1.jpg",
-	"atk": 4,
-	"hp": 2,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 4
 },
@@ -370,8 +370,8 @@
 {
 	"id": 47,
 	"image": "res://data/cards/images/3/machine/bomb_1.jpg",
-	"atk": 1,
-	"hp": 2,
+	"atk": 0,
+	"hp": 0,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -578,16 +578,16 @@
 {
 	"id": 73,
 	"image": "res://data/cards/images/1/machine/stone_1.jpg",
-	"atk": 3,
-	"hp": 2,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 1
 },
 {
 	"id": 74,
 	"image": "res://data/cards/images/2/machine/stone_1.jpg",
-	"atk": 5,
-	"hp": 2,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 2
 },
@@ -595,15 +595,15 @@
 	"id": 75,
 	"image": "res://data/cards/images/3/machine/stone_1.jpg",
 	"atk": 1,
-	"hp": 2,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 3
 },
 {
 	"id": 76,
 	"image": "res://data/cards/images/4/machine/stone_1.jpg",
-	"atk": 2,
-	"hp": 4,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 4
 },
@@ -674,8 +674,8 @@
 {
 	"id": 85,
 	"image": "res://data/cards/images/3/dragon/bomb_1.jpg",
-	"atk": 3,
-	"hp": 4,
+	"atk": 0,
+	"hp": 0,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -882,7 +882,7 @@
 {
 	"id": 111,
 	"image": "res://data/cards/images/1/dragon/stone_1.jpg",
-	"atk": 2,
+	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
 	"stone": 1
@@ -890,24 +890,24 @@
 {
 	"id": 112,
 	"image": "res://data/cards/images/2/dragon/stone_1.jpg",
-	"atk": 2,
-	"hp": 2,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 2
 },
 {
 	"id": 113,
 	"image": "res://data/cards/images/3/dragon/stone_1.jpg",
-	"atk": 4,
-	"hp": 3,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 3
 },
 {
 	"id": 114,
 	"image": "res://data/cards/images/4/dragon/stone_1.jpg",
-	"atk": 7,
-	"hp": 7,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 4
 },
@@ -978,8 +978,8 @@
 {
 	"id": 123,
 	"image": "res://data/cards/images/3/pet/bomb_1.jpg",
-	"atk": 4,
-	"hp": 2,
+	"atk": 0,
+	"hp": 0,
 	"max_owned": 3,
 	"bomb": true
 },
@@ -1186,7 +1186,7 @@
 {
 	"id": 149,
 	"image": "res://data/cards/images/1/pet/stone_1.jpg",
-	"atk": 2,
+	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
 	"stone": 1
@@ -1194,23 +1194,23 @@
 {
 	"id": 150,
 	"image": "res://data/cards/images/2/pet/stone_1.jpg",
-	"atk": 2,
-	"hp": 4,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 2
 },
 {
 	"id": 151,
 	"image": "res://data/cards/images/3/pet/stone_1.jpg",
-	"atk": 3,
-	"hp": 4,
+	"atk": 1,
+	"hp": 1,
 	"max_owned": 1,
 	"stone": 3
 },
 {
 	"id": 152,
 	"image": "res://data/cards/images/4/pet/stone_1.jpg",
-	"atk": 3,
+	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
 	"stone": 4
