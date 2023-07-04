@@ -31,7 +31,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	if right and my_pos+1 < GbProps.max_card_space_spots:
 		neighbour = GbUtil.get_card_from_container(lane, my_pos+1);
 	if neighbour != null:
-		if neighbour.type().equals(BombEffect.PANEL) or neighbour.type().equals(StoneEffect.PANEL):
+		if neighbour.type() == BombEffect.PANEL or neighbour.type() == StoneEffect.PANEL:
 			return true
 		me.set_hp(me.hp + neighbour.properties.hp)
 	return true
