@@ -90,6 +90,8 @@ func attack(attacker_cards, target_cards, health_node: Node, use_player_hp: bool
 						break
 				var defender_props = defender.properties as CardProperties
 				await attackAnimation(attacker, defender).finished
+				if attacker == null:
+					continue
 				defender.defend_against(attacker)
 				var dmg = attacker_props.atk
 				var hp = defender_props.hp
