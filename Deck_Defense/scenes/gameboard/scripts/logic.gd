@@ -147,7 +147,7 @@ func player_looses():
 func current_looses():
 	if GbProps.current_cycle.equals(GbProps.TURN_CYCLE.MY_TURN):
 		player_looses()
-	else:
+	elif GbProps.current_cycle.equals(GbProps.TURN_CYCLE.OPPONENT_TURN):
 		player_wins()
 
 func addPlayerPoints(rewardPoints):
