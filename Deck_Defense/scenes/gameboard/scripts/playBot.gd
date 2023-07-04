@@ -16,22 +16,26 @@ func play_move(hand_container: HBoxContainer, my_cards_container: HBoxContainer,
 	var hand_cards_amount = hand_container.get_child_count()
 	var cards_that_can_attack_count = GbUtil.count_attacking_cards(my_cards_container)
 	var attack_when_at_least = rng.randi_range(2, GbProps.max_card_space_spots - level)
-	var attack_instead = false
+	var attack_instead = true
 	if hand_cards_amount > 0 and attack_when_at_least >= cards_that_can_attack_count:
 		var playable_cards = GbUtil.cards_ltr_in(hand_container) as Array
-		var cards_to_play = rng.randi_range(1, min(5, playable_cards.size()))
+		var field_cards_size = GbUtil.cards_ltr_in(my_cards_container).size()
+		var cards_to_play = min(attack_when_at_least - field_cards_size, playable_cards.size())
 		for i in range(cards_to_play):
 			var placement_scored = placements(playable_cards, card_space_dict(my_cards_container), card_space_dict(opponent_cards_container))
 			if placement_scored.values().max() < 1:
-				if i == 0 and cards_that_can_attack_count > 0:
-					attack_instead = true
+				if cards_that_can_attack_count > 0:
 					break
 				continue
+			attack_instead = false
 			var diff = 5 - level
 			var placement = random_placement(diff, placement_scored)
 			await GbUtil.lay_card_on_space(my_cards_container, placement.card, placement.spot, hand_container, opponent_cards_container)
 			playable_cards.remove_at(playable_cards.find(placement.card))
 		if not attack_instead:
+			if cards_that_can_attack_count <= 0 && hand_cards_amount > 0:
+				var random_card = hand_container.get_child(rng.randi_range(1, hand_cards_amount))
+				await GbUtil.lay_card_on_space(my_cards_container, random_card, 0, hand_container, opponent_cards_container)
 			return true
 	return await GbUtil.attack(GbUtil.cards_ltr_in(my_cards_container), GbUtil.cards_ltr_in(opponent_cards_container), opponent_health_node, true)
 
