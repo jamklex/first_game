@@ -181,7 +181,7 @@ var tutorialPages = [
 	{
 		"title": "Placing cards",
 		"videoPath": "res://data/videos/tutorial/1_placingCards.ogv",
-		"desc": "You can place cards by selecting them from Your hand card via the left mouse button.\nAfterwards You can select a free spot on Your side of the field to place them."
+		"desc": "You can place cards by selecting them from Your hand via the left mouse button.\nAfterwards You can select a free spot on Your side of the field to place them."
 	},
 	{
 		"title": "Placing cards",
