@@ -22,20 +22,21 @@ func play_move(hand_container: HBoxContainer, my_cards_container: HBoxContainer,
 		var field_cards_size = GbUtil.cards_ltr_in(my_cards_container).size()
 		var cards_to_play = min((attack_when_at_least - field_cards_size) * level / 2, playable_cards.size())
 		for i in range(cards_to_play):
-			var placement_scored = placements(playable_cards, card_space_dict(my_cards_container), card_space_dict(opponent_cards_container))
-			if placement_scored.values().max() < 1:
-				if cards_that_can_attack_count > 0:
+			var placements_scored = placements(playable_cards, card_space_dict(my_cards_container), card_space_dict(opponent_cards_container))
+			if placements_scored.values().max() < 1:
+				if attack_instead and cards_that_can_attack_count > 0:
 					break
 				continue
-			attack_instead = false
 			var diff = 5 - level
-			var placement = random_placement(diff, placement_scored)
+			var placement = choose_placement(diff, placements_scored)
 			await GbUtil.lay_card_on_space(my_cards_container, placement.card, placement.spot, hand_container, opponent_cards_container)
 			playable_cards.remove_at(playable_cards.find(placement.card))
+			attack_instead = false
 		if not attack_instead:
-			if cards_that_can_attack_count <= 0 && hand_cards_amount > 0:
-				var random_card = hand_container.get_child(rng.randi_range(1, hand_cards_amount))
-				await GbUtil.lay_card_on_space(my_cards_container, random_card, 0, hand_container, opponent_cards_container)
+			return true
+		if cards_that_can_attack_count <= 0 && hand_cards_amount > 0:
+			var random_card = hand_container.get_child(rng.randi_range(1, hand_cards_amount))
+			await GbUtil.lay_card_on_space(my_cards_container, random_card, 0, hand_container, opponent_cards_container)
 			return true
 	return await GbUtil.attack(GbUtil.cards_ltr_in(my_cards_container), GbUtil.cards_ltr_in(opponent_cards_container), opponent_health_node, true)
 
@@ -47,7 +48,7 @@ func placements(cards: Array, my_field: Dictionary, opponent_field: Dictionary):
 				placements_scored[Placement.of(card, i)] = card.calc_placement_points(i, my_field, opponent_field)
 	return placements_scored
 
-func random_placement(diff: int, placements_scored: Dictionary):
+func choose_placement(diff: int, placements_scored: Dictionary):
 	var placements_to_choose = []
 	var max_value = placements_scored.values().max()
 	var min_value = min(max_value, max(2, max_value - diff))
