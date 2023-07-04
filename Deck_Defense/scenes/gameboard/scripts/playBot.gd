@@ -34,8 +34,8 @@ func play_move(hand_container: HBoxContainer, my_cards_container: HBoxContainer,
 			attack_instead = false
 		if not attack_instead:
 			return true
-		if cards_that_can_attack_count <= 0 && hand_cards_amount > 0:
-			var random_card = hand_container.get_child(rng.randi_range(1, hand_cards_amount))
+		if GbUtil.count_attacking_cards(my_cards_container) <= 0 && hand_cards_amount > 0:
+			var random_card = hand_container.get_child(rng.randi_range(0, hand_cards_amount))
 			await GbUtil.lay_card_on_space(my_cards_container, random_card, 0, hand_container, opponent_cards_container)
 			return true
 	return await GbUtil.attack(GbUtil.cards_ltr_in(my_cards_container), GbUtil.cards_ltr_in(opponent_cards_container), opponent_health_node, true)
