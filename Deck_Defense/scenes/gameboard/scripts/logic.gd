@@ -76,8 +76,8 @@ func _on_AttackOpponent_gui_input(event):
 		var player_cards = GbUtil.cards_ltr_in(GbProps.player_card_space_node)
 		var enemy_cards = GbUtil.cards_ltr_in(GbProps.enemy_card_space_node)
 		await GbUtil.attack(player_cards, enemy_cards, get_node(enemy_healt), false)
-		check_winning_state(GbProps.player_card_space_node)
-		switch_to_enemy()
+		if not check_winning_state(GbProps.player_card_space_node):
+			switch_to_enemy()
 
 func switch_to_player():
 	GbUtil.apply_next_turn_effects(GbProps.player_card_space_node, GbProps.enemy_card_space_node)
@@ -117,10 +117,10 @@ func check_winning_state(my_card_space: HBoxContainer):
 	if GbUtil.count_attacking_cards(my_card_space) < 0:
 		current_looses()
 		return true
-	if GbProps.enemyCurrentHp <= 0 or enemy_cards <= 0:
+	elif GbProps.enemyCurrentHp <= 0 or enemy_cards <= 0:
 		player_wins()
 		return true
-	if GbProps.playerCurrentHp <= 0 or player_cards <= 0:
+	elif GbProps.playerCurrentHp <= 0 or player_cards <= 0:
 		player_looses()
 		return true
 	return false
@@ -130,6 +130,7 @@ func player_wins():
 	var rewardPoints = GbProps.get_enemy_win_points()
 	var winEndWindow = $PlayerWins as EndWindow
 	winEndWindow.setPoints(rewardPoints)
+	print("add winning " + str(rewardPoints))
 	addPlayerPoints(rewardPoints)
 	GbUtil.set_visibility(get_node("PlayerWins"), true)
 	GbUtil.set_visibility(get_node("Surrender"), false)
