@@ -49,11 +49,12 @@ func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dicti
 	return points
 
 func points_for_card_type(card: Card):
+	var points = card.properties.atk / 20 + card.properties.hp / 20
 	if card.type() == KanonenrohrEffect.PANEL:
-		return card.properties.effect.counter / 2
-	if card.type() == StoneEffect.PANEL:
-		return card.properties.effect.blocks_remaining
-	return 1
+		points += card.properties.effect.counter / 2
+	elif card.type() == StoneEffect.PANEL:
+		points += card.properties.effect.blocks_remaining
+	return points + 1
 
 func reload_data():
 	me.make_visible(PANEL)
