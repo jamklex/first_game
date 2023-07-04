@@ -194,9 +194,14 @@ var tutorialPages = [
 		"desc": "You can attack Your opponent after his turn ends by clicking on the swords icon.\nAfter attacking Your turn will end automatically."
 	},
 	{
-		"title": "Card infos",
+		"title": "Card infos overview",
 		"videoPath": "res://data/videos/tutorial/4_cardInfos.ogv",
 		"desc": "You can find information about the different types of cards in the main menu under the section 'Card infos'."
+	}, 
+	{
+		"title": "Card infos ingame",
+		"videoPath": "res://data/videos/tutorial/5_cardInfosIngame.ogv",
+		"desc": "You can also find these information while you're ingame. Just select a card and open up the information box on the left side."
 	}
 ]
 var KEY_TUT_DONE = "tutorialDone"
