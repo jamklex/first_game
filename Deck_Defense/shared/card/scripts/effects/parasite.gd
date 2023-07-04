@@ -40,7 +40,7 @@ func destroy():
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
 	var opponent = opponent_field[pos] as Card
 	if opponent == null:
-		return 0
+		return -1
 	var points = opponent.properties.atk / 10
 	if opponent.type() == KanonenrohrEffect.PANEL:
 		points += (opponent.properties.effect.max_counter - opponent.properties.effect.counter) / 4
