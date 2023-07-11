@@ -277,7 +277,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 1
+	"stone": 2
 },
 {
 	"id": 36,
@@ -285,7 +285,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 2
+	"stone": 3
 },
 {
 	"id": 37,
@@ -293,7 +293,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 3
+	"stone": 4
 },
 {
 	"id": 38,
@@ -301,7 +301,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 4
+	"stone": 5
 },
 {
 	"id": 39,
@@ -581,7 +581,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 1
+	"stone": 2
 },
 {
 	"id": 74,
@@ -589,7 +589,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 2
+	"stone": 3
 },
 {
 	"id": 75,
@@ -597,7 +597,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 3
+	"stone": 4
 },
 {
 	"id": 76,
@@ -605,7 +605,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 4
+	"stone": 5
 },
 {
 	"id": 77,
@@ -885,7 +885,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 1
+	"stone": 2
 },
 {
 	"id": 112,
@@ -893,7 +893,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 2
+	"stone": 3
 },
 {
 	"id": 113,
@@ -901,7 +901,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 3
+	"stone": 4
 },
 {
 	"id": 114,
@@ -909,7 +909,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 4
+	"stone": 5
 },
 {
 	"id": 115,
@@ -1189,7 +1189,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 1
+	"stone": 2
 },
 {
 	"id": 150,
@@ -1197,7 +1197,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 2
+	"stone": 3
 },
 {
 	"id": 151,
@@ -1205,7 +1205,7 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 3
+	"stone": 4
 },
 {
 	"id": 152,
@@ -1213,5 +1213,5 @@
 	"atk": 1,
 	"hp": 1,
 	"max_owned": 1,
-	"stone": 4
+	"stone": 5
 }]
