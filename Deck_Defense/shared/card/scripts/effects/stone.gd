@@ -19,7 +19,7 @@ func load_properties(card_prop_dict: Dictionary, card: CardProperties):
 		return true
 
 func defend(source: CardProperties):
-	me.set_hp(me.hp + source.atk)
+	me.set_hp(1 + source.atk)
 	update_blocks(-1)
 	if blocks_remaining <= 0:
 		me.set_hp(1)
@@ -30,13 +30,11 @@ func next_turn(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 
 func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	me.attacks_remaining = 0
-	me.set_hp(1)
-	me.set_atk(0)
 	update_blocks(MAX_BLOCKS)
 	return true
 
 func destroy():
-	pass
+	return true
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
 	var points = (GbProps.max_card_space_spots - pos) / 3

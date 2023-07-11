@@ -35,7 +35,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	return true
 
 func destroy():
-	GbUtil.remove_from_game_without_effect_calls(infested)
+	return await GbUtil.remove_from_game_without_effect_calls(infested)
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
 	var opponent = opponent_field[pos] as Card

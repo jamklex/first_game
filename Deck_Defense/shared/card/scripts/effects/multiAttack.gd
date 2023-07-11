@@ -27,7 +27,7 @@ func card_laydown(lane: HBoxContainer, my_pos, enemy_lane: HBoxContainer):
 	return true
 
 func destroy():
-	pass
+	return true
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
 	var points = pos / 2

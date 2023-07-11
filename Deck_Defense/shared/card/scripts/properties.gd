@@ -97,7 +97,7 @@ func react_on_card_laydown(my_container: HBoxContainer, my_position, enemy_conta
 	return true
 
 func execute_destroy_effects():
-	effect.destroy()
+	return await effect.destroy()
 
 func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dictionary):
 	return effect.calc_placement_points(pos, my_field, opponent_field)
