@@ -51,6 +51,8 @@ func calc_placement_points(pos: int, my_field: Dictionary, opponent_field: Dicti
 func reload_data():
 	me.make_visible(PANEL)
 	if infested == null:
+		me.make_invisible(CardProperties.hp_label)
+		me.make_invisible(CardProperties.atk_label)
 		return
 	me.overwrite_color = INFESTED_COLOR
 	infested.set_hp(me.hp)
