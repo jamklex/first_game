@@ -130,7 +130,6 @@ func player_wins():
 	var rewardPoints = GbProps.get_enemy_win_points()
 	var winEndWindow = $PlayerWins as EndWindow
 	winEndWindow.setPoints(rewardPoints)
-	print("add winning " + str(rewardPoints))
 	addPlayerPoints(rewardPoints)
 	GbUtil.set_visibility(get_node("PlayerWins"), true)
 	GbUtil.set_visibility(get_node("Surrender"), false)

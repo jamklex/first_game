@@ -97,8 +97,8 @@ func attack(attacker_cards, target_cards, health_node: Node, use_player_hp: bool
 				var hp = defender_props.hp
 				var new_card_hp = hp - dmg
 				if new_card_hp <= 0:
-					remove_from_game(defender)
-					target_cards.erase(defender)
+					if await remove_from_game(defender):
+						target_cards.erase(defender)
 				else:
 					defender_props.set_hp(new_card_hp)
 					defender_props.reload_data()
@@ -170,9 +170,10 @@ func remove_from_game(card):
 	if card != null:
 		if card is CardProperties:
 			card = card.node as Card
-		card.execute_destroy_effects()
+		await card.execute_destroy_effects()
 		await destroyAnimation(card).animation_finished
 		card.queue_free()
+	return true
 
 func remove_from_game_without_effect_calls(card):
 	if card != null:
@@ -180,6 +181,7 @@ func remove_from_game_without_effect_calls(card):
 			card = card.node as Card
 		await destroyAnimation(card).animation_finished
 		card.queue_free()
+	return true
 
 func destroyAnimation(card: Card):
 	var soundPlayer = card.get_node("DestroySoundPlayer") as AudioStreamPlayer
