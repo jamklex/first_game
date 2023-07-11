@@ -24,17 +24,9 @@ var cards = []
 func _ready():
 	pass
 	
-func setOnActiveCheckClicked(newFuncObj, funcName):
-	activeFuncObj = newFuncObj
-	activeFunctionName = funcName
-
 func setOnEditButtonClicked(newFuncObj, funcName):
 	editFuncObj = newFuncObj
 	editFunctionName = funcName
-	
-func setOnDeleteButtonClicked(newFuncObj, funcName):
-	deleteFuncObj = newFuncObj
-	deleteFunctionName = funcName
 	
 func setDeckName(newName):
 	var labelName = $name as Label
@@ -42,50 +34,19 @@ func setDeckName(newName):
 	
 func getDeckName():
 	var labelName = $name as Label
-	return labelName.text	
+	return labelName.text
 	
 func setActive(newActive):
-	var activeBox = $active as CheckBox
-	activeBox.button_pressed = newActive
-	var deleteBtn = $deleteBtn as Button
-	deleteBtn.disabled = newActive
+	var activeText = $activeText as Label
+	activeText.visible = newActive
 	active = newActive
-	
-func closeEditName():
-	_showNameEdit(false)
-	
-func _showNameEdit(show:bool):
-	var name = $name as Label
-	var nameEdit = $nameEdit as LineEdit
-	name.visible = not show
-	nameEdit.visible = show
-	nameEdit.text = getDeckName()
-	if show:
-		nameEdit.grab_focus()
 
-func _on_edit_btn_pressed():
+func _on_pressed():
 	if editFuncObj:
 		editFuncObj.call(editFunctionName, self)
-	onEveryAction.emit()
 
-func _on_active_pressed():
-	if activeFuncObj:
-		activeFuncObj.call(activeFunctionName, self)
-	onEveryAction.emit()
-
-func _on_delete_btn_pressed():
-	if deleteFuncObj:
-		deleteFuncObj.call(deleteFunctionName, self)
-	onEveryAction.emit()
-
-func _on_name_gui_input(event):
+func _on_gui_input(event):
 	if event is InputEventMouseButton:
 		event = event as InputEventMouseButton
-		if event.pressed:
-			onEveryAction.emit()
-			_showNameEdit(true)
-
-func _on_name_edit_text_submitted(newName:String):
-	if newName.length() > 0:
-		setDeckName(newName)
-		_showNameEdit(false)
+		if event.pressed and not event.double_click:
+			_on_pressed()

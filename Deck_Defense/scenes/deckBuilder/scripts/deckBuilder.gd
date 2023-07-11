@@ -60,22 +60,24 @@ func _loadDecks():
 	for deckData in decksData["decks"]:
 		var newDeck = deckScene.instantiate() as Deck
 		newDeck.setDeckName(deckData["name"])
-		newDeck.setOnEditButtonClicked(self, "onDeckEditBtnClicked")
-		newDeck.setOnActiveCheckClicked(self, "onDeckActiveCheckClicked")
-		newDeck.setOnDeleteButtonClicked(self, "onDeckDeleteBtnClicked")
+		newDeck.setOnEditButtonClicked(self, "onDeckClicked")
 		newDeck.setActive(deckData["active"])
-		newDeck.onEveryAction.connect(_closeEdits)
 		newDeck.cards = deckData["cards"]
 		deckHolder.add_child(newDeck)
 		decks.append(newDeck)
 	setDeckHolderColumns()
 
-func onDeckDeleteBtnClicked(deck: Deck):
+func deleteCurrentDeck():
+	if not selectedDeck:
+		return
+	deleteDeck(selectedDeck)
+
+func deleteDeck(deck: Deck):
 	decks.remove_at(decks.find(deck))
 	deckHolder.remove_child(deck)
 	setDeckHolderColumns()
 		
-func onDeckEditBtnClicked(deck: Deck):
+func onDeckClicked(deck: Deck):
 	loadCards()
 	activateDeckCards(deck)
 	sortCards_activeFirst()
@@ -83,6 +85,8 @@ func onDeckEditBtnClicked(deck: Deck):
 	setCardHolderColumns()
 	editDeck.visible = true
 	selectedDeck = deck
+	setCurrentDeckNameLabel(selectedDeck.getDeckName())
+	setEditActive(selectedDeck.active)
 	checkRequirements()
 	
 func activateDeckCards(deck: Deck):
@@ -113,10 +117,10 @@ func sortCards_activeFirst():
 	sortedCards.append_array(notSelected)
 	cards = sortedCards
 	
-func onDeckActiveCheckClicked(activeDeck:Deck):
+func changeActiveDeck(newActiveDeck:Deck):
 	for index in decks.size():
 		var deck = decks[index] as Deck
-		deck.setActive(deck == activeDeck)
+		deck.setActive(deck == newActiveDeck)
 	_saveDecks()
 
 func loadCards():
@@ -183,6 +187,7 @@ func onEditDeckCanceled():
 	editDeck.visible = false
 	selectedDeck = null
 	cleanCardHolder()
+	closeChangeDeckName()
 	cards.clear()
 	
 func loadCardHolder():
@@ -202,16 +207,43 @@ func onEditDeckDone():
 		_saveSelectedCardsToDeck()
 #		_loadDecks()
 		onEditDeckCanceled()
+	
+func showChangeDeckName():
+	switchChangeDeckNameDialog(true)
+	var newDeckName = $editDeck/deckName/changeDialog/newDeckName as LineEdit
+	newDeckName.text = selectedDeck.getDeckName()
+	
+func closeChangeDeckName():
+	switchChangeDeckNameDialog(false)
+	
+func applyDeckName():
+	var lineEdit = $editDeck/deckName/changeDialog/newDeckName as LineEdit
+	var newDeckName = lineEdit.text
+	if newDeckName == "":
+		return
+	setCurrentDeckNameLabel(newDeckName)
+	selectedDeck.setDeckName(newDeckName)
+	closeChangeDeckName()
+	
+func setCurrentDeckNameLabel(currentDeckName:String):
+	var label = $editDeck/deckName/showDialog/currentDeckName as Label
+	label.text = currentDeckName
+	
+		
+func switchChangeDeckNameDialog(showChangeDialog:bool):
+	var changeDialog = $editDeck/deckName/changeDialog
+	var showDialog = $editDeck/deckName/showDialog
+	showDialog.visible = not showChangeDialog
+	changeDialog.visible = showChangeDialog
+	
 
 func _on_new_deck_pressed():
 	var newDeck = deckScene.instantiate() as Deck
 	newDeck.setDeckName("New Deck")
-	newDeck.setOnEditButtonClicked(self, "onDeckEditBtnClicked")
-	newDeck.setOnActiveCheckClicked(self, "onDeckActiveCheckClicked")
-	newDeck.setOnDeleteButtonClicked(self, "onDeckDeleteBtnClicked")
+	newDeck.setOnEditButtonClicked(self, "onDeckClicked")
 	deckHolder.add_child(newDeck)
 	decks.append(newDeck)
-	_closeEdits()
+	onDeckClicked(newDeck)	
 
 func _loadRequirements():
 	var reqHolder = $editDeck/marginVertAlign/vertAlign/requirements
@@ -273,13 +305,29 @@ func _saveSelectedCardsToDeck():
 		doneIds.append(id)
 	selectedDeck.cards = newCards
 
-func _closeEdits():
-	for deck in decks:
-		deck = deck as Deck
-		deck.closeEditName()
+func switchDeleteDialog(show:bool):
+	var deleteDialog = $deleteDeckDialog as Panel
+	deleteDialog.visible = show
 
-func _on_gui_input(event):
-	if event is InputEventMouseButton:
-		event = event as InputEventMouseButton
-		if event.pressed and not event.double_click:
-			_closeEdits()
+func _on_delete_deck_pressed():
+	switchDeleteDialog(true)
+
+func _on_no_pressed():
+	switchDeleteDialog(false)
+
+func _on_yes_pressed():
+	_on_no_pressed()
+	deleteCurrentDeck()
+	onEditDeckCanceled()
+	
+func setEditActive(active:bool):
+	var setActiveBtn = $editDeck/setActive as Button
+	var activeText = $editDeck/activeText as Label
+	var deleteBtn = $editDeck/deleteDeck as Button
+	setActiveBtn.visible = not active
+	deleteBtn.visible = not active
+	activeText.visible = active
+
+func _on_set_active_pressed():
+	changeActiveDeck(selectedDeck)
+	setEditActive(true)
